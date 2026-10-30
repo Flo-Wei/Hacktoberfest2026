@@ -1,0 +1,13 @@
+# Seed data
+
+- `seed.sql`: 30 fictional personas.
+- `seed-products.sql`: 60 products with made-up stores and prices. Images and nutrition come from Open Food Facts.
+- `seed-swipes.sql`: generated swipes for the personas.
+
+## Open Food Facts
+
+Contains data from [Open Food Facts](https://world.openfoodfacts.org), available under the [Open Database License](https://opendatacommons.org/licenses/odbl/1-0/). Product images are available under [CC BY-SA](https://creativecommons.org/licenses/by-sa/3.0/) and are linked, not copied. `off_code` is the barcode of the source product.
+
+Keep the visible credit in the app. If an adapted version of this data is used publicly, it must also be offered under the ODbL. Details: https://world.openfoodfacts.org/data
+
+The source product can come from a different brand or store than the mock product. Prices and store names are not real.
