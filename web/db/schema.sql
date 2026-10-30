@@ -18,18 +18,16 @@ create table if not exists products (
   unit text not null,
   regular_cents integer not null,
   discount_cents integer not null check (discount_cents < regular_cents),
-  tags text[] not null default '{}'
+  tags text[] not null default '{}',
+  -- From Open Food Facts, nutrition per 100 g or ml. See db/README.md.
+  image_url text,
+  off_code text,
+  kcal integer,
+  protein_g real,
+  carbs_g real,
+  fat_g real,
+  sugar_g real
 );
-
--- From Open Food Facts, nutrition per 100 g or ml. See db/README.md.
-alter table products
-  add column if not exists image_url text,
-  add column if not exists off_code text,
-  add column if not exists kcal integer,
-  add column if not exists protein_g real,
-  add column if not exists carbs_g real,
-  add column if not exists fat_g real,
-  add column if not exists sugar_g real;
 
 create table if not exists swipes (
   user_id uuid not null references users (id) on delete cascade,

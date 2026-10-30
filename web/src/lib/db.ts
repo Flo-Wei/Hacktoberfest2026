@@ -1,29 +1,36 @@
+import { createHash } from "node:crypto";
 import { mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { PGlite } from "@electric-sql/pglite";
 
 // The only file that knows about PGlite. To move to a hosted Postgres,
-// replace this file and run db/schema.sql and db/seed.sql there.
+// replace this file and run the SQL_FILES there in order.
 const DATA_DIR = path.join(process.cwd(), ".data", "pglite");
 const SQL_DIR = path.join(process.cwd(), "db");
+const SQL_FILES = ["schema.sql", "seed.sql", "seed-products.sql", "seed-swipes.sql"];
 
 async function open() {
   await mkdir(DATA_DIR, { recursive: true });
   const db = new PGlite(DATA_DIR);
-  const run = async (file: string) =>
-    db.exec(await readFile(path.join(SQL_DIR, file), "utf8"));
-  const isEmpty = async (from: string) => {
-    const { rows } = await db.query<{ count: number }>(
-      `select count(*)::int as count from ${from}`,
-    );
-    return rows[0].count === 0;
-  };
 
-  await run("schema.sql");
-  if (await isEmpty("users where is_mock")) await run("seed.sql");
-  if (await isEmpty("products")) {
-    await run("seed-products.sql");
-    await run("seed-swipes.sql");
+  const sql = await Promise.all(
+    SQL_FILES.map(async (file) =>
+      (await readFile(path.join(SQL_DIR, file), "utf8")).replace(/\r\n/g, "\n"),
+    ),
+  );
+  const version = createHash("sha256").update(sql.join("\n")).digest("hex");
+
+  // The local database is disposable: when the SQL files change, for example
+  // after a git pull, rebuild it so nobody has to reset it by hand.
+  await db.exec("create table if not exists seed_version (version text primary key)");
+  const { rows } = await db.query("select 1 from seed_version where version = $1", [version]);
+  if (rows.length === 0) {
+    await db.transaction(async (tx) => {
+      await tx.exec("drop schema public cascade; create schema public;");
+      for (const statements of sql) await tx.exec(statements);
+      await tx.exec("create table seed_version (version text primary key)");
+      await tx.query("insert into seed_version (version) values ($1)", [version]);
+    });
   }
   return db;
 }
