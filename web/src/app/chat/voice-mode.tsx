@@ -40,6 +40,11 @@ export function VoiceMode({
         setPhase("failed");
         return;
       }
+      // Closed while the browser was asking for the mic.
+      if (signal.aborted) {
+        stream.getTracks().forEach((track) => track.stop());
+        return;
+      }
       wakeLock = await navigator.wakeLock?.request("screen").catch(() => null);
 
       while (!signal.aborted) {
