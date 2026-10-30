@@ -20,6 +20,9 @@
 # production
 /build
 
+# the root .gitignore (Python template) ignores lib/
+!/src/lib/
+
 # local database
 /.data/
 
