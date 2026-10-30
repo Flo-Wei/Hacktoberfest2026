@@ -1,0 +1,1344 @@
+{
+ "stores": [
+  {
+   "store": "Hofer",
+   "name": "Hofer Mariahilfer Straße",
+   "city": "Vienna",
+   "distance_km": 0.8
+  },
+  {
+   "store": "Hofer",
+   "name": "Hofer Favoriten",
+   "city": "Vienna",
+   "distance_km": 3.4
+  },
+  {
+   "store": "Billa",
+   "name": "Billa Neubaugasse",
+   "city": "Vienna",
+   "distance_km": 0.5
+  },
+  {
+   "store": "Billa",
+   "name": "Billa Landstraße",
+   "city": "Vienna",
+   "distance_km": 2.6
+  },
+  {
+   "store": "Spar",
+   "name": "Spar Westbahnhof",
+   "city": "Vienna",
+   "distance_km": 1.2
+  },
+  {
+   "store": "Spar",
+   "name": "Interspar Donauzentrum",
+   "city": "Vienna",
+   "distance_km": 7.5
+  },
+  {
+   "store": "Hofer",
+   "name": "Hofer Jakomini",
+   "city": "Graz",
+   "distance_km": 1.4
+  },
+  {
+   "store": "Billa",
+   "name": "Billa Annenstraße",
+   "city": "Graz",
+   "distance_km": 0.7
+  },
+  {
+   "store": "Billa",
+   "name": "Billa Lend",
+   "city": "Graz",
+   "distance_km": 2.1
+  },
+  {
+   "store": "Spar",
+   "name": "Spar Hauptplatz",
+   "city": "Graz",
+   "distance_km": 0.6
+  },
+  {
+   "store": "Spar",
+   "name": "Interspar Graz Süd",
+   "city": "Graz",
+   "distance_km": 5.2
+  },
+  {
+   "store": "Hofer",
+   "name": "Hofer Urfahr",
+   "city": "Linz",
+   "distance_km": 2.3
+  },
+  {
+   "store": "Billa",
+   "name": "Billa Landstraße Linz",
+   "city": "Linz",
+   "distance_km": 0.9
+  },
+  {
+   "store": "Spar",
+   "name": "Spar Hauptbahnhof Linz",
+   "city": "Linz",
+   "distance_km": 1.1
+  },
+  {
+   "store": "Spar",
+   "name": "Interspar Linz Industriezeile",
+   "city": "Linz",
+   "distance_km": 4.6
+  },
+  {
+   "store": "Hofer",
+   "name": "Hofer Lehen",
+   "city": "Salzburg",
+   "distance_km": 1.9
+  },
+  {
+   "store": "Billa",
+   "name": "Billa Linzer Gasse",
+   "city": "Salzburg",
+   "distance_km": 0.6
+  },
+  {
+   "store": "Spar",
+   "name": "Spar Getreidegasse",
+   "city": "Salzburg",
+   "distance_km": 0.4
+  },
+  {
+   "store": "Spar",
+   "name": "Interspar Europark",
+   "city": "Salzburg",
+   "distance_km": 4.8
+  },
+  {
+   "store": "Hofer",
+   "name": "Hofer Pradl",
+   "city": "Innsbruck",
+   "distance_km": 2.0
+  },
+  {
+   "store": "Billa",
+   "name": "Billa Museumstraße",
+   "city": "Innsbruck",
+   "distance_km": 0.5
+  },
+  {
+   "store": "Spar",
+   "name": "Spar Maria-Theresien-Straße",
+   "city": "Innsbruck",
+   "distance_km": 0.3
+  },
+  {
+   "store": "Spar",
+   "name": "Interspar DEZ",
+   "city": "Innsbruck",
+   "distance_km": 4.1
+  }
+ ],
+ "offers": [
+  {
+   "name": "Hühnerbrustfilet",
+   "store": "Hofer",
+   "category": "Meat & Fish",
+   "unit": "500 g",
+   "regular_cents": 799,
+   "discount_cents": 599,
+   "tags": [
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/406/145/801/0627/front_de.43.400.jpg",
+   "off_code": "4061458010627",
+   "kcal": 102,
+   "protein_g": 22.0,
+   "carbs_g": 0.0,
+   "fat_g": 1.6,
+   "sugar_g": 0.0
+  },
+  {
+   "name": "Rinderfaschiertes",
+   "store": "Hofer",
+   "category": "Meat & Fish",
+   "unit": "400 g",
+   "regular_cents": 599,
+   "discount_cents": 449,
+   "tags": [
+    "High protein",
+    "Low Carb",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/409/920/002/9429/front_de.4.400.jpg",
+   "off_code": "4099200029429",
+   "kcal": 236,
+   "protein_g": 18.0,
+   "carbs_g": 0.5,
+   "fat_g": 18.0,
+   "sugar_g": null
+  },
+  {
+   "name": "Lachsfilet",
+   "store": "Hofer",
+   "category": "Meat & Fish",
+   "unit": "250 g",
+   "regular_cents": 699,
+   "discount_cents": 549,
+   "tags": [
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/406/146/376/3419/front_de.4.400.jpg",
+   "off_code": "4061463763419",
+   "kcal": 195,
+   "protein_g": 19.0,
+   "carbs_g": 0.5,
+   "fat_g": 13.0,
+   "sugar_g": null
+  },
+  {
+   "name": "Thunfisch in Wasser",
+   "store": "Hofer",
+   "category": "Pantry",
+   "unit": "3 cans",
+   "regular_cents": 499,
+   "discount_cents": 379,
+   "tags": [
+    "High protein",
+    "Low Carb",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/316/595/738/0012/front.3.400.jpg",
+   "off_code": "3165957380012",
+   "kcal": 97,
+   "protein_g": 23.0,
+   "carbs_g": 0.0,
+   "fat_g": 0.5,
+   "sugar_g": 0.0
+  },
+  {
+   "name": "Magerquark",
+   "store": "Hofer",
+   "category": "Dairy",
+   "unit": "500 g",
+   "regular_cents": 159,
+   "discount_cents": 119,
+   "tags": [
+    "Vegetarian",
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/401/719/400/9692/front_de.3.400.jpg",
+   "off_code": "4017194009692",
+   "kcal": 67,
+   "protein_g": 12.0,
+   "carbs_g": 3.5,
+   "fat_g": 0.1,
+   "sugar_g": 3.5
+  },
+  {
+   "name": "Skyr Natur",
+   "store": "Hofer",
+   "category": "Dairy",
+   "unit": "450 g",
+   "regular_cents": 229,
+   "discount_cents": 169,
+   "tags": [
+    "Vegetarian",
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/409/920/014/1411/front_en.3.400.jpg",
+   "off_code": "4099200141411",
+   "kcal": 62,
+   "protein_g": 11.0,
+   "carbs_g": 4.0,
+   "fat_g": 0.2,
+   "sugar_g": 4.0
+  },
+  {
+   "name": "Bio-Eier",
+   "store": "Hofer",
+   "category": "Dairy",
+   "unit": "10 pieces",
+   "regular_cents": 399,
+   "discount_cents": 329,
+   "tags": [
+    "Vegetarian",
+    "High protein",
+    "Low Carb",
+    "Organic"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/409/920/001/6887/front_de.3.400.jpg",
+   "off_code": "4099200016887",
+   "kcal": 154,
+   "protein_g": 13.0,
+   "carbs_g": 0.7,
+   "fat_g": 11.0,
+   "sugar_g": 0.5
+  },
+  {
+   "name": "Haferflocken",
+   "store": "Hofer",
+   "category": "Pantry",
+   "unit": "1 kg",
+   "regular_cents": 149,
+   "discount_cents": 99,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/430/618/804/7162/front_de.15.400.jpg",
+   "off_code": "4306188047162",
+   "kcal": 375,
+   "protein_g": 14.0,
+   "carbs_g": 59.0,
+   "fat_g": 7.0,
+   "sugar_g": 0.7
+  },
+  {
+   "name": "Vollkornnudeln",
+   "store": "Hofer",
+   "category": "Pantry",
+   "unit": "500 g",
+   "regular_cents": 139,
+   "discount_cents": 99,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/400/296/600/5460/front_de.8.400.jpg",
+   "off_code": "4002966005460",
+   "kcal": 350,
+   "protein_g": 12.5,
+   "carbs_g": 66.0,
+   "fat_g": 2.4,
+   "sugar_g": 3.0
+  },
+  {
+   "name": "Rote Linsen",
+   "store": "Hofer",
+   "category": "Pantry",
+   "unit": "500 g",
+   "regular_cents": 249,
+   "discount_cents": 189,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "High protein"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/409/920/024/7663/front_de.4.400.jpg",
+   "off_code": "4099200247663",
+   "kcal": 360,
+   "protein_g": 23.0,
+   "carbs_g": 58.0,
+   "fat_g": 1.5,
+   "sugar_g": 1.1
+  },
+  {
+   "name": "Brokkoli",
+   "store": "Hofer",
+   "category": "Fruit & Vegetables",
+   "unit": "500 g",
+   "regular_cents": 199,
+   "discount_cents": 139,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/410/442/014/2343/front_de.49.400.jpg",
+   "off_code": "4104420142343",
+   "kcal": 22,
+   "protein_g": 2.6,
+   "carbs_g": 1.7,
+   "fat_g": 0.5,
+   "sugar_g": 1.4
+  },
+  {
+   "name": "Äpfel aus der Steiermark",
+   "store": "Hofer",
+   "category": "Fruit & Vegetables",
+   "unit": "1 kg",
+   "regular_cents": 249,
+   "discount_cents": 179,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/404/992/865/3017/front_de.17.400.jpg",
+   "off_code": "4049928653017",
+   "kcal": 55,
+   "protein_g": 0.0,
+   "carbs_g": 13.0,
+   "fat_g": 0.0,
+   "sugar_g": 10.0
+  },
+  {
+   "name": "Bananen",
+   "store": "Hofer",
+   "category": "Fruit & Vegetables",
+   "unit": "1 kg",
+   "regular_cents": 179,
+   "discount_cents": 129,
+   "tags": [
+    "Vegan",
+    "Vegetarian"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/425/129/111/3221/front_de.26.400.jpg",
+   "off_code": "4251291113221",
+   "kcal": 96,
+   "protein_g": 1.1,
+   "carbs_g": 22.0,
+   "fat_g": 0.2,
+   "sugar_g": 17.2
+  },
+  {
+   "name": "Tiefkühl-Gemüsepfanne",
+   "store": "Hofer",
+   "category": "Ready Meals",
+   "unit": "750 g",
+   "regular_cents": 349,
+   "discount_cents": 249,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/406/145/813/0226/front_de.9.400.jpg",
+   "off_code": "4061458130226",
+   "kcal": 53,
+   "protein_g": 1.7,
+   "carbs_g": 6.1,
+   "fat_g": 2.1,
+   "sugar_g": 3.1
+  },
+  {
+   "name": "Tiefkühlpizza Margherita",
+   "store": "Hofer",
+   "category": "Ready Meals",
+   "unit": "350 g",
+   "regular_cents": 299,
+   "discount_cents": 199,
+   "tags": [
+    "Vegetarian",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/438/884/418/2929/front_de.16.400.jpg",
+   "off_code": "4388844182929",
+   "kcal": 240,
+   "protein_g": 8.9,
+   "carbs_g": 32.9,
+   "fat_g": 7.6,
+   "sugar_g": 4.4
+  },
+  {
+   "name": "Vollmilchschokolade",
+   "store": "Hofer",
+   "category": "Sweets & Snacks",
+   "unit": "100 g",
+   "regular_cents": 129,
+   "discount_cents": 89,
+   "tags": [
+    "Vegetarian",
+    "Sweet"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/433/725/612/4645/front_de.32.400.jpg",
+   "off_code": "4337256124645",
+   "kcal": 551,
+   "protein_g": 9.2,
+   "carbs_g": 51.0,
+   "fat_g": 34.0,
+   "sugar_g": 50.0
+  },
+  {
+   "name": "Proteinriegel Schoko",
+   "store": "Hofer",
+   "category": "Sweets & Snacks",
+   "unit": "4 pieces",
+   "regular_cents": 499,
+   "discount_cents": 349,
+   "tags": [
+    "Vegetarian",
+    "High protein",
+    "Sweet"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/431/159/663/7393/front_de.3.400.jpg",
+   "off_code": "4311596637393",
+   "kcal": 394,
+   "protein_g": 32.0,
+   "carbs_g": 39.0,
+   "fat_g": 12.0,
+   "sugar_g": 21.0
+  },
+  {
+   "name": "Gesalzene Erdnüsse",
+   "store": "Hofer",
+   "category": "Sweets & Snacks",
+   "unit": "200 g",
+   "regular_cents": 199,
+   "discount_cents": 149,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/400/498/051/2801/front_de.29.400.jpg",
+   "off_code": "4004980512801",
+   "kcal": 600,
+   "protein_g": 24.0,
+   "carbs_g": 14.0,
+   "fat_g": 48.0,
+   "sugar_g": 5.2
+  },
+  {
+   "name": "Orangensaft",
+   "store": "Hofer",
+   "category": "Drinks",
+   "unit": "1 l",
+   "regular_cents": 229,
+   "discount_cents": 169,
+   "tags": [
+    "Vegan",
+    "Vegetarian"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/404/851/763/1665/front_de.19.400.jpg",
+   "off_code": "4048517631665",
+   "kcal": 43,
+   "protein_g": 0.7,
+   "carbs_g": 8.8,
+   "fat_g": 0.5,
+   "sugar_g": 8.8
+  },
+  {
+   "name": "Mineralwasser",
+   "store": "Hofer",
+   "category": "Drinks",
+   "unit": "6 x 1.5 l",
+   "regular_cents": 399,
+   "discount_cents": 299,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/90097775/front_de.11.400.jpg",
+   "off_code": "90097775",
+   "kcal": 0,
+   "protein_g": 0.0,
+   "carbs_g": 0.0,
+   "fat_g": 0.0,
+   "sugar_g": 0.0
+  },
+  {
+   "name": "Putenschnitzel",
+   "store": "Billa",
+   "category": "Meat & Fish",
+   "unit": "400 g",
+   "regular_cents": 849,
+   "discount_cents": 629,
+   "tags": [
+    "High protein",
+    "Low Carb",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/20236502/front_de.20.400.jpg",
+   "off_code": "20236502",
+   "kcal": 110,
+   "protein_g": 23.0,
+   "carbs_g": 0.0,
+   "fat_g": 2.0,
+   "sugar_g": 0.0
+  },
+  {
+   "name": "Bio-Hühnerkeulen",
+   "store": "Billa",
+   "category": "Meat & Fish",
+   "unit": "800 g",
+   "regular_cents": 999,
+   "discount_cents": 799,
+   "tags": [
+    "High protein",
+    "Low Carb",
+    "Organic"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/433/718/561/6143/front_de.14.400.jpg",
+   "off_code": "4337185616143",
+   "kcal": 170,
+   "protein_g": 15.0,
+   "carbs_g": 0.5,
+   "fat_g": 12.0,
+   "sugar_g": 0.5
+  },
+  {
+   "name": "Forellenfilet aus Österreich",
+   "store": "Billa",
+   "category": "Meat & Fish",
+   "unit": "200 g",
+   "regular_cents": 749,
+   "discount_cents": 599,
+   "tags": [
+    "High protein",
+    "Low Carb",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/426/004/674/9165/front_de.3.400.jpg",
+   "off_code": "4260046749165",
+   "kcal": 144,
+   "protein_g": 23.0,
+   "carbs_g": 0.5,
+   "fat_g": 5.6,
+   "sugar_g": 0.5
+  },
+  {
+   "name": "Räuchertofu",
+   "store": "Billa",
+   "category": "Vegan & Vegetarian",
+   "unit": "200 g",
+   "regular_cents": 299,
+   "discount_cents": 219,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/401/973/818/0003/front_de.3.400.jpg",
+   "off_code": "4019738180003",
+   "kcal": 164,
+   "protein_g": 18.0,
+   "carbs_g": 1.5,
+   "fat_g": 9.2,
+   "sugar_g": 0.1
+  },
+  {
+   "name": "Veganes Faschiertes",
+   "store": "Billa",
+   "category": "Vegan & Vegetarian",
+   "unit": "250 g",
+   "regular_cents": 449,
+   "discount_cents": 329,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "High protein",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/910/000/098/3035/front_de.12.400.jpg",
+   "off_code": "9100000983035",
+   "kcal": 217,
+   "protein_g": 14.0,
+   "carbs_g": 4.2,
+   "fat_g": 15.0,
+   "sugar_g": 1.7
+  },
+  {
+   "name": "Falafel",
+   "store": "Billa",
+   "category": "Vegan & Vegetarian",
+   "unit": "220 g",
+   "regular_cents": 349,
+   "discount_cents": 249,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/912/007/348/7650/front_de.16.400.jpg",
+   "off_code": "9120073487650",
+   "kcal": 199,
+   "protein_g": 9.2,
+   "carbs_g": 21.0,
+   "fat_g": 6.6,
+   "sugar_g": 1.2
+  },
+  {
+   "name": "Griechisches Joghurt",
+   "store": "Billa",
+   "category": "Dairy",
+   "unit": "500 g",
+   "regular_cents": 279,
+   "discount_cents": 199,
+   "tags": [
+    "Vegetarian",
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/409/920/001/7273/front_de.15.400.jpg",
+   "off_code": "4099200017273",
+   "kcal": 126,
+   "protein_g": 5.5,
+   "carbs_g": 3.5,
+   "fat_g": 10.0,
+   "sugar_g": 3.5
+  },
+  {
+   "name": "Bergkäse aus Tirol",
+   "store": "Billa",
+   "category": "Dairy",
+   "unit": "200 g",
+   "regular_cents": 449,
+   "discount_cents": 349,
+   "tags": [
+    "Vegetarian",
+    "High protein",
+    "Low Carb",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/409/920/002/0112/front_de.13.400.jpg",
+   "off_code": "4099200020112",
+   "kcal": 396,
+   "protein_g": 27.0,
+   "carbs_g": 0.0,
+   "fat_g": 32.0,
+   "sugar_g": 0.0
+  },
+  {
+   "name": "Bio-Vollmilch",
+   "store": "Billa",
+   "category": "Dairy",
+   "unit": "1 l",
+   "regular_cents": 169,
+   "discount_cents": 129,
+   "tags": [
+    "Vegetarian",
+    "Organic",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/900/458/400/1669/front_de.12.400.jpg",
+   "off_code": "9004584001669",
+   "kcal": 64,
+   "protein_g": 3.3,
+   "carbs_g": 4.8,
+   "fat_g": 3.5,
+   "sugar_g": 4.8
+  },
+  {
+   "name": "Haferdrink",
+   "store": "Billa",
+   "category": "Drinks",
+   "unit": "1 l",
+   "regular_cents": 229,
+   "discount_cents": 159,
+   "tags": [
+    "Vegan",
+    "Vegetarian"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/406/360/850/0217/front_de.43.400.jpg",
+   "off_code": "4063608500217",
+   "kcal": 51,
+   "protein_g": 0.9,
+   "carbs_g": 9.3,
+   "fat_g": 1.1,
+   "sugar_g": 1.9
+  },
+  {
+   "name": "Vollkornbrot",
+   "store": "Billa",
+   "category": "Bakery",
+   "unit": "500 g",
+   "regular_cents": 299,
+   "discount_cents": 219,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/400/035/805/1514/front_de.28.400.jpg",
+   "off_code": "4000358051514",
+   "kcal": 184,
+   "protein_g": 4.2,
+   "carbs_g": 34.0,
+   "fat_g": 1.2,
+   "sugar_g": 2.5
+  },
+  {
+   "name": "Croissants",
+   "store": "Billa",
+   "category": "Bakery",
+   "unit": "4 pieces",
+   "regular_cents": 279,
+   "discount_cents": 199,
+   "tags": [
+    "Vegetarian",
+    "Sweet",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/401/226/302/9304/front_de.3.400.jpg",
+   "off_code": "4012263029304",
+   "kcal": 403,
+   "protein_g": 6.6,
+   "carbs_g": 48.0,
+   "fat_g": 20.0,
+   "sugar_g": 8.8
+  },
+  {
+   "name": "Bio-Karotten",
+   "store": "Billa",
+   "category": "Fruit & Vegetables",
+   "unit": "1 kg",
+   "regular_cents": 219,
+   "discount_cents": 159,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Organic",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/425/007/345/5603/front_de.9.400.jpg",
+   "off_code": "4250073455603",
+   "kcal": 42,
+   "protein_g": 0.6,
+   "carbs_g": 6.9,
+   "fat_g": 0.2,
+   "sugar_g": 5.8
+  },
+  {
+   "name": "Avocado",
+   "store": "Billa",
+   "category": "Fruit & Vegetables",
+   "unit": "2 pieces",
+   "regular_cents": 299,
+   "discount_cents": 219,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/13512880/front_de.3.400.jpg",
+   "off_code": "13512880",
+   "kcal": 130,
+   "protein_g": 1.5,
+   "carbs_g": 3.6,
+   "fat_g": 12.5,
+   "sugar_g": null
+  },
+  {
+   "name": "Babyspinat",
+   "store": "Billa",
+   "category": "Fruit & Vegetables",
+   "unit": "150 g",
+   "regular_cents": 229,
+   "discount_cents": 169,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Low Carb",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/328/022/011/5389/front_de.23.400.jpg",
+   "off_code": "3280220115389",
+   "kcal": 19,
+   "protein_g": 1.8,
+   "carbs_g": 0.8,
+   "fat_g": 0.5,
+   "sugar_g": null
+  },
+  {
+   "name": "Heidelbeeren",
+   "store": "Billa",
+   "category": "Fruit & Vegetables",
+   "unit": "250 g",
+   "regular_cents": 349,
+   "discount_cents": 249,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/438/884/413/4508/front_de.17.400.jpg",
+   "off_code": "4388844134508",
+   "kcal": 50,
+   "protein_g": 0.6,
+   "carbs_g": 8.3,
+   "fat_g": 0.5,
+   "sugar_g": 7.4
+  },
+  {
+   "name": "Linsen-Curry zum Aufwärmen",
+   "store": "Billa",
+   "category": "Ready Meals",
+   "unit": "400 g",
+   "regular_cents": 399,
+   "discount_cents": 299,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "High protein",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/405/068/400/1837/front_de.3.400.jpg",
+   "off_code": "4050684001837",
+   "kcal": 161,
+   "protein_g": 5.2,
+   "carbs_g": 16.8,
+   "fat_g": 6.4,
+   "sugar_g": 1.0
+  },
+  {
+   "name": "Hühner-Wrap",
+   "store": "Billa",
+   "category": "Ready Meals",
+   "unit": "1 piece",
+   "regular_cents": 449,
+   "discount_cents": 339,
+   "tags": [
+    "High protein",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/900/223/302/9910/front_de.13.400.jpg",
+   "off_code": "9002233029910",
+   "kcal": 219,
+   "protein_g": 8.1,
+   "carbs_g": 23.0,
+   "fat_g": 10.0,
+   "sugar_g": 3.0
+  },
+  {
+   "name": "Zartbitterschokolade",
+   "store": "Billa",
+   "category": "Sweets & Snacks",
+   "unit": "100 g",
+   "regular_cents": 199,
+   "discount_cents": 139,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Sweet"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/431/150/171/3570/front_de.9.400.jpg",
+   "off_code": "4311501713570",
+   "kcal": 512,
+   "protein_g": 7.8,
+   "carbs_g": 53.0,
+   "fat_g": 28.0,
+   "sugar_g": 47.0
+  },
+  {
+   "name": "Gummibärchen",
+   "store": "Billa",
+   "category": "Sweets & Snacks",
+   "unit": "200 g",
+   "regular_cents": 169,
+   "discount_cents": 119,
+   "tags": [
+    "Sweet"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/402/185/163/9498/front_de.16.400.jpg",
+   "off_code": "4021851639498",
+   "kcal": 338,
+   "protein_g": 8.0,
+   "carbs_g": 74.0,
+   "fat_g": 0.5,
+   "sugar_g": 39.0
+  },
+  {
+   "name": "Rindersteak",
+   "store": "Spar",
+   "category": "Meat & Fish",
+   "unit": "300 g",
+   "regular_cents": 1199,
+   "discount_cents": 899,
+   "tags": [
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/20609078/front_de.4.400.jpg",
+   "off_code": "20609078",
+   "kcal": 165,
+   "protein_g": 20.0,
+   "carbs_g": 0.8,
+   "fat_g": 9.0,
+   "sugar_g": 0.5
+  },
+  {
+   "name": "Puten-Aufschnitt",
+   "store": "Spar",
+   "category": "Meat & Fish",
+   "unit": "150 g",
+   "regular_cents": 299,
+   "discount_cents": 219,
+   "tags": [
+    "High protein",
+    "Low Carb",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/400/299/309/3003/front_de.3.400.jpg",
+   "off_code": "4002993093003",
+   "kcal": 114,
+   "protein_g": 15.0,
+   "carbs_g": 2.3,
+   "fat_g": 5.0,
+   "sugar_g": 1.6
+  },
+  {
+   "name": "Garnelen",
+   "store": "Spar",
+   "category": "Meat & Fish",
+   "unit": "250 g",
+   "regular_cents": 899,
+   "discount_cents": 699,
+   "tags": [
+    "High protein",
+    "Low Carb",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/400/645/100/1609/front_de.23.400.jpg",
+   "off_code": "4006451001609",
+   "kcal": 88,
+   "protein_g": 18.0,
+   "carbs_g": 0.0,
+   "fat_g": 1.0,
+   "sugar_g": 0.0
+  },
+  {
+   "name": "Bio-Tofu Natur",
+   "store": "Spar",
+   "category": "Vegan & Vegetarian",
+   "unit": "400 g",
+   "regular_cents": 349,
+   "discount_cents": 259,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "High protein",
+    "Low Carb",
+    "Organic"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/901/043/701/4465/front_de.8.400.jpg",
+   "off_code": "9010437014465",
+   "kcal": 100,
+   "protein_g": 11.0,
+   "carbs_g": 1.2,
+   "fat_g": 5.6,
+   "sugar_g": 0.6
+  },
+  {
+   "name": "Kichererbsen",
+   "store": "Spar",
+   "category": "Pantry",
+   "unit": "400 g",
+   "regular_cents": 129,
+   "discount_cents": 89,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "High protein",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/869/080/435/4656/front_nl.18.400.jpg",
+   "off_code": "8690804354656",
+   "kcal": 120,
+   "protein_g": 5.7,
+   "carbs_g": 16.8,
+   "fat_g": 2.4,
+   "sugar_g": 1.3
+  },
+  {
+   "name": "Bio-Vollkornreis",
+   "store": "Spar",
+   "category": "Pantry",
+   "unit": "1 kg",
+   "regular_cents": 349,
+   "discount_cents": 269,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Organic"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/403/562/600/0550/front_de.4.400.jpg",
+   "off_code": "4035626000550",
+   "kcal": 352,
+   "protein_g": 7.8,
+   "carbs_g": 74.0,
+   "fat_g": 2.2,
+   "sugar_g": 0.6
+  },
+  {
+   "name": "Dinkelvollkornmehl",
+   "store": "Spar",
+   "category": "Pantry",
+   "unit": "1 kg",
+   "regular_cents": 229,
+   "discount_cents": 169,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Regional",
+    "Organic"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/410/442/014/0684/front_de.53.400.jpg",
+   "off_code": "4104420140684",
+   "kcal": 341,
+   "protein_g": 12.3,
+   "carbs_g": 62.4,
+   "fat_g": 2.7,
+   "sugar_g": 1.0
+  },
+  {
+   "name": "Mandeln",
+   "store": "Spar",
+   "category": "Sweets & Snacks",
+   "unit": "200 g",
+   "regular_cents": 399,
+   "discount_cents": 299,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/22126269/front.9.400.jpg",
+   "off_code": "22126269",
+   "kcal": 612,
+   "protein_g": 21.0,
+   "carbs_g": 5.1,
+   "fat_g": 55.0,
+   "sugar_g": 3.9
+  },
+  {
+   "name": "Hüttenkäse",
+   "store": "Spar",
+   "category": "Dairy",
+   "unit": "200 g",
+   "regular_cents": 189,
+   "discount_cents": 139,
+   "tags": [
+    "Vegetarian",
+    "High protein",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/400/267/115/7737/front_de.14.400.jpg",
+   "off_code": "4002671157737",
+   "kcal": 87,
+   "protein_g": 12.3,
+   "carbs_g": 1.5,
+   "fat_g": 3.2,
+   "sugar_g": 1.5
+  },
+  {
+   "name": "Mozzarella",
+   "store": "Spar",
+   "category": "Dairy",
+   "unit": "125 g",
+   "regular_cents": 139,
+   "discount_cents": 99,
+   "tags": [
+    "Vegetarian",
+    "Low Carb",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/431/392/001/5457/front_de.22.400.jpg",
+   "off_code": "4313920015457",
+   "kcal": 246,
+   "protein_g": 18.9,
+   "carbs_g": 1.0,
+   "fat_g": 18.5,
+   "sugar_g": 1.0
+  },
+  {
+   "name": "Fruchtjoghurt",
+   "store": "Spar",
+   "category": "Dairy",
+   "unit": "4 x 125 g",
+   "regular_cents": 249,
+   "discount_cents": 179,
+   "tags": [
+    "Vegetarian",
+    "Sweet"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/910/000/076/1824/front_de.17.400.jpg",
+   "off_code": "9100000761824",
+   "kcal": 93,
+   "protein_g": 3.1,
+   "carbs_g": 14.0,
+   "fat_g": 2.6,
+   "sugar_g": 13.0
+  },
+  {
+   "name": "Paradeiser aus dem Burgenland",
+   "store": "Spar",
+   "category": "Fruit & Vegetables",
+   "unit": "500 g",
+   "regular_cents": 299,
+   "discount_cents": 219,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Low Carb",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/406/146/262/2939/front_de.8.400.jpg",
+   "off_code": "4061462622939",
+   "kcal": 19,
+   "protein_g": 0.9,
+   "carbs_g": 2.5,
+   "fat_g": 0.3,
+   "sugar_g": 2.5
+  },
+  {
+   "name": "Bio-Erdäpfel",
+   "store": "Spar",
+   "category": "Fruit & Vegetables",
+   "unit": "2 kg",
+   "regular_cents": 349,
+   "discount_cents": 259,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Organic",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/400/381/434/9194/front_de.4.400.jpg",
+   "off_code": "4003814349194",
+   "kcal": 73,
+   "protein_g": 1.3,
+   "carbs_g": 15.0,
+   "fat_g": 0.0,
+   "sugar_g": 0.7
+  },
+  {
+   "name": "Zucchini",
+   "store": "Spar",
+   "category": "Fruit & Vegetables",
+   "unit": "500 g",
+   "regular_cents": 199,
+   "discount_cents": 139,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/910/000/086/0152/front_de.10.400.jpg",
+   "off_code": "9100000860152",
+   "kcal": 16,
+   "protein_g": 1.2,
+   "carbs_g": 3.3,
+   "fat_g": 0.2,
+   "sugar_g": null
+  },
+  {
+   "name": "Erdbeeren",
+   "store": "Spar",
+   "category": "Fruit & Vegetables",
+   "unit": "500 g",
+   "regular_cents": 399,
+   "discount_cents": 299,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Low Carb"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/430/421/843/0892/front_de.3.400.jpg",
+   "off_code": "4304218430892",
+   "kcal": 35,
+   "protein_g": 0.8,
+   "carbs_g": 5.5,
+   "fat_g": 0.5,
+   "sugar_g": 5.5
+  },
+  {
+   "name": "Gemüselasagne",
+   "store": "Spar",
+   "category": "Ready Meals",
+   "unit": "400 g",
+   "regular_cents": 449,
+   "discount_cents": 329,
+   "tags": [
+    "Vegetarian",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/406/145/804/1881/front_de.22.400.jpg",
+   "off_code": "4061458041881",
+   "kcal": 149,
+   "protein_g": 4.6,
+   "carbs_g": 16.0,
+   "fat_g": 7.0,
+   "sugar_g": 3.3
+  },
+  {
+   "name": "Sushi-Box",
+   "store": "Spar",
+   "category": "Ready Meals",
+   "unit": "8 pieces",
+   "regular_cents": 699,
+   "discount_cents": 549,
+   "tags": [
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/406/145/818/5035/front_de.3.400.jpg",
+   "off_code": "4061458185035",
+   "kcal": 178,
+   "protein_g": 5.8,
+   "carbs_g": 23.0,
+   "fat_g": 6.6,
+   "sugar_g": 5.3
+  },
+  {
+   "name": "Apfelstrudel",
+   "store": "Spar",
+   "category": "Bakery",
+   "unit": "400 g",
+   "regular_cents": 449,
+   "discount_cents": 339,
+   "tags": [
+    "Vegetarian",
+    "Sweet",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/400/857/700/0566/front_de.45.400.jpg",
+   "off_code": "4008577000566",
+   "kcal": 245,
+   "protein_g": 3.0,
+   "carbs_g": 31.0,
+   "fat_g": 11.0,
+   "sugar_g": 13.0
+  },
+  {
+   "name": "Eiskaffee",
+   "store": "Spar",
+   "category": "Drinks",
+   "unit": "500 ml",
+   "regular_cents": 169,
+   "discount_cents": 119,
+   "tags": [
+    "Vegetarian",
+    "Sweet",
+    "Quick to cook"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/400/349/009/9376/front_de.3.400.jpg",
+   "off_code": "4003490099376",
+   "kcal": 54,
+   "protein_g": 2.9,
+   "carbs_g": 8.7,
+   "fat_g": 0.8,
+   "sugar_g": 8.4
+  },
+  {
+   "name": "Apfelsaft naturtrüb",
+   "store": "Spar",
+   "category": "Drinks",
+   "unit": "1 l",
+   "regular_cents": 249,
+   "discount_cents": 179,
+   "tags": [
+    "Vegan",
+    "Vegetarian",
+    "Regional"
+   ],
+   "image_url": "https://images.openfoodfacts.org/images/products/401/326/500/0711/front_de.4.400.jpg",
+   "off_code": "4013265000711",
+   "kcal": 44,
+   "protein_g": 0.5,
+   "carbs_g": 10.0,
+   "fat_g": 0.5,
+   "sugar_g": 10.0
+  }
+ ]
+}

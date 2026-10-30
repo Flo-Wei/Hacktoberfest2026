@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { recordSwipe } from "@/app/actions";
+import { reportAppEvent } from "@/lib/krabby/events";
 import type { RecommendedProduct } from "@/lib/products";
 
 const THRESHOLD = 100;
@@ -92,6 +93,7 @@ export function SwipeDeck({ products }: { products: RecommendedProduct[] }) {
       return;
     }
 
+    reportAppEvent({ type: "swipe", productId: product.id, liked });
     setOffset(0);
     setLeaving(false);
     setIndex(index + 1);

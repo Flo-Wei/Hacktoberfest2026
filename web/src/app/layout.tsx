@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { KrabbyPopup } from "@/components/krabby-popup";
+import { KrabbySession } from "@/components/krabby-session";
 import { getCurrentUser } from "@/lib/session";
 import "./globals.css";
 
@@ -11,6 +13,7 @@ export const metadata: Metadata = {
 const NAV = [
   { href: "/swipe", label: "Swipe" },
   { href: "/chat", label: "Chat" },
+  { href: "/list", label: "List" },
   { href: "/info", label: "Info" },
 ];
 
@@ -33,8 +36,10 @@ export default async function RootLayout({
           )}
         </header>
         <main className="flex-1 px-4 pb-6">{children}</main>
+        {user && <KrabbySession />}
+        {user && <KrabbyPopup />}
         {user && (
-          <nav className="sticky bottom-0 grid grid-cols-3 border-t border-orange-200 bg-white">
+          <nav className="sticky bottom-0 grid grid-cols-4 border-t border-orange-200 bg-white">
             {NAV.map((item) => (
               <Link
                 key={item.href}

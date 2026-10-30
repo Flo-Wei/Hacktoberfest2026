@@ -35,3 +35,28 @@ export async function createUser(
   );
   return rows[0];
 }
+
+export async function updateUser(
+  id: string,
+  changes: Partial<Pick<User, "name" | "age" | "city" | "goals" | "preferences">>,
+) {
+  const rows = await query<User>(
+    `update users set
+       name = coalesce($2, name),
+       age = coalesce($3, age),
+       city = coalesce($4, city),
+       goals = coalesce($5, goals),
+       preferences = coalesce($6, preferences)
+     where id::text = $1
+     returning ${COLUMNS}`,
+    [
+      id,
+      changes.name ?? null,
+      changes.age ?? null,
+      changes.city ?? null,
+      changes.goals ?? null,
+      changes.preferences ?? null,
+    ],
+  );
+  return rows[0];
+}

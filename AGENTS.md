@@ -24,13 +24,14 @@ Users swipe through products. They see products that similar users liked. Until 
 
 ### 3. Chat with Krabby
 
-Runs on Gemma and handles text, images and audio:
+Runs on Gemma, with speech through ElevenLabs. Krabby can do everything the app can do. The full spec is in [docs/krabby-spec.md](docs/krabby-spec.md), read it before changing the chat or adding an app feature.
 
 - **Ask for offers:** "I'm going to Hofer, give me all the offers" returns the products on offer there.
-- **Product photo:** The photographed product is added to the user's preferences.
-- **Suggestions and roasting:** Krabby makes suggestions or roasts the user, spoken through ElevenLabs (for example "Not enough protein!").
+- **Product photo:** The photographed product counts as a like.
+- **Action comments:** When you do something in the app, such as swiping against your goals, Krabby replies with some good-natured teasing. The reply appears in the chat and as a pop-up.
+- **Voice:** Every Krabby message can be played aloud, and voice mode allows hands-free chat.
 
-The roasting voice is a fictional bodybuilder character using a voice from the ElevenLabs library. Don't name real people or clone their voices, the ElevenLabs rules forbid it.
+Krabby's voice is a fictional bodybuilder character using a voice from the ElevenLabs library. Don't name real people or clone their voices, the ElevenLabs rules forbid it.
 
 ### 4. Info board
 
@@ -38,13 +39,13 @@ Shows which offers are available in which nearby store, with filters for store, 
 
 ## Decisions
 
-- **First version runs locally:** The app lives in `web/` (Next.js, TypeScript, Tailwind). It will later move to Lovable or Vercel, the target is still open. Python is not used for features, the package in `src/grabby` is only the original scaffold.
+- **First version runs locally:** The app lives in `web/` (Next.js, TypeScript, Tailwind). It will later move to Lovable or Vercel, the target is still open. Python is only used for the catalog feed in `src/grabby`.
 - **The database is Postgres:** Locally it runs on PGlite with nothing to install. The data lives in `web/.data/` and is not committed. Only `web/src/lib/db.ts` knows about PGlite. The schema and mock data are plain SQL in `web/db/`, so moving to Supabase or Vercel Postgres stays simple.
 - **No real login yet:** Onboarding creates a profile, and a cookie remembers the user ID (`web/src/lib/session.ts`). `/personas` switches to any of the 30 mock personas.
-- **Still placeholders:** The info board only shows a notice, and the chat replies with a fixed mock text.
+- **Still placeholders:** The info board only shows a notice.
 - **Swipe recommendations:** `recommendProducts` in `web/src/lib/products.ts` ranks by likes from similar users, then by profile. Vegan and vegetarian rule out unsuitable products. Prices, stores and the mock personas' swipes are made up.
 - **Images and nutrition:** They come from Open Food Facts and are stored in `web/db/seed-products.sql`. The licence requires the visible credit in the app, see `web/db/README.md`.
-- **Offers and stores are mock data:** Don't build real scrapers. Stores (for example Hofer, Billa, Spar) and offers come from a fixed data set in the database.
+- **Offers and stores are mock data:** The Python service in `src/grabby` serves them from a mock file, and the web app imports them into Postgres on startup. A scraper can replace the mock source later, see [docs/krabby-spec.md](docs/krabby-spec.md). Without Python, the app uses the SQL seed data.
 - **No real GPS:** City and distance to a store are stored in the mock data.
 
 ## Collaboration
@@ -59,8 +60,8 @@ Shows which offers are available in which nearby store, with filters for store, 
 
 The keys are listed in `.env.example`. Add new keys there as well. Keys the app needs at runtime belong in the hosting project's secrets and must never end up in frontend code.
 
-- **Gemma:** runs through the hosted Gemini API with `GEMINI_API_KEY`. The available models are `gemma-4-26b-a4b-it` and `gemma-4-31b-it`. Test before building whether they handle images and audio as needed.
-- **ElevenLabs:** uses `ELEVENLABS_API_KEY`.
+- **Gemma:** runs through the hosted Gemini API with `GEMINI_API_KEY`, using the `@google/genai` SDK. The app uses `gemma-4-26b-a4b-it`. It handles tools and images but rejects audio, and it often returns temporary 500 errors, so calls need retries.
+- **ElevenLabs:** uses `ELEVENLABS_API_KEY` for text to speech and speech to text. `ELEVENLABS_VOICE_ID` is optional and chooses the voice.
 - **Lovable:** runs through the `lovable` MCP server and the `lovable-mcp` skill. The server uses per-person OAuth and needs no key.
 - **Lovable REST API:** `LOV_PUBLIC_API_KEY` is optional and needs a Business or Enterprise workspace. Lovable reserves secret names starting with `LOVABLE_`, so don't use that prefix.
 
@@ -76,21 +77,21 @@ Web app, run in `web/`:
 
 ```bash
 npm install      # install dependencies
-npm run dev      # start the app on http://localhost:3000, creates the database on first start
+npm run dev      # start the app on http://localhost:3000 and the catalog feed, creates the database on first start
 npm run lint     # linter
 npm run build    # production build, stop npm run dev first
 ```
 
 The local database needs no manual setup. When any SQL file in `web/db/` changes, for example after a `git pull`, the next start rebuilds it automatically. This also deletes local profiles and swipes, so don't rely on them. PGlite allows only one process per database.
 
-Python scaffold:
+Python catalog feed:
 
 ```bash
 uv sync                         # install dependencies
 cp .env.example .env            # first time only
-uv run --env-file .env grabby   # start the scaffold with API keys loaded
+uv run grabby-api               # start the catalog feed on http://127.0.0.1:8000, npm run dev also does this
 uv add <package>                # add a dependency, then commit pyproject.toml and uv.lock
 uv build                        # build the package
 ```
 
-There is no test runner yet. Nothing loads `.env` automatically, so commands that need API keys must pass `--env-file .env`.
+There is no test runner yet. The web app loads the `.env` at the repo root through `web/next.config.ts`. Other commands that need API keys must pass `--env-file .env`.
