@@ -62,7 +62,7 @@ Shows which offers are available in which nearby store, with filters for store, 
 
 The keys are listed in `.env.example`. Add new keys there as well. Keys the app needs at runtime belong in the hosting project's secrets and must never end up in frontend code.
 
-- **Gemma:** runs through OpenRouter with `OPENROUTER_API_KEY`, using the `openai` SDK. The default model is `google/gemma-4-31b-it:free`, which handles tools but is often rate limited. `OPENROUTER_MODEL` overrides it, for example with the paid `google/gemma-4-26b-a4b-it`.
+- **Gemma:** runs through OpenRouter with `OPENROUTER_API_KEY`, using the `openai` SDK. The app uses `google/gemma-4-26b-a4b-it`, which handles tools and images but not audio.
 - **ElevenLabs:** uses `ELEVENLABS_API_KEY` for text to speech and speech to text. `ELEVENLABS_VOICE_ID` is optional and chooses the voice.
 - **Lovable:** runs through the `lovable` MCP server and the `lovable-mcp` skill. The server uses per-person OAuth and needs no key.
 - **Lovable REST API:** `LOV_PUBLIC_API_KEY` is optional and needs a Business or Enterprise workspace. Lovable reserves secret names starting with `LOVABLE_`, so don't use that prefix.

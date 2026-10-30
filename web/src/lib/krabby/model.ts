@@ -8,9 +8,8 @@ import type {
   ChatCompletionToolChoiceOption,
 } from "openai/resources/chat/completions";
 
-// Gemma 4 is a project requirement. The free model is rate limited more often,
-// but works with a key that has no credit.
-const MODEL = process.env.OPENROUTER_MODEL || "google/gemma-4-31b-it:free";
+// Gemma 4 is a project requirement.
+const MODEL = "google/gemma-4-26b-a4b-it";
 // DeepInfra is fast and honours tool_choice, which some providers ignore. It can't
 // read images, so OpenRouter sends photo turns to another provider that supports them.
 const PROVIDER = { order: ["deepinfra"], allow_fallbacks: true, require_parameters: true };
