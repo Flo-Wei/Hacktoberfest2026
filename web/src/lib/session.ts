@@ -24,3 +24,7 @@ export async function setCurrentUser(id: string) {
     maxAge: 60 * 60 * 24 * 365,
   });
 }
+
+export async function clearCurrentUser() {
+  (await cookies()).delete(COOKIE);
+}

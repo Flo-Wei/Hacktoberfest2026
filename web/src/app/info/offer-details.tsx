@@ -2,7 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { ProductImage } from "@/components/product-image";
-import { discountPercent, price } from "@/lib/format";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { discountPercent, formatPrice } from "@/lib/format";
 import type { Offer } from "@/lib/products";
 
 export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => void }) {
@@ -29,40 +31,42 @@ export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => 
         // A click on the dialog itself and not its content is a click on the backdrop.
         if (event.target === event.currentTarget) event.currentTarget.close();
       }}
-      className="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl bg-white shadow-md backdrop:bg-black/50"
+      className="m-auto w-[calc(100%-2rem)] max-w-sm rounded-xl border bg-card text-card-foreground shadow-md backdrop:bg-black/50"
     >
       <div className="space-y-3 p-4">
-        <ProductImage product={offer} />
+        <ProductImage product={offer} className="h-40 rounded-lg p-2" />
         <div className="flex items-start justify-between gap-2">
-          <span className="rounded-full bg-orange-100 px-3 py-1 text-sm font-medium">{offer.store}</span>
-          <span className="rounded-full bg-orange-600 px-3 py-1 text-sm font-bold text-white">
-            -{discountPercent(offer)}%
-          </span>
+          <Badge variant="secondary" className="px-3 py-1 text-sm">
+            {offer.store}
+          </Badge>
+          <Badge variant="selected" className="px-3 py-1 text-sm">
+            −{discountPercent(offer)}%
+          </Badge>
         </div>
         <div>
-          <h2 id="offer-details-title" className="text-xl font-bold">
+          <h2 id="offer-details-title" className="text-xl font-semibold tracking-tight">
             {offer.name}
           </h2>
-          <p className="text-sm text-stone-600">
+          <p className="text-sm text-muted-foreground">
             {offer.unit} · {offer.category}
           </p>
         </div>
         <p>
-          <span className="text-2xl font-bold text-orange-600">{price.format(offer.discount_cents / 100)}</span>{" "}
-          <span className="text-stone-500 line-through">{price.format(offer.regular_cents / 100)}</span>
+          <span className="text-2xl font-semibold text-selected-foreground">{formatPrice(offer.discount_cents)}</span>{" "}
+          <del className="text-muted-foreground">{formatPrice(offer.regular_cents)}</del>
         </p>
-        <p className="text-sm text-stone-600">
-          You save {price.format((offer.regular_cents - offer.discount_cents) / 100)}
+        <p className="text-sm text-muted-foreground">
+          You save {formatPrice(offer.regular_cents - offer.discount_cents)}
         </p>
         {nutrition.length > 0 && (
-          <dl className="grid grid-cols-5 gap-1 rounded-xl bg-stone-100 p-2 text-center text-sm">
+          <dl className="grid grid-cols-5 gap-1 rounded-lg bg-secondary p-2 text-center text-sm">
             {nutrition.map(([label, value, suffix]) => (
               <div key={label}>
                 <dd className="font-semibold">
                   {value}
                   {suffix}
                 </dd>
-                <dt className="text-xs text-stone-600">{label}</dt>
+                <dt className="text-xs text-muted-foreground">{label}</dt>
               </div>
             ))}
           </dl>
@@ -70,7 +74,7 @@ export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => 
         {offer.tags.length > 0 && (
           <ul className="flex flex-wrap gap-1">
             {offer.tags.map((tag) => (
-              <li key={tag} className="rounded-full bg-stone-100 px-2 py-0.5 text-xs">
+              <li key={tag} className="rounded-full bg-secondary px-2 py-0.5 text-xs">
                 {tag}
               </li>
             ))}
@@ -81,13 +85,15 @@ export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => 
             href={`https://world.openfoodfacts.org/product/${offer.off_code}`}
             target="_blank"
             rel="noreferrer"
-            className="block text-xs text-stone-600 underline"
+            className="block text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
           >
             Image and nutrition per 100 g/ml: Open Food Facts (example product)
           </a>
         )}
         <form method="dialog">
-          <button className="w-full rounded-lg border border-stone-300 bg-white py-3 font-semibold">Close</button>
+          <Button variant="outline" size="lg" className="w-full">
+            Close
+          </Button>
         </form>
       </div>
     </dialog>

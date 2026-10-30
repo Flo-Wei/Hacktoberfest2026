@@ -1,0 +1,506 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T17:08:46.349343+00:00",
+  "title": "Design System: Grabby",
+  "extensions": {
+    "colorMeta": {
+      "terracotta": {
+        "role": "primary",
+        "displayName": "Terracotta",
+        "tonalRamp": [
+          "#160604",
+          "#40160e",
+          "#6e281b",
+          "#a13b29",
+          "#c75e4a",
+          "#de8d7c",
+          "#f2baae",
+          "#ffe7e1"
+        ]
+      },
+      "burnt-red": {
+        "role": "primary",
+        "displayName": "Burnt Red",
+        "tonalRamp": [
+          "#150705",
+          "#3e1811",
+          "#6b2b20",
+          "#9c4030",
+          "#c26251",
+          "#d98f80",
+          "#eebbb1",
+          "#ffe8e3"
+        ]
+      },
+      "soft-coral": {
+        "role": "primary",
+        "displayName": "Soft Coral",
+        "tonalRamp": [
+          "#150704",
+          "#3c1a11",
+          "#682e20",
+          "#98452f",
+          "#bd6750",
+          "#d59280",
+          "#ebbdb0",
+          "#ffe9e3"
+        ]
+      },
+      "peach-coral": {
+        "role": "primary",
+        "displayName": "Peach Coral",
+        "tonalRamp": [
+          "#130805",
+          "#381c14",
+          "#623326",
+          "#8f4c38",
+          "#b46d58",
+          "#cd9685",
+          "#e6bfb4",
+          "#fdeae4"
+        ]
+      },
+      "pale-peach": {
+        "role": "primary",
+        "displayName": "Pale Peach",
+        "tonalRamp": [
+          "#0d0b09",
+          "#2a2420",
+          "#4a3f3a",
+          "#6d5e56",
+          "#8e7f77",
+          "#aea29c",
+          "#d0c7c3",
+          "#f1edeb"
+        ]
+      },
+      "dark-rust": {
+        "role": "primary",
+        "displayName": "Dark Rust",
+        "tonalRamp": [
+          "#0f0a09",
+          "#2d221f",
+          "#503d37",
+          "#755a52",
+          "#987b72",
+          "#b69f99",
+          "#d5c5c1",
+          "#f4edea"
+        ]
+      },
+      "warm-cream": {
+        "role": "neutral",
+        "displayName": "Warm Cream",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#262523",
+          "#44423e",
+          "#64615c",
+          "#85827d",
+          "#a7a5a1",
+          "#cac9c6",
+          "#efeeed"
+        ]
+      },
+      "ivory": {
+        "role": "neutral",
+        "displayName": "Ivory",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#262523",
+          "#43423f",
+          "#63615d",
+          "#84827e",
+          "#a6a5a2",
+          "#cac9c7",
+          "#efeeed"
+        ]
+      },
+      "oat": {
+        "role": "neutral",
+        "displayName": "Oat",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#272521",
+          "#46413b",
+          "#676058",
+          "#888178",
+          "#aaa49d",
+          "#ccc8c4",
+          "#f0eeec"
+        ]
+      },
+      "sand": {
+        "role": "neutral",
+        "displayName": "Sand",
+        "tonalRamp": [
+          "#0c0b09",
+          "#28241f",
+          "#484139",
+          "#695f54",
+          "#8b8074",
+          "#aca49a",
+          "#cec8c2",
+          "#f1eeeb"
+        ]
+      },
+      "control-sand": {
+        "role": "neutral",
+        "displayName": "Control Sand",
+        "tonalRamp": [
+          "#0d0b08",
+          "#2a241e",
+          "#4b3f36",
+          "#6e5e4f",
+          "#907f70",
+          "#b0a297",
+          "#d1c7bf",
+          "#f2edea"
+        ]
+      },
+      "espresso": {
+        "role": "neutral",
+        "displayName": "Espresso",
+        "tonalRamp": [
+          "#0d0b09",
+          "#2a2421",
+          "#4a403b",
+          "#6c5e57",
+          "#8e7f77",
+          "#aea29c",
+          "#cfc7c3",
+          "#f1edec"
+        ]
+      },
+      "cocoa": {
+        "role": "neutral",
+        "displayName": "Cocoa",
+        "tonalRamp": [
+          "#0d0a08",
+          "#2b231e",
+          "#4b3f36",
+          "#6f5d50",
+          "#917e70",
+          "#b0a297",
+          "#d1c7c0",
+          "#f2edea"
+        ]
+      },
+      "deep-espresso": {
+        "role": "neutral",
+        "displayName": "Deep Espresso",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#272423",
+          "#46413e",
+          "#675f5c",
+          "#89807d",
+          "#aaa3a1",
+          "#ccc8c6",
+          "#f0eeed"
+        ]
+      },
+      "warm-charcoal": {
+        "role": "neutral",
+        "displayName": "Warm Charcoal",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#282422",
+          "#47403d",
+          "#695f5a",
+          "#8a807a",
+          "#aba39f",
+          "#cdc8c5",
+          "#f0eeec"
+        ]
+      },
+      "dark-walnut": {
+        "role": "neutral",
+        "displayName": "Dark Walnut",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#282422",
+          "#47403d",
+          "#695f5a",
+          "#8a807a",
+          "#aba39f",
+          "#cdc8c5",
+          "#f0eeec"
+        ]
+      },
+      "hover-walnut": {
+        "role": "neutral",
+        "displayName": "Hover Walnut",
+        "tonalRamp": [
+          "#0d0b09",
+          "#292421",
+          "#49403b",
+          "#6b5e57",
+          "#8d7f78",
+          "#aea29d",
+          "#cfc7c3",
+          "#f1eeec"
+        ]
+      },
+      "brown": {
+        "role": "neutral",
+        "displayName": "Brown",
+        "tonalRamp": [
+          "#0d0a09",
+          "#2a231f",
+          "#4b3f38",
+          "#6e5d53",
+          "#907e73",
+          "#b0a29a",
+          "#d0c7c1",
+          "#f2edeb"
+        ]
+      },
+      "control-brown": {
+        "role": "neutral",
+        "displayName": "Control Brown",
+        "tonalRamp": [
+          "#0e0a08",
+          "#2b231d",
+          "#4d3f35",
+          "#715d4f",
+          "#937e6f",
+          "#b2a196",
+          "#d2c7bf",
+          "#f3edea"
+        ]
+      },
+      "cream": {
+        "role": "neutral",
+        "displayName": "Cream",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#272421",
+          "#46413c",
+          "#676058",
+          "#888179",
+          "#a9a49e",
+          "#ccc8c4",
+          "#f0eeec"
+        ]
+      },
+      "muted-sand": {
+        "role": "neutral",
+        "displayName": "Muted Sand",
+        "tonalRamp": [
+          "#0e0a08",
+          "#2b231e",
+          "#4c3f36",
+          "#6f5d50",
+          "#917e71",
+          "#b1a297",
+          "#d1c7c0",
+          "#f2edea"
+        ]
+      },
+      "sage": {
+        "role": "status",
+        "displayName": "Sage",
+        "tonalRamp": [
+          "#070d08",
+          "#1a291c",
+          "#2f4933",
+          "#466c4c",
+          "#668e6c",
+          "#90ae94",
+          "#bbcfbe",
+          "#e8f1e9"
+        ]
+      },
+      "amber": {
+        "role": "status",
+        "displayName": "Amber",
+        "tonalRamp": [
+          "#110a03",
+          "#332108",
+          "#583b0f",
+          "#825815",
+          "#a5793c",
+          "#c09f73",
+          "#dcc5a9",
+          "#f8eddf"
+        ]
+      },
+      "deep-red": {
+        "role": "status",
+        "displayName": "Deep Red",
+        "tonalRamp": [
+          "#160607",
+          "#3f1619",
+          "#6d282e",
+          "#9e3b44",
+          "#c55d64",
+          "#dc8c8e",
+          "#f0b9ba",
+          "#ffe7e7"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "page-heading": {
+        "displayName": "Page heading",
+        "purpose": "One per screen."
+      },
+      "section-heading": {
+        "displayName": "Section heading",
+        "purpose": "Groups and empty-state titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Buttons and chat bubbles."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navigation, field labels, supporting text."
+      }
+    },
+    "shadows": [
+      {
+        "name": "floating",
+        "value": "0 1px 3px rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1)",
+        "purpose": "The floating navbar."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-change",
+        "value": "150ms",
+        "purpose": "Hover and selection."
+      },
+      {
+        "name": "search-expand",
+        "value": "200ms ease-out",
+        "purpose": "Navbar search expansion."
+      },
+      {
+        "name": "crab-step",
+        "value": "667ms steps(8)",
+        "purpose": "One sprite walk cycle."
+      },
+      {
+        "name": "crab-cross",
+        "value": "2668ms linear",
+        "purpose": "Onboarding walk-across."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action on a screen.",
+      "html": "<button class=\"ds-btn-primary\">Let's go</button>",
+      "css": ".ds-btn-primary{background:var(--primary);color:var(--primary-foreground);height:44px;padding:0 20px;border:0;border-radius:10px;font-size:15px;font-weight:500;transition:background-color .15s}.ds-btn-primary:hover{background:var(--primary-hover)}.ds-btn-primary:focus-visible{outline:3px solid color-mix(in srgb,var(--ring) 50%,transparent)}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary actions and the login button.",
+      "html": "<button class=\"ds-btn-outline\">Create account</button>",
+      "css": ".ds-btn-outline{background:var(--card);color:var(--foreground);height:44px;padding:0 20px;border:1px solid var(--border);border-radius:10px;font-size:15px;font-weight:500;transition:background-color .15s}.ds-btn-outline:hover{background:var(--accent)}"
+    },
+    {
+      "name": "Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Text entry on an ivory surface.",
+      "html": "<input class=\"ds-input\" placeholder=\"Your name\" />",
+      "css": ".ds-input{background:var(--card);color:var(--foreground);height:44px;padding:0 12px;border:1px solid var(--input);border-radius:10px;font-size:15px}.ds-input:focus-visible{outline:3px solid color-mix(in srgb,var(--ring) 50%,transparent)}"
+    },
+    {
+      "name": "Preference Chip",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Selected preference with a check icon.",
+      "html": "<span class=\"ds-chip\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20 6 9 17l-5-5\"/></svg>Vegan</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border:1px solid var(--selected-foreground);border-radius:9999px;background:var(--selected);color:var(--selected-foreground);font-size:14px;font-weight:500}"
+    },
+    {
+      "name": "Navbar",
+      "kind": "nav",
+      "refersTo": "navbar",
+      "description": "Slim floating bar with brand, links and tools.",
+      "html": "<nav class=\"ds-nav\"><strong>Grabby</strong><span class=\"ds-links\"><a href=\"#\">Info</a><a href=\"#\">Swipe</a><a href=\"#\">Chat</a></span></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 16px;background:var(--card);border:1px solid var(--border);border-radius:16px}.ds-links{display:flex;gap:20px}.ds-links a{font-size:14px;font-weight:500;color:var(--muted-foreground);text-decoration:none}.ds-links a:hover{color:var(--foreground);text-decoration:underline;text-underline-offset:6px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Helpful Crab",
+    "overview": "Grabby behaves like a clean, familiar app and sounds like a friend who knows the shelves. Everything is warm and flat, and the personality comes from one small crab rather than from decoration. People arrive to find offers, so nothing competes with that job.\n\nThe source brief is `frontend.txt`. Tokens live in `web/src/app/globals.css` and reach components through shadcn semantic names, so new UI uses `bg-primary` or `text-muted-foreground`, never raw colors.",
+    "keyCharacteristics": [
+      "Warm cream and ivory surfaces, with espresso text and terracotta used sparingly",
+      "Inter throughout, in regular, medium and semibold",
+      "Flat surfaces separated by spacing and thin borders",
+      "Comfortable 44px controls and pill-shaped chips",
+      "Swipe as the one highlighted feature",
+      "Full-width panels that share the navbar's edges",
+      "A crab that walks sideways when something is happening"
+    ],
+    "rules": [
+      {
+        "name": "The Reserved Terracotta Rule",
+        "body": "Terracotta and coral mark primary actions, selection and useful emphasis only. Hover on neutral controls stays neutral.",
+        "section": "colors"
+      },
+      {
+        "name": "The Honest Status Rule",
+        "body": "Color never carries status alone.",
+        "section": "colors"
+      },
+      {
+        "name": "The Shared Edge Rule",
+        "body": "Content starts and ends where the navbar does. Never put a screen in a narrow centered column.",
+        "section": "layout"
+      },
+      {
+        "name": "The Earned Space Rule",
+        "body": "A panel stretches only when something fills it or it holds one centered focus. Cards keep their content height, because a tall card with little in it reads as a mistake.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Cards and list items carry a border, not a shadow. The onboarding sheet is the one exception.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Highlight Rule",
+        "body": "Swipe is the only filled item in navigation. Nothing else, including the current page, may compete with it.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "**Do** use semantic tokens and existing shadcn components first.",
+      "**Do** label sample data, using words like \"Test profile\" and \"Sample prices\".",
+      "**Do** mark planned features with a \"Soon\" badge.",
+      "**Do** write warm, everyday English such as \"What do you like to buy?\"."
+    ],
+    "donts": [
+      "**Don't** invent discounts, prices, savings or dietary claims.",
+      "**Don't** use technical words like \"mock\" in the interface.",
+      "**Don't** add glass effects, heavy gradients or large decorative backgrounds. Onboarding is the single exception, chosen on purpose, and the rest of the app stays flat.",
+      "**Don't** let the crab compete with offers or animate without a reason.",
+      "**Don't** imply a retailer logo or product photo exists when it doesn't. Use the crab as a clean fallback, not emoji."
+    ]
+  }
+}

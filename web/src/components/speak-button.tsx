@@ -32,7 +32,7 @@ export function SpeakButton({ messageId }: { messageId: string }) {
         event.stopPropagation();
         void toggle();
       }}
-      className="mt-1 block text-xs font-medium text-orange-700 underline"
+      className="mt-1 block text-xs font-medium text-selected-foreground underline"
     >
       {label}
     </button>

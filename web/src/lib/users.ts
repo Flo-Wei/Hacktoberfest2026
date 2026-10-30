@@ -7,10 +7,11 @@ export type User = {
   city: string;
   goals: string[];
   preferences: string[];
+  avatar: string | null;
   is_mock: boolean;
 };
 
-const COLUMNS = "id, name, age, city, goals, preferences, is_mock";
+const COLUMNS = "id, name, age, city, goals, preferences, avatar, is_mock";
 
 export function listMockUsers() {
   return query<User>(`select ${COLUMNS} from users where is_mock order by name`);
@@ -24,14 +25,26 @@ export async function getUser(id: string) {
   return rows[0] ?? null;
 }
 
+// Newest first, because names aren't unique.
+export async function findUserByName(name: string) {
+  const rows = await query<User>(
+    `select ${COLUMNS} from users
+     where lower(name) = lower($1)
+     order by created_at desc
+     limit 1`,
+    [name],
+  );
+  return rows[0] ?? null;
+}
+
 export async function createUser(
-  user: Pick<User, "name" | "age" | "city" | "goals" | "preferences">,
+  user: Pick<User, "name" | "age" | "city" | "goals" | "preferences" | "avatar">,
 ) {
   const rows = await query<User>(
-    `insert into users (name, age, city, goals, preferences)
-     values ($1, $2, $3, $4, $5)
+    `insert into users (name, age, city, goals, preferences, avatar)
+     values ($1, $2, $3, $4, $5, $6)
      returning ${COLUMNS}`,
-    [user.name, user.age, user.city, user.goals, user.preferences],
+    [user.name, user.age, user.city, user.goals, user.preferences, user.avatar],
   );
   return rows[0];
 }

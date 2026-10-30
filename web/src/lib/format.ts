@@ -1,4 +1,8 @@
-export const price = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" });
+const euro = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" });
+
+export function formatPrice(cents: number) {
+  return euro.format(cents / 100);
+}
 
 export function discountPercent(product: { regular_cents: number; discount_cents: number }) {
   return Math.round((1 - product.discount_cents / product.regular_cents) * 100);

@@ -16,7 +16,7 @@ The repo and folder are named `Hacktoberfest2026`, the project is named `grabby`
 
 ### 1. Onboarding
 
-Registration with short personal details: name, age, preferences and goals (for example losing weight, fitness).
+A three-step registration with short personal details: optional photo, name, age, city, preferences and goals (for example losing weight, fitness). It ends on a review step, then shows real setup progress before leading to Swipe.
 
 ### 2. Swipe
 
@@ -41,8 +41,9 @@ Shows which offers are available in which nearby store, with filters for store, 
 
 - **First version runs locally:** The app lives in `web/` (Next.js, TypeScript, Tailwind). It will later move to Lovable or Vercel, the target is still open. Python is only used for the catalog feed in `src/grabby`.
 - **The database is Postgres:** Locally it runs on PGlite with nothing to install. The data lives in `web/.data/` and is not committed. Only `web/src/lib/db.ts` knows about PGlite. The schema and mock data are plain SQL in `web/db/`, so moving to Supabase or Vercel Postgres stays simple.
-- **No real login yet:** Onboarding creates a profile, and a cookie remembers the user ID (`web/src/lib/session.ts`). `/personas` switches to any of the 30 mock personas.
-- **Info board:** `/info` lists all offers per store in a card grid and only filters by store so far. Category and distance filters are still missing.
+- **No real login yet:** `/onboarding` is the only entry page: it creates a profile, and its "Log in with an existing account" link shows a form that finds a profile by name, without a password. A cookie remembers the user ID (`web/src/lib/session.ts`), and `/personas` switches to any of the 30 mock personas. Don't store anything sensitive until real authentication exists. Profile photos are optional, shrunk to 256px in the browser and stored as a data URL in `users.avatar`; because login needs only a name, the form warns that they aren't private.
+- **Info board:** `/info` lists all offers per store in a card grid. It filters by store and by the header search (`?q=`) so far. Category and distance filters are still missing.
+- **Design:** `PRODUCT.md` describes the product, `DESIGN.md` the design system, and `frontend.txt` is the original brief. New UI uses shadcn (`new-york-v4` style on Radix) and the tokens in `web/src/app/globals.css`. The components in `web/src/components/ui` are customised, so update them with `--diff` and never overwrite them blindly. The crab comes from `web/src/components/crab.tsx`. Swipe is the main feature and the only highlighted navigation item. Don't show technical words like "mock" in the UI.
 - **Swipe recommendations:** `recommendProducts` in `web/src/lib/products.ts` ranks by likes from similar users, then by profile. Vegan and vegetarian rule out unsuitable products. Prices, stores and the mock personas' swipes are made up.
 - **Images and nutrition:** They come from Open Food Facts and are stored in `web/db/seed-products.sql`. The licence requires the visible credit in the app, see `web/db/README.md`.
 - **Offers and stores are mock data:** The Python service in `src/grabby` serves them from a mock file, and the web app imports them into Postgres on startup. A scraper can replace the mock source later, see [docs/krabby-spec.md](docs/krabby-spec.md). Without Python, the app uses the SQL seed data.

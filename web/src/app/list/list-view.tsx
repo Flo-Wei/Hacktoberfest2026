@@ -3,8 +3,7 @@
 import { useRef } from "react";
 import { addListItem, clearCheckedListItems, removeListItem, toggleListItem } from "@/app/actions";
 import type { ShoppingListItem } from "@/lib/shopping-list";
-
-const price = new Intl.NumberFormat("en-AT", { style: "currency", currency: "EUR" });
+import { formatPrice } from "@/lib/format";
 
 export function ListView({ items }: { items: ShoppingListItem[] }) {
   const form = useRef<HTMLFormElement>(null);
@@ -25,37 +24,37 @@ export function ListView({ items }: { items: ShoppingListItem[] }) {
           required
           placeholder="Add an item"
           aria-label="Add an item"
-          className="min-w-0 flex-1 rounded-lg border border-stone-300 bg-white px-3 py-2"
+          className="min-w-0 flex-1 rounded-lg border border-border bg-card px-3 py-2"
         />
-        <button className="rounded-lg bg-orange-600 px-4 font-semibold text-white">Add</button>
+        <button className="rounded-lg bg-primary px-4 font-semibold text-primary-foreground">Add</button>
       </form>
 
-      {items.length === 0 && <p className="text-stone-600">Your list is empty. Add something here or ask Krabby.</p>}
+      {items.length === 0 && <p className="text-muted-foreground">Your list is empty. Add something here or ask Krabby.</p>}
       <ul className="space-y-2">
         {items.map((item) => (
-          <li key={item.id} className="flex items-center gap-3 rounded-lg border border-stone-200 bg-white p-3">
+          <li key={item.id} className="flex items-center gap-3 rounded-lg border border-border bg-card p-3">
             <input
               type="checkbox"
               checked={item.checked}
               onChange={(event) => void toggleListItem(item.id, event.target.checked)}
               aria-label={`Check off ${item.name}`}
-              className="size-5 accent-orange-600"
+              className="size-5 accent-primary"
             />
-            <div className={`min-w-0 flex-1 ${item.checked ? "text-stone-500 line-through" : ""}`}>
+            <div className={`min-w-0 flex-1 ${item.checked ? "text-muted-foreground line-through" : ""}`}>
               <p className="truncate font-medium">
                 {item.name}
                 {item.quantity && ` (${item.quantity})`}
               </p>
               {item.store && item.discount_cents !== null && (
-                <p className="text-sm text-stone-600">
-                  {item.store}, {price.format(item.discount_cents / 100)}
+                <p className="text-sm text-muted-foreground">
+                  {item.store}, {formatPrice(item.discount_cents)}
                 </p>
               )}
             </div>
             <button
               onClick={() => void removeListItem(item.id)}
               aria-label={`Remove ${item.name}`}
-              className="px-2 text-stone-600"
+              className="px-2 text-muted-foreground"
             >
               ✕
             </button>
@@ -64,7 +63,7 @@ export function ListView({ items }: { items: ShoppingListItem[] }) {
       </ul>
 
       {items.some((item) => item.checked) && (
-        <button onClick={() => void clearCheckedListItems()} className="text-sm text-stone-600 underline">
+        <button onClick={() => void clearCheckedListItems()} className="text-sm text-muted-foreground underline">
           Remove checked items
         </button>
       )}

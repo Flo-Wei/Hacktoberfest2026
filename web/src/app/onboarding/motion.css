@@ -1,0 +1,54 @@
+@keyframes onboard-draw {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes onboard-settle {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes onboard-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes onboard-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 24 is longer than the check icon's stroke, so it starts fully hidden. */
+  .onboard-check path {
+    stroke-dasharray: 24;
+    animation: onboard-draw 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .onboard-settle {
+    animation: onboard-settle 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .onboard-appear {
+    animation: onboard-appear 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .onboard-spin {
+    animation: onboard-spin 800ms linear infinite;
+  }
+}

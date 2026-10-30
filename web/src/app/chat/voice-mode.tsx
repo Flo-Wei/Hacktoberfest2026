@@ -86,7 +86,7 @@ export function VoiceMode({
       <p aria-live="polite" className="text-xl font-semibold">
         {LABELS[phase]}
       </p>
-      <button onClick={onClose} className="rounded-lg bg-orange-600 px-6 py-3 font-semibold text-white">
+      <button onClick={onClose} className="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground">
         End voice mode
       </button>
     </div>

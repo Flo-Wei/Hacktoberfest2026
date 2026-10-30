@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { ProductImage } from "@/components/product-image";
-import { discountPercent, price } from "@/lib/format";
+import { Badge } from "@/components/ui/badge";
+import { discountPercent, formatPrice } from "@/lib/format";
 import type { Offer } from "@/lib/products";
 import { OfferDetails } from "./offer-details";
 
@@ -28,14 +29,14 @@ export function OfferBoard({ offers }: { offers: Offer[] }) {
 
   return (
     <div className="space-y-4">
-      <div className="sticky top-0 z-10 -mx-4 flex gap-2 overflow-x-auto bg-white px-4 py-2">
+      <div className="sticky top-[var(--header-height)] z-10 -mx-2 flex gap-2 overflow-x-auto rounded-xl bg-[var(--glass)] p-2 backdrop-blur-lg">
         {[ALL, ...stores].map((store) => (
           <button
             key={store}
             onClick={() => selectStore(store)}
             aria-pressed={selected === store}
             className={`rounded-full px-3 py-1 text-sm font-medium ${
-              selected === store ? "bg-orange-600 text-white" : "bg-orange-100"
+              selected === store ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
             }`}
           >
             {store}
@@ -53,33 +54,33 @@ export function OfferBoard({ offers }: { offers: Offer[] }) {
                 aria-expanded={isOpen}
                 className="flex w-full items-baseline justify-between text-left"
               >
-                <span className="text-xl font-bold">
-                  <span aria-hidden className="mr-2 inline-block w-4 text-base text-stone-600">
+                <span className="text-xl font-semibold tracking-tight">
+                  <span aria-hidden className="mr-2 inline-block w-4 text-base text-muted-foreground">
                     {isOpen ? "▾" : "▸"}
                   </span>
                   {store}
                 </span>
-                <span className="text-sm text-stone-600">{storeOffers.length} offers</span>
+                <span className="text-sm text-muted-foreground">{storeOffers.length} offers</span>
               </button>
             </h2>
-            <div hidden={!isOpen} className={isOpen ? "grid grid-cols-2 gap-3" : undefined}>
+            <div hidden={!isOpen} className={isOpen ? "grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5" : undefined}>
               {storeOffers.map((offer) => (
                 <article key={offer.id}>
                   <button
                     onClick={() => setOpenOffer(offer)}
-                    className="block h-full w-full cursor-pointer space-y-1 rounded-2xl bg-white p-2 text-left shadow-md"
+                    className="block h-full w-full cursor-pointer space-y-1 rounded-xl border bg-card p-2 text-left text-card-foreground"
                   >
-                    <ProductImage product={offer} />
+                    <ProductImage product={offer} className="h-28 rounded-lg p-2" />
                     <h3 className="truncate font-semibold" title={offer.name}>
                       {offer.name}
                     </h3>
-                    <p className="text-xs text-stone-600">{offer.unit}</p>
+                    <p className="text-xs text-muted-foreground">{offer.unit}</p>
                     <p className="flex flex-wrap items-baseline gap-x-1">
-                      <span className="font-bold text-orange-600">{price.format(offer.discount_cents / 100)}</span>
-                      <span className="text-xs text-stone-500 line-through">
-                        {price.format(offer.regular_cents / 100)}
-                      </span>
-                      <span className="ml-auto text-xs font-bold text-orange-600">-{discountPercent(offer)}%</span>
+                      <span className="font-semibold text-selected-foreground">{formatPrice(offer.discount_cents)}</span>
+                      <del className="text-xs text-muted-foreground">{formatPrice(offer.regular_cents)}</del>
+                      <Badge variant="selected" className="ml-auto">
+                        −{discountPercent(offer)}%
+                      </Badge>
                     </p>
                   </button>
                 </article>
