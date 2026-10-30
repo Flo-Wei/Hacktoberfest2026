@@ -47,6 +47,7 @@ Shows which offers are available in which nearby store, with filters for store, 
 - **Images and nutrition:** They come from Open Food Facts and are stored in `web/db/seed-products.sql`. The licence requires the visible credit in the app, see `web/db/README.md`.
 - **Offers and stores are mock data:** The Python service in `src/grabby` serves them from a mock file, and the web app imports them into Postgres on startup. A scraper can replace the mock source later, see [docs/krabby-spec.md](docs/krabby-spec.md). Without Python, the app uses the SQL seed data.
 - **No real GPS:** City and distance to a store are stored in the mock data.
+- **Docker is an extra for hosting:** One container runs the app, with PGlite on a volume. See [Docker](#docker).
 
 ## Collaboration
 
@@ -95,3 +96,19 @@ uv build                        # build the package
 ```
 
 There is no test runner yet. The web app loads the `.env` at the repo root through `web/next.config.ts`. Other commands that need API keys must pass `--env-file .env`.
+
+## Docker
+
+Docker is only an extra for hosting. Develop and debug with `npm run dev`, there is no need to build or start a container for that.
+
+Keep `web/Dockerfile`, `web/.dockerignore` and `docker-compose.yml` current: if a change affects how the app builds or runs, update them in the same branch. That includes new services, system packages, the Node version, data stored outside `web/.data/`, and files read at runtime that Next.js file tracing misses. New keys in `.env` reach the container without any change here. Only run the container when you changed one of these things.
+
+Run in the repo root:
+
+```bash
+docker compose up --build   # build and start the app on http://localhost:3000
+docker compose down         # stop, keeps the database
+docker compose down -v      # stop and delete the database
+```
+
+The app runs as a single instance, because PGlite allows only one process per database. The automatic database rebuild also runs in the container: when an image with changed SQL files starts, all profiles and swipes on the volume are deleted.

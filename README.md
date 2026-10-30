@@ -24,6 +24,26 @@ npm run dev
 
 Then open http://localhost:3000.
 
+## Run with Docker
+
+Docker is optional and meant for hosting. For development, use `npm run dev` as above.
+
+```bash
+cp .env.example .env   # optional, only needed for API keys
+docker compose up --build
+```
+
+Then open http://localhost:3000. To use a different port, set `WEB_PORT` in `.env`.
+
+The database lives in the `grabby_data` volume and survives restarts. When a SQL file in `web/db/` has changed, the next start rebuilds the database and deletes all profiles and swipes. `docker compose down -v` deletes the volume by hand.
+
+To host it somewhere else, build `web/Dockerfile` with `web/` as the build context, and:
+
+- Mount a persistent volume at `/app/.data`, otherwise every deploy starts with a fresh database. Even with a volume, a deploy that changes a SQL file in `web/db/` deletes all profiles and swipes.
+- Run a single instance, because PGlite allows only one process per database.
+- Set API keys as environment variables on the host. They are not part of the image.
+- The app listens on `PORT`, which defaults to 3000.
+
 ## Setup
 
 You need [uv](https://docs.astral.sh/uv/getting-started/installation/) and [Claude Code](https://code.claude.com/docs). uv installs the right Python version for you.

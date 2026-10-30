@@ -7,6 +7,8 @@ const rootEnv = path.resolve(process.cwd(), "..", ".env");
 if (existsSync(rootEnv)) process.loadEnvFile(rootEnv);
 
 const nextConfig: NextConfig = {
+  // Only the Docker image runs the standalone server.
+  output: process.env.STANDALONE_BUILD ? "standalone" : undefined,
   serverExternalPackages: ["@electric-sql/pglite"],
 };
 
