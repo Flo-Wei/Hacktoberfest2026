@@ -76,6 +76,34 @@ export function recommendProducts(user: User, limit = 10) {
   );
 }
 
+export type Offer = {
+  id: string;
+  name: string;
+  store: string;
+  category: string;
+  unit: string;
+  regular_cents: number;
+  discount_cents: number;
+  tags: string[];
+  image_url: string | null;
+  off_code: string | null;
+  kcal: number | null;
+  protein_g: number | null;
+  carbs_g: number | null;
+  fat_g: number | null;
+  sugar_g: number | null;
+};
+
+export function listOffers() {
+  return query<Offer>(
+    `select id, name, store, category, unit, regular_cents, discount_cents, tags, image_url,
+       off_code, kcal, protein_g, carbs_g, fat_g, sugar_g
+     from products
+     where discount_cents < regular_cents
+     order by store, (regular_cents - discount_cents)::float / regular_cents desc, name`,
+  );
+}
+
 export async function saveSwipe(userId: string, productId: string, liked: boolean) {
   await query(
     `insert into swipes (user_id, product_id, liked)

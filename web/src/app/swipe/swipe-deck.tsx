@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { recordSwipe } from "@/app/actions";
+import { ProductImage } from "@/components/product-image";
+import { discountPercent, price } from "@/lib/format";
 import type { RecommendedProduct } from "@/lib/products";
 
 const THRESHOLD = 100;
@@ -13,45 +15,6 @@ const REASONS = {
   profile: "Matches your profile",
   offer: "Good offer",
 };
-
-const CATEGORY_ICONS: Record<string, string> = {
-  "Meat & Fish": "🍗",
-  "Vegan & Vegetarian": "🌱",
-  Dairy: "🥛",
-  "Fruit & Vegetables": "🥦",
-  Pantry: "🥫",
-  "Ready Meals": "🍱",
-  "Sweets & Snacks": "🍫",
-  Bakery: "🥐",
-  Drinks: "🧃",
-};
-
-const price = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" });
-
-function ProductImage({ product }: { product: RecommendedProduct }) {
-  const [failed, setFailed] = useState(false);
-
-  return (
-    <div className="flex h-28 items-center justify-center overflow-hidden rounded-xl bg-orange-50">
-      {product.image_url && !failed ? (
-        // External store links, so next/image would need every host configured.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          key={product.id}
-          src={product.image_url}
-          alt={product.name}
-          draggable={false}
-          onError={() => setFailed(true)}
-          className="h-full w-full object-contain"
-        />
-      ) : (
-        <span aria-hidden className="text-6xl">
-          {CATEGORY_ICONS[product.category] ?? "🛒"}
-        </span>
-      )}
-    </div>
-  );
-}
 
 export function SwipeDeck({ products }: { products: RecommendedProduct[] }) {
   const router = useRouter();
@@ -72,7 +35,7 @@ export function SwipeDeck({ products }: { products: RecommendedProduct[] }) {
     );
   }
 
-  const percent = Math.round((1 - product.discount_cents / product.regular_cents) * 100);
+  const percent = discountPercent(product);
 
   async function swipe(liked: boolean) {
     if (leaving) return;
