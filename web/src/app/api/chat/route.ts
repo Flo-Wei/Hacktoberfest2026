@@ -3,6 +3,7 @@ import { runTurn, type Photo } from "@/lib/krabby/agent";
 import { getCurrentUser } from "@/lib/session";
 
 const MAX_PHOTO_CHARS = 8_000_000;
+const MAX_TEXT_CHARS = 4000;
 
 type Body = { chatId?: string; text?: string; photo?: Photo; voice?: boolean };
 
@@ -14,6 +15,7 @@ export async function POST(request: Request) {
   const text = body.text?.trim() ?? "";
   const photo = body.photo;
   if (!text && !photo) return new Response("Empty message", { status: 400 });
+  if (text.length > MAX_TEXT_CHARS) return new Response("Message too long", { status: 413 });
   if (photo && (!photo.mimeType?.startsWith("image/") || !photo.data)) {
     return new Response("Invalid photo", { status: 400 });
   }

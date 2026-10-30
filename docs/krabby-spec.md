@@ -101,4 +101,5 @@ Offers in the feed are matched to `products` by `name` and `store`. The import o
 - [ ] **Open Food Facts credit:** keep the visible credit wherever product data appears, including any product cards added to the chat. See `web/db/README.md`.
 - [ ] **New pages:** apply the core rule, and add action comments where they make sense.
 - [ ] **Voice:** choose the final bodybuilder voice, then set `ELEVENLABS_VOICE_ID`. The ElevenLabs key can't list voices, so pick the ID in the ElevenLabs app.
+- [ ] **Before any public hosting:** add real login and spend limits. `/api/chat`, `/api/speak` and `/api/transcribe` have no rate limit, personas are shared by every visitor, and text in a photo could trigger list or profile changes. Switching persona also replaces the only cookie, so a real user loses their profile. None of this matters for a local demo.
 - [ ] **Hosting:** the Python feed needs a host when the app moves off local. If the target can't run it, keep the SQL seed data.
