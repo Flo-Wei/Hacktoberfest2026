@@ -1,92 +1,98 @@
 # AGENTS.md
 
-Gemeinsame Infos für alle Coding-Agents und alle 4 Teammitglieder. Wenn sich eine Entscheidung ändert, hier anpassen, damit alle denselben Stand haben.
+Shared information for all coding agents and all 4 team members. When a decision changes, update it here so everyone has the same state.
 
-## Projekt
+## Language
 
-Grabby ist ein Hackathon-Projekt: Essensempfehlungen auf Basis von Rabattaktionen, dem eigenen Profil und dem, was ähnlichen Usern gefällt. Krabby ist der Chat-Assistent in der App.
+English is the project language for everything: code, comments, docs, commit messages, branch names, UI text and data values.
 
-Das Repo und der Ordner heißen `Hacktoberfest2026`, das Projekt heißt `grabby`.
+The app's UI text and its data values (for example goals, preferences, categories and product names) are still in German from the first version. New work must be in English, and the existing German text still needs to be translated.
+
+## Project
+
+Grabby is a hackathon project: food recommendations based on grocery discounts, your profile, and what similar users like. Krabby is the chat assistant in the app.
+
+The repo and folder are named `Hacktoberfest2026`, the project is named `grabby`.
 
 ## Features
 
 ### 1. Onboarding
 
-Registrierung mit kurzen Infos zur Person: Name, Alter, Präferenzen und Ziele (z.B. abnehmen, Fitness).
+Registration with short personal details: name, age, preferences and goals (for example losing weight, fitness).
 
 ### 2. Swipe
 
-User swipen durch Produkte. Gezeigt werden Produkte, die ähnlichen Usern gefallen haben. Solange es noch keine Swipes gibt, richtet sich die Auswahl nach den Zielen und Präferenzen aus dem Onboarding.
+Users swipe through products. They see products that similar users liked. Until a user has swipes of their own, the selection follows the goals and preferences from onboarding.
 
-### 3. Chat mit Krabby
+### 3. Chat with Krabby
 
-Läuft mit Gemma und kann Text, Bild und Audio verarbeiten:
+Runs on Gemma and handles text, images and audio:
 
-- **Angebote abfragen:** "Ich gehe gerade zum Hofer, gib mir alle Angebote" liefert die Produkte, die dort im Angebot sind.
-- **Produktfoto:** Das fotografierte Produkt wird zu den Präferenzen hinzugefügt.
-- **Vorschlag und Roasting:** Krabby gibt Vorschläge oder roastet den User, gesprochen über ElevenLabs (z.B. "Zu wenig Proteine!").
+- **Ask for offers:** "I'm going to Hofer, give me all the offers" returns the products on offer there.
+- **Product photo:** The photographed product is added to the user's preferences.
+- **Suggestions and roasting:** Krabby makes suggestions or roasts the user, spoken through ElevenLabs (for example "Not enough protein!").
 
-Die Roasting-Stimme ist eine fiktive Bodybuilder-Figur mit einer Stimme aus der ElevenLabs-Library. Keine echten Personen nennen oder ihre Stimmen klonen, das verbieten die ElevenLabs-Regeln.
+The roasting voice is a fictional bodybuilder character using a voice from the ElevenLabs library. Don't name real people or clone their voices, the ElevenLabs rules forbid it.
 
-### 4. Infoboard
+### 4. Info board
 
-Zeigt, welche Angebote es in welchem Laden in der Nähe gibt, mit Filtern nach Laden, Kategorie und Entfernung.
+Shows which offers are available in which nearby store, with filters for store, category and distance.
 
-## Festgelegte Entscheidungen
+## Decisions
 
-- **Erste Version läuft lokal:** Die App liegt in `web/` (Next.js, TypeScript, Tailwind). Später zieht sie zu Lovable oder Vercel um, das Ziel ist noch offen. Python wird nicht für Features verwendet, das Paket in `src/grabby` ist nur das ursprüngliche Grundgerüst.
-- **Datenbank ist Postgres:** Lokal läuft PGlite ohne Installation, die Daten liegen in `web/.data/` und werden nicht committet. Nur `web/src/lib/db.ts` kennt PGlite. Schema und Mock-Daten stehen als normales SQL in `web/db/`, damit der Umzug zu Supabase oder Vercel Postgres einfach bleibt.
-- **Noch kein echter Login:** Das Onboarding legt ein Profil an, und ein Cookie merkt sich die User-ID (`web/src/lib/session.ts`). Über `/personas` lässt sich zu einer der 30 Mock-Personen wechseln.
-- **Noch Platzhalter:** Das Infoboard zeigt nur einen Hinweis, der Chat antwortet mit einem festen Mock-Text.
-- **Swipe-Empfehlungen:** `recommendProducts` in `web/src/lib/products.ts` reiht nach Likes ähnlicher User und danach nach dem Profil. Vegan und Vegetarisch schließen unpassende Produkte aus. Preise, Läden und die Swipes der Mock-Personen sind erfunden.
-- **Bilder und Nährwerte:** Sie kommen von Open Food Facts und stehen in `web/db/seed-products.sql`. Die Lizenz verlangt die sichtbare Quellenangabe in der App, siehe `web/db/README.md`.
-- **Angebote und Läden sind Mock-Daten:** Keine echten Scraper bauen. Läden (z.B. Hofer, Billa, Spar) und Angebote kommen aus einem festen Datensatz in der Datenbank.
-- **Kein echtes GPS:** Die Stadt und die Entfernung zum Laden stehen in den Mock-Daten.
+- **First version runs locally:** The app lives in `web/` (Next.js, TypeScript, Tailwind). It will later move to Lovable or Vercel, the target is still open. Python is not used for features, the package in `src/grabby` is only the original scaffold.
+- **The database is Postgres:** Locally it runs on PGlite with nothing to install. The data lives in `web/.data/` and is not committed. Only `web/src/lib/db.ts` knows about PGlite. The schema and mock data are plain SQL in `web/db/`, so moving to Supabase or Vercel Postgres stays simple.
+- **No real login yet:** Onboarding creates a profile, and a cookie remembers the user ID (`web/src/lib/session.ts`). `/personas` switches to any of the 30 mock personas.
+- **Still placeholders:** The info board only shows a notice, and the chat replies with a fixed mock text.
+- **Swipe recommendations:** `recommendProducts` in `web/src/lib/products.ts` ranks by likes from similar users, then by profile. Vegan and vegetarian rule out unsuitable products. Prices, stores and the mock personas' swipes are made up.
+- **Images and nutrition:** They come from Open Food Facts and are stored in `web/db/seed-products.sql`. The licence requires the visible credit in the app, see `web/db/README.md`.
+- **Offers and stores are mock data:** Don't build real scrapers. Stores (for example Hofer, Billa, Spar) and offers come from a fixed data set in the database.
+- **No real GPS:** City and distance to a store are stored in the mock data.
 
-## Zusammenarbeit
+## Collaboration
 
-- Für jedes Feature einen eigenen Branch anlegen, z.B. `feature/swipe` oder `feature/krabby-chat`.
-- Wer fertig ist, merged den Branch selbst nach `main`, ohne Pflicht-Review. `main` muss danach weiter funktionieren.
-- Vor dem Mergen den aktuellen Stand von `main` in den eigenen Branch holen.
-- Falls ihr später Lovable nutzt: Lovable-Projekte liegen in Lovable und nicht automatisch in diesem Repo. Mit dem Lovable MCP arbeiten alle am selben Projekt und nicht auf Git-Branches, also Änderungen dort im Team absprechen.
-- Geheimnisse wie `.env` nie committen.
+- Create a separate branch for each feature, for example `feature/swipe` or `feature/krabby-chat`.
+- When you're done, merge your branch into `main` yourself, no review required. `main` must still work afterwards.
+- Before merging, bring the latest `main` into your branch.
+- If you use Lovable later: Lovable projects live in Lovable and not automatically in this repo. With the Lovable MCP everyone works on the same project and not on Git branches, so coordinate changes there with the team.
+- Never commit secrets such as `.env`.
 
-## Externe Dienste
+## External services
 
-Die Keys stehen in `.env.example`. Neue Keys dort ebenfalls eintragen. Keys, die die App zur Laufzeit braucht, gehören in die Secrets des Lovable-Projekts und dürfen nie im Frontend-Code landen.
+The keys are listed in `.env.example`. Add new keys there as well. Keys the app needs at runtime belong in the hosting project's secrets and must never end up in frontend code.
 
-- **Gemma:** läuft über die gehostete Gemini API mit `GEMINI_API_KEY`. Verfügbare Modelle sind `gemma-4-26b-a4b-it` und `gemma-4-31b-it`. Vor dem Bauen testen, ob sie Bild und Audio wie benötigt verarbeiten.
-- **ElevenLabs:** verwendet `ELEVENLABS_API_KEY`.
-- **Lovable:** läuft über den `lovable` MCP-Server und den `lovable-mcp` Skill. Der Server nutzt OAuth pro Person und braucht keinen Key.
-- **Lovable REST API:** `LOV_PUBLIC_API_KEY` ist optional und braucht einen Business- oder Enterprise-Workspace. Lovable reserviert Secret-Namen mit dem Präfix `LOVABLE_`, also dieses Präfix nicht verwenden.
+- **Gemma:** runs through the hosted Gemini API with `GEMINI_API_KEY`. The available models are `gemma-4-26b-a4b-it` and `gemma-4-31b-it`. Test before building whether they handle images and audio as needed.
+- **ElevenLabs:** uses `ELEVENLABS_API_KEY`.
+- **Lovable:** runs through the `lovable` MCP server and the `lovable-mcp` skill. The server uses per-person OAuth and needs no key.
+- **Lovable REST API:** `LOV_PUBLIC_API_KEY` is optional and needs a Business or Enterprise workspace. Lovable reserves secret names starting with `LOVABLE_`, so don't use that prefix.
 
-Vor diesen Lovable-Aktionen immer nachfragen:
+Always ask before these Lovable actions:
 
-- `create_project` und `send_message` verbrauchen Build-Credits.
-- `deploy_project` veröffentlicht eine öffentliche URL.
-- `query_database` kann Daten und Schema ändern, deshalb das SQL vor jedem Schreibzugriff zeigen.
+- `create_project` and `send_message` spend build credits.
+- `deploy_project` publishes a public URL.
+- `query_database` can change data and schema, so show the SQL before any write.
 
-## Befehle
+## Commands
 
-Web-App, im Ordner `web/` ausführen:
-
-```bash
-npm install      # Abhängigkeiten installieren
-npm run dev      # App auf http://localhost:3000 starten, legt beim ersten Mal die Datenbank an
-npm run lint     # Linter
-npm run build    # Production-Build, vorher npm run dev beenden
-```
-
-Lokale Datenbank zurücksetzen: Server beenden und `web/.data/` löschen. Beim nächsten Start werden die Mock-Personen neu angelegt. PGlite erlaubt nur einen Prozess pro Datenbank.
-
-Python-Grundgerüst:
+Web app, run in `web/`:
 
 ```bash
-uv sync                         # Abhängigkeiten installieren
-cp .env.example .env            # nur beim ersten Mal
-uv run --env-file .env grabby   # Grundgerüst mit API-Keys starten
-uv add <package>                # Abhängigkeit hinzufügen, dann pyproject.toml und uv.lock committen
-uv build                        # Paket bauen
+npm install      # install dependencies
+npm run dev      # start the app on http://localhost:3000, creates the database on first start
+npm run lint     # linter
+npm run build    # production build, stop npm run dev first
 ```
 
-Es gibt noch keinen Test-Runner. `.env` wird nicht automatisch geladen, Befehle mit API-Keys brauchen also `--env-file .env`.
+Reset the local database: stop the server and delete `web/.data/`. The next start loads the mock data again. This is also needed to get updated seed data. PGlite allows only one process per database.
+
+Python scaffold:
+
+```bash
+uv sync                         # install dependencies
+cp .env.example .env            # first time only
+uv run --env-file .env grabby   # start the scaffold with API keys loaded
+uv add <package>                # add a dependency, then commit pyproject.toml and uv.lock
+uv build                        # build the package
+```
+
+There is no test runner yet. Nothing loads `.env` automatically, so commands that need API keys must pass `--env-file .env`.
