@@ -2,7 +2,8 @@
 
 import { redirect } from "next/navigation";
 import { CITIES, GOALS, PREFERENCES } from "@/lib/options";
-import { setCurrentUser } from "@/lib/session";
+import { saveSwipe } from "@/lib/products";
+import { requireUser, setCurrentUser } from "@/lib/session";
 import { createUser, getUser } from "@/lib/users";
 
 export async function register(_: string | null, form: FormData) {
@@ -28,6 +29,11 @@ export async function register(_: string | null, form: FormData) {
   });
   await setCurrentUser(user.id);
   redirect("/");
+}
+
+export async function recordSwipe(productId: string, liked: boolean) {
+  const user = await requireUser();
+  await saveSwipe(user.id, productId, liked);
 }
 
 export async function switchUser(form: FormData) {

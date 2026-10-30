@@ -37,7 +37,9 @@ Zeigt, welche Angebote es in welchem Laden in der Nähe gibt, mit Filtern nach L
 - **Erste Version läuft lokal:** Die App liegt in `web/` (Next.js, TypeScript, Tailwind). Später zieht sie zu Lovable oder Vercel um, das Ziel ist noch offen. Python wird nicht für Features verwendet, das Paket in `src/grabby` ist nur das ursprüngliche Grundgerüst.
 - **Datenbank ist Postgres:** Lokal läuft PGlite ohne Installation, die Daten liegen in `web/.data/` und werden nicht committet. Nur `web/src/lib/db.ts` kennt PGlite. Schema und Mock-Daten stehen als normales SQL in `web/db/`, damit der Umzug zu Supabase oder Vercel Postgres einfach bleibt.
 - **Noch kein echter Login:** Das Onboarding legt ein Profil an, und ein Cookie merkt sich die User-ID (`web/src/lib/session.ts`). Über `/personas` lässt sich zu einer der 30 Mock-Personen wechseln.
-- **Noch Platzhalter:** Swipe und Infoboard zeigen nur einen Hinweis, der Chat antwortet mit einem festen Mock-Text.
+- **Noch Platzhalter:** Das Infoboard zeigt nur einen Hinweis, der Chat antwortet mit einem festen Mock-Text.
+- **Swipe-Empfehlungen:** `recommendProducts` in `web/src/lib/products.ts` reiht nach Likes ähnlicher User und danach nach dem Profil. Vegan und Vegetarisch schließen unpassende Produkte aus. Preise, Läden und die Swipes der Mock-Personen sind erfunden.
+- **Bilder und Nährwerte:** Sie kommen von Open Food Facts und stehen in `web/db/seed-products.sql`. Die Lizenz verlangt die sichtbare Quellenangabe in der App, siehe `web/db/README.md`.
 - **Angebote und Läden sind Mock-Daten:** Keine echten Scraper bauen. Läden (z.B. Hofer, Billa, Spar) und Angebote kommen aus einem festen Datensatz in der Datenbank.
 - **Kein echtes GPS:** Die Stadt und die Entfernung zum Laden stehen in den Mock-Daten.
 
