@@ -96,7 +96,7 @@ Offers in the feed are matched to `products` by `name` and `store`. The import o
 
 ## Still to do
 
-- [ ] **Info board:** build `/info` on `listStores` and `searchOffers` from `web/src/lib/`, and keep the `get_offers` tool working the same way.
+- [ ] **Info board:** `/info` exists but only filters by store. When adding the category and distance filters, use `listStores` and `searchOffers` from `web/src/lib/`, so it matches the `get_offers` tool.
 - [ ] **Design pass:** the chat, pop-up, voice mode and shopping list only have functional styling. Apply the design specs and components when they arrive. Keep the behaviour in this file.
 - [ ] **Open Food Facts credit:** keep the visible credit wherever product data appears, including any product cards added to the chat. See `web/db/README.md`.
 - [ ] **New pages:** apply the core rule, and add action comments where they make sense.

@@ -76,12 +76,35 @@ export function recommendProducts(user: User, limit = 10) {
   );
 }
 
-export type Offer = Omit<RecommendedProduct, "reason"> & {
+export type Offer = {
+  id: string;
+  name: string;
+  store: string;
+  category: string;
+  unit: string;
+  regular_cents: number;
+  discount_cents: number;
   tags: string[];
+  image_url: string | null;
+  off_code: string | null;
+  kcal: number | null;
+  protein_g: number | null;
+  carbs_g: number | null;
+  fat_g: number | null;
   sugar_g: number | null;
-  nearest_store: string | null;
-  nearest_km: number | null;
 };
+
+export function listOffers() {
+  return query<Offer>(
+    `select id, name, store, category, unit, regular_cents, discount_cents, tags, image_url,
+       off_code, kcal, protein_g, carbs_g, fat_g, sugar_g
+     from products
+     where discount_cents < regular_cents
+     order by store, (regular_cents - discount_cents)::float / regular_cents desc, name`,
+  );
+}
+
+export type NearbyOffer = Offer & { nearest_store: string | null; nearest_km: number | null };
 
 export type OfferFilters = {
   store?: string;
@@ -92,7 +115,7 @@ export type OfferFilters = {
 
 // Offers belong to a chain, so the distance is to its nearest branch in the user's city.
 export function searchOffers(city: string, filters: OfferFilters = {}, limit = 60) {
-  return query<Offer>(
+  return query<NearbyOffer>(
     `select
        p.id, p.name, p.store, p.category, p.unit, p.regular_cents, p.discount_cents, p.tags,
        p.image_url, p.off_code, p.kcal, p.protein_g, p.carbs_g, p.fat_g, p.sugar_g,
@@ -121,8 +144,7 @@ export function searchOffers(city: string, filters: OfferFilters = {}, limit = 6
 }
 
 const OFFER_COLUMNS = `id, name, store, category, unit, regular_cents, discount_cents, tags,
-  image_url, off_code, kcal, protein_g, carbs_g, fat_g, sugar_g,
-  null as nearest_store, null as nearest_km`;
+  image_url, off_code, kcal, protein_g, carbs_g, fat_g, sugar_g`;
 
 export async function getOffer(productId: string) {
   const rows = await query<Offer>(`select ${OFFER_COLUMNS} from products where id::text = $1`, [productId]);
