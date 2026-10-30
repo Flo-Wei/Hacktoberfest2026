@@ -1,5 +1,7 @@
 # Grabby
 
+**Live app:** https://crabby.flo-wei.com
+
 Hackathon project: food recommendations based on grocery discounts, your profile, and what other users like.
 
 ## Features
