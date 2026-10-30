@@ -5,11 +5,11 @@ import { useState } from "react";
 type Message = { from: "krabby" | "user"; text: string };
 
 // Canned replies until Krabby is connected to Gemma.
-const MOCK_REPLY = "Ich bin noch ein Mock. Bald kenne ich alle Angebote für dich!";
+const MOCK_REPLY = "I'm still a mock. Soon I'll know all the offers for you!";
 
 export function MockChat({ name }: { name: string }) {
   const [messages, setMessages] = useState<Message[]>([
-    { from: "krabby", text: `Hallo ${name}, ich bin Krabby!` },
+    { from: "krabby", text: `Hi ${name}, I'm Krabby!` },
   ]);
   const [draft, setDraft] = useState("");
 
@@ -42,11 +42,11 @@ export function MockChat({ name }: { name: string }) {
         <input
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
-          placeholder="Nachricht an Krabby"
-          aria-label="Nachricht an Krabby"
+          placeholder="Message Krabby"
+          aria-label="Message Krabby"
           className="min-w-0 flex-1 rounded-lg border border-stone-300 bg-white px-3 py-2"
         />
-        <button className="rounded-lg bg-orange-600 px-4 font-semibold text-white">Senden</button>
+        <button className="rounded-lg bg-orange-600 px-4 font-semibold text-white">Send</button>
       </form>
     </div>
   );

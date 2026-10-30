@@ -10,11 +10,11 @@ export default async function PersonasPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold">Mock-Personen</h1>
+        <h1 className="text-2xl font-bold">Mock personas</h1>
         <p className="text-stone-600">
-          {users.length} Testprofile.{" "}
+          {users.length} test profiles.{" "}
           <Link href="/onboarding" className="underline">
-            Neues Profil anlegen
+            Create a new profile
           </Link>
         </p>
       </div>

@@ -11,11 +11,11 @@ export async function register(_: string | null, form: FormData) {
   const age = Number(form.get("age"));
   const city = String(form.get("city") ?? "");
 
-  if (!name) return "Bitte gib deinen Namen ein.";
+  if (!name) return "Please enter your name.";
   if (!Number.isInteger(age) || age < 1 || age > 120) {
-    return "Bitte gib ein gültiges Alter ein.";
+    return "Please enter a valid age.";
   }
-  if (!CITIES.includes(city)) return "Bitte wähle eine Stadt aus.";
+  if (!CITIES.includes(city)) return "Please choose a city.";
 
   const user = await createUser({
     name,

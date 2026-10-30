@@ -5,7 +5,7 @@ function Tags({ title, items }: { title: string; items: string[] }) {
     <div>
       <h2 className="mb-2 text-sm font-semibold text-stone-600">{title}</h2>
       <div className="flex flex-wrap gap-2">
-        {items.length === 0 && <span className="text-sm text-stone-500">Noch nichts gewählt</span>}
+        {items.length === 0 && <span className="text-sm text-stone-500">Nothing selected yet</span>}
         {items.map((item) => (
           <span key={item} className="rounded-full bg-orange-100 px-3 py-1 text-sm">
             {item}
@@ -22,13 +22,13 @@ export default async function Home() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold">Hallo {user.name}!</h1>
+        <h1 className="text-2xl font-bold">Hello {user.name}!</h1>
         <p className="text-stone-600">
-          {user.age} Jahre, {user.city}
+          {user.age} years old, {user.city}
         </p>
       </div>
-      <Tags title="Ziele" items={user.goals} />
-      <Tags title="Präferenzen" items={user.preferences} />
+      <Tags title="Goals" items={user.goals} />
+      <Tags title="Preferences" items={user.preferences} />
     </div>
   );
 }

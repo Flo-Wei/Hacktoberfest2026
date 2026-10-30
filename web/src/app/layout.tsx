@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Grabby",
-  description: "Essensempfehlungen aus Rabatten, deinem Profil und ähnlichen Usern",
+  description: "Food recommendations from discounts, your profile and similar users",
 };
 
 const NAV = [
@@ -20,7 +20,7 @@ export default async function RootLayout({
   const user = await getCurrentUser();
 
   return (
-    <html lang="de">
+    <html lang="en">
       <body className="mx-auto flex min-h-dvh max-w-md flex-col">
         <header className="flex items-center justify-between px-4 py-3">
           <Link href={user ? "/" : "/onboarding"} className="text-xl font-bold text-orange-600">

@@ -35,28 +35,28 @@ export function OnboardingForm() {
         <input name="name" required maxLength={80} className={FIELD} />
       </label>
       <label className="block">
-        <span className="mb-1 block font-medium">Alter</span>
+        <span className="mb-1 block font-medium">Age</span>
         <input name="age" type="number" required min={1} max={120} className={FIELD} />
       </label>
       <label className="block">
-        <span className="mb-1 block font-medium">Stadt</span>
+        <span className="mb-1 block font-medium">City</span>
         <select name="city" required defaultValue="" className={FIELD}>
           <option value="" disabled>
-            Bitte wählen
+            Please choose
           </option>
           {CITIES.map((city) => (
             <option key={city}>{city}</option>
           ))}
         </select>
       </label>
-      <Checkboxes legend="Deine Ziele" name="goals" options={GOALS} />
-      <Checkboxes legend="Deine Präferenzen" name="preferences" options={PREFERENCES} />
+      <Checkboxes legend="Your goals" name="goals" options={GOALS} />
+      <Checkboxes legend="Your preferences" name="preferences" options={PREFERENCES} />
       {error && <p className="text-sm text-red-700">{error}</p>}
       <button
         disabled={pending}
         className="w-full rounded-lg bg-orange-600 py-3 font-semibold text-white disabled:opacity-60"
       >
-        Los geht&apos;s
+        Let&apos;s go
       </button>
     </form>
   );

@@ -3,5 +3,5 @@ import { requireUser } from "@/lib/session";
 
 export default async function InfoPage() {
   await requireUser();
-  return <Placeholder title="Infoboard" text="Hier siehst du, welche Angebote es in welchem Laden in deiner Nähe gibt." />;
+  return <Placeholder title="Info board" text="See which offers are available in which store near you." />;
 }

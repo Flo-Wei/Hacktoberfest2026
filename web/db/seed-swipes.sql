@@ -16,7 +16,7 @@ from (
     abs(hashtext(u.name || p.name)::bigint) as hash,
     p.tags && u.preferences as matches,
     (not 'Vegan' = any(u.preferences) or 'Vegan' = any(p.tags))
-      and (not 'Vegetarisch' = any(u.preferences) or 'Vegetarisch' = any(p.tags)) as fits_diet
+      and (not 'Vegetarian' = any(u.preferences) or 'Vegetarian' = any(p.tags)) as fits_diet
   from users u
   cross join products p
   where u.is_mock

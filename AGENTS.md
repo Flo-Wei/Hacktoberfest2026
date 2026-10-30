@@ -6,8 +6,6 @@ Shared information for all coding agents and all 4 team members. When a decision
 
 English is the project language for everything: code, comments, docs, commit messages, branch names, UI text and data values.
 
-The app's UI text and its data values (for example goals, preferences, categories and product names) are still in German from the first version. New work must be in English, and the existing German text still needs to be translated.
-
 ## Project
 
 Grabby is a hackathon project: food recommendations based on grocery discounts, your profile, and what similar users like. Krabby is the chat assistant in the app.
@@ -83,7 +81,7 @@ npm run lint     # linter
 npm run build    # production build, stop npm run dev first
 ```
 
-Reset the local database: stop the server and delete `web/.data/`. The next start loads the mock data again. This is also needed to get updated seed data. PGlite allows only one process per database.
+The local database needs no manual setup. When any SQL file in `web/db/` changes, for example after a `git pull`, the next start rebuilds it automatically. This also deletes local profiles and swipes, so don't rely on them. PGlite allows only one process per database.
 
 Python scaffold:
 

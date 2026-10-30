@@ -9,24 +9,24 @@ const THRESHOLD = 100;
 const EXIT_MS = 200;
 
 const REASONS = {
-  similar: "Gefällt ähnlichen Usern",
-  profile: "Passt zu deinem Profil",
-  offer: "Gutes Angebot",
+  similar: "Liked by similar users",
+  profile: "Matches your profile",
+  offer: "Good offer",
 };
 
 const CATEGORY_ICONS: Record<string, string> = {
-  "Fleisch & Fisch": "🍗",
-  "Vegan & Vegetarisch": "🌱",
-  Milchprodukte: "🥛",
-  "Obst & Gemüse": "🥦",
-  Vorrat: "🥫",
-  Fertiggerichte: "🍱",
-  "Süßes & Snacks": "🍫",
-  Backwaren: "🥐",
-  Getränke: "🧃",
+  "Meat & Fish": "🍗",
+  "Vegan & Vegetarian": "🌱",
+  Dairy: "🥛",
+  "Fruit & Vegetables": "🥦",
+  Pantry: "🥫",
+  "Ready Meals": "🍱",
+  "Sweets & Snacks": "🍫",
+  Bakery: "🥐",
+  Drinks: "🧃",
 };
 
-const price = new Intl.NumberFormat("de-AT", { style: "currency", currency: "EUR" });
+const price = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" });
 
 function ProductImage({ product }: { product: RecommendedProduct }) {
   const [failed, setFailed] = useState(false);
@@ -67,7 +67,7 @@ export function SwipeDeck({ products }: { products: RecommendedProduct[] }) {
   if (!product) {
     return (
       <p className="rounded-2xl bg-white p-6 text-center text-stone-600">
-        {products.length === 0 ? "Du hast alle Angebote geswiped!" : "Neue Vorschläge werden geladen..."}
+        {products.length === 0 ? "You've swiped all the offers!" : "Loading new suggestions..."}
       </p>
     );
   }
@@ -86,7 +86,7 @@ export function SwipeDeck({ products }: { products: RecommendedProduct[] }) {
     try {
       await saved;
     } catch {
-      setError("Speichern hat nicht geklappt. Bitte nochmal versuchen.");
+      setError("Couldn't save that. Please try again.");
       setOffset(0);
       setLeaving(false);
       return;
@@ -148,9 +148,9 @@ export function SwipeDeck({ products }: { products: RecommendedProduct[] }) {
           <dl className="grid grid-cols-4 gap-1 rounded-xl bg-stone-100 p-2 text-center text-sm">
             {[
               ["kcal", product.kcal],
-              ["Eiweiß", `${product.protein_g} g`],
-              ["Kohlenh.", `${product.carbs_g} g`],
-              ["Fett", `${product.fat_g} g`],
+              ["Protein", `${product.protein_g} g`],
+              ["Carbs", `${product.carbs_g} g`],
+              ["Fat", `${product.fat_g} g`],
             ].map(([label, value]) => (
               <div key={label}>
                 <dd className="font-semibold">{value}</dd>
@@ -168,7 +168,7 @@ export function SwipeDeck({ products }: { products: RecommendedProduct[] }) {
             onPointerDown={(event) => event.stopPropagation()}
             className="block text-xs text-stone-600 underline"
           >
-            Bild und Nährwerte pro 100 g/ml: Open Food Facts (Beispielprodukt)
+            Image and nutrition per 100 g/ml: Open Food Facts (example product)
           </a>
         )}
         {offset !== 0 && !leaving && (
@@ -176,7 +176,7 @@ export function SwipeDeck({ products }: { products: RecommendedProduct[] }) {
             aria-hidden
             className={`absolute top-6 left-6 rounded-full bg-white px-3 py-1 font-bold shadow ${offset > 0 ? "text-green-700" : "text-red-700"}`}
           >
-            {offset > 0 ? "Gefällt mir" : "Nein danke"}
+            {offset > 0 ? "Like" : "No thanks"}
           </span>
         )}
       </div>
@@ -187,14 +187,14 @@ export function SwipeDeck({ products }: { products: RecommendedProduct[] }) {
           disabled={leaving}
           className="rounded-lg border border-stone-300 bg-white py-3 font-semibold disabled:opacity-60"
         >
-          Nein danke
+          No thanks
         </button>
         <button
           onClick={() => swipe(true)}
           disabled={leaving}
           className="rounded-lg bg-orange-600 py-3 font-semibold text-white disabled:opacity-60"
         >
-          Gefällt mir
+          Like
         </button>
       </div>
     </div>

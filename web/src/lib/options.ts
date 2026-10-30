@@ -1,32 +1,32 @@
-export const CITIES = ["Wien", "Graz", "Linz", "Salzburg", "Innsbruck"];
+export const CITIES = ["Vienna", "Graz", "Linz", "Salzburg", "Innsbruck"];
 
 export const GOALS = [
-  "Abnehmen",
-  "Muskelaufbau",
+  "Lose weight",
+  "Build muscle",
   "Fitness",
-  "Gesund essen",
-  "Geld sparen",
+  "Eat healthy",
+  "Save money",
 ];
 
-// Product tags that serve each goal. "Geld sparen" has none: the deck always
+// Product tags that serve each goal. "Save money" has none: the deck always
 // ranks bigger discounts first among equal matches.
 export const GOAL_TAGS: Record<string, string[]> = {
-  Abnehmen: ["Low Carb"],
-  Muskelaufbau: ["Proteinreich"],
-  Fitness: ["Proteinreich"],
-  "Gesund essen": ["Bio", "Regional"],
+  "Lose weight": ["Low Carb"],
+  "Build muscle": ["High protein"],
+  Fitness: ["High protein"],
+  "Eat healthy": ["Organic", "Regional"],
 };
 
 // Preferences that rule products out instead of only ranking them.
-export const DIETS = ["Vegan", "Vegetarisch"];
+export const DIETS = ["Vegan", "Vegetarian"];
 
 export const PREFERENCES = [
-  "Vegetarisch",
+  "Vegetarian",
   "Vegan",
-  "Proteinreich",
+  "High protein",
   "Low Carb",
   "Regional",
-  "Bio",
-  "Süßes",
-  "Schnell kochen",
+  "Organic",
+  "Sweet",
+  "Quick to cook",
 ];

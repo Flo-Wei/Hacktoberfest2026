@@ -5,13 +5,13 @@ export default function OnboardingPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold">Willkommen bei Grabby</h1>
-        <p className="text-stone-600">Ein paar kurze Infos, dann geht es los.</p>
+        <h1 className="text-2xl font-bold">Welcome to Grabby</h1>
+        <p className="text-stone-600">A few quick details and you&apos;re ready to go.</p>
       </div>
       <OnboardingForm />
       <p className="text-center text-sm">
         <Link href="/personas" className="text-stone-600 underline">
-          Oder eine Mock-Person verwenden
+          Or use a mock persona
         </Link>
       </p>
     </div>

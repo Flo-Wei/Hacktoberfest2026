@@ -4,14 +4,13 @@ Hackathon project: food recommendations based on grocery discounts, your profile
 
 ## Features
 
-- Rabattaktionen scrapen (mock)
-- multi user
-- Recommender System um Lebensmittel zu finden anhand deines Profiels und was andere gern haben
+- Discount offers (mock data)
+- Multiple users
+- Recommender system that finds food based on your profile and what others like
 - Frontend:
-    - Dashboard
-    - Essen Swipen
-    - Chat:
-        - kühlschrankfoto
+    - Info board
+    - Food swiping
+    - Chat with Krabby
 
 ## Run the web app
 
