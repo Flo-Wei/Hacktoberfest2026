@@ -41,7 +41,8 @@ Shows which offers are available in which nearby store, with filters for store, 
 - **First version runs locally:** The app lives in `web/` (Next.js, TypeScript, Tailwind). It will later move to Lovable or Vercel, the target is still open. Python is not used for features, the package in `src/grabby` is only the original scaffold.
 - **The database is Postgres:** Locally it runs on PGlite with nothing to install. The data lives in `web/.data/` and is not committed. Only `web/src/lib/db.ts` knows about PGlite. The schema and mock data are plain SQL in `web/db/`, so moving to Supabase or Vercel Postgres stays simple.
 - **No real login yet:** Onboarding creates a profile, and a cookie remembers the user ID (`web/src/lib/session.ts`). `/personas` switches to any of the 30 mock personas.
-- **Still placeholders:** The info board only shows a notice, and the chat replies with a fixed mock text.
+- **Still placeholders:** The chat replies with a fixed mock text.
+- **Info board:** `/info` lists all offers per store in a card grid and only filters by store so far. Category and distance filters are still missing.
 - **Swipe recommendations:** `recommendProducts` in `web/src/lib/products.ts` ranks by likes from similar users, then by profile. Vegan and vegetarian rule out unsuitable products. Prices, stores and the mock personas' swipes are made up.
 - **Images and nutrition:** They come from Open Food Facts and are stored in `web/db/seed-products.sql`. The licence requires the visible credit in the app, see `web/db/README.md`.
 - **Offers and stores are mock data:** Don't build real scrapers. Stores (for example Hofer, Billa, Spar) and offers come from a fixed data set in the database.
