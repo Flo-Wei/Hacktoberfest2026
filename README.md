@@ -76,3 +76,9 @@ Keep in mind:
 - `create_project` and `send_message` spend Lovable build credits.
 - `deploy_project` publishes a public URL on Free and Pro plans.
 - `query_database` can change data and schema in the project's database.
+
+## AI disclosure
+
+This project was built with AI assistance. We used [Claude Code](https://code.claude.com/docs) to write code and documentation.
+
+The app also uses AI at runtime. Krabby's replies come from Gemma through OpenRouter, and its voice and speech recognition come from ElevenLabs. Krabby's replies and voice are AI-generated and can contain mistakes.
