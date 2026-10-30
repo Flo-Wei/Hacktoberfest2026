@@ -10,13 +10,20 @@ const SQL_DIR = path.join(process.cwd(), "db");
 async function open() {
   await mkdir(DATA_DIR, { recursive: true });
   const db = new PGlite(DATA_DIR);
-  await db.exec(await readFile(path.join(SQL_DIR, "schema.sql"), "utf8"));
+  const run = async (file: string) =>
+    db.exec(await readFile(path.join(SQL_DIR, file), "utf8"));
+  const isEmpty = async (from: string) => {
+    const { rows } = await db.query<{ count: number }>(
+      `select count(*)::int as count from ${from}`,
+    );
+    return rows[0].count === 0;
+  };
 
-  const { rows } = await db.query<{ count: number }>(
-    "select count(*)::int as count from users where is_mock",
-  );
-  if (rows[0].count === 0) {
-    await db.exec(await readFile(path.join(SQL_DIR, "seed.sql"), "utf8"));
+  await run("schema.sql");
+  if (await isEmpty("users where is_mock")) await run("seed.sql");
+  if (await isEmpty("products")) {
+    await run("seed-products.sql");
+    await run("seed-swipes.sql");
   }
   return db;
 }
