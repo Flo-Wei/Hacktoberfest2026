@@ -1,0 +1,7 @@
+.data
+.env*
+.next
+node_modules
+.dockerignore
+Dockerfile
+npm-debug.log*
