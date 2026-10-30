@@ -1,12 +1,15 @@
 import { query } from "./db";
-import { listCookableOffers, type Offer } from "./offers";
-import { askGemma, hasOpenRouterKey } from "./openrouter";
+import { generateText } from "./krabby/model";
 import { DIETS, GOAL_TAGS } from "./options";
+import { searchOffers, type NearbyOffer } from "./products";
 import type { User } from "./users";
 
+const MAX_OFFERS = 200;
+const COOK_TIMEOUT_MS = 60_000;
+
 export type MealProduct = Pick<
-  Offer,
-  "id" | "name" | "store" | "unit" | "regular_cents" | "discount_cents" | "branch" | "distance_km"
+  NearbyOffer,
+  "id" | "name" | "store" | "unit" | "regular_cents" | "discount_cents" | "nearest_store" | "nearest_km"
 >;
 
 export type Meal = {
@@ -46,18 +49,18 @@ export async function getMeal(id: string, user: User) {
   const products = await query<MealProduct>(
     `select
        p.id, p.name, p.store, p.unit, p.regular_cents, p.discount_cents,
-       b.name as branch, b.distance_km
+       nearest.name as nearest_store, nearest.distance_km as nearest_km
      from meal_products mp
      join products p on p.id = mp.product_id
      left join lateral (
        select s.name, s.distance_km
        from stores s
-       where s.chain = p.store and s.city = $2
+       where s.store = p.store and s.city = $2
        order by s.distance_km
        limit 1
-     ) b on true
+     ) nearest on true
      where mp.meal_id = $1::uuid
-     order by b.distance_km, p.store, p.name`,
+     order by nearest.distance_km, p.store, p.name`,
     [id, user.city],
   );
   return { ...meal, products };
@@ -108,11 +111,13 @@ export async function recommendCommunityMeal(user: User, shownIds: string[]) {
   return match ? getMeal(match.id, user) : null;
 }
 
-function buildPrompt(user: User, offers: Offer[], votes: { title: string; liked: boolean }[], wish: string) {
+const SYSTEM = "You are Krabby, the cooking assistant in a grocery discount app.";
+
+function buildPrompt(user: User, offers: NearbyOffer[], votes: { title: string; liked: boolean }[], wish: string) {
   const titles = (liked: boolean) =>
     votes.filter((vote) => vote.liked === liked).map((vote) => vote.title).join("; ") || "none";
 
-  return `You are Krabby, the cooking assistant in a grocery discount app. Suggest one recipe.
+  return `Suggest one recipe.
 
 Profile:
 - Goals: ${user.goals.join(", ") || "none"}
@@ -138,7 +143,7 @@ Answer with JSON only, in this shape:
 
 // The model's reply is untrusted: only offers from the list survive, and prices
 // are read from the database later, so it can't make up either.
-function parseRecipe(reply: string, offers: Offer[]): Recipe {
+function parseRecipe(reply: string, offers: NearbyOffer[]): Recipe {
   const data = JSON.parse(reply.slice(reply.indexOf("{"), reply.lastIndexOf("}") + 1));
 
   const strings = (value: unknown) =>
@@ -170,12 +175,12 @@ function parseRecipe(reply: string, offers: Offer[]): Recipe {
 }
 
 // Used without an API key, so the app runs for everyone.
-function mockRecipe(user: User, offers: Offer[], wish: string): Recipe {
+function mockRecipe(user: User, offers: NearbyOffer[], wish: string): Recipe {
   const wanted = [...user.preferences, ...user.goals.flatMap((goal) => GOAL_TAGS[goal] ?? [])];
   const words = wish.toLowerCase().split(/\W+/).filter((word) => word.length > 2);
 
   function pick(categories: string[]) {
-    const score = (offer: Offer) =>
+    const score = (offer: NearbyOffer) =>
       offer.tags.filter((tag) => wanted.includes(tag)).length +
       3 * words.filter((word) => offer.name.toLowerCase().includes(word)).length +
       Math.random();
@@ -206,12 +211,23 @@ function mockRecipe(user: User, offers: Offer[], wish: string): Recipe {
   };
 }
 
+// What Krabby may cook with: fits the user's diet and wasn't swiped away.
+async function listCookableOffers(user: User) {
+  const diets = user.preferences.filter((preference) => DIETS.includes(preference));
+  const [offers, disliked] = await Promise.all([
+    searchOffers(user.city, {}, MAX_OFFERS),
+    query<{ product_id: string }>("select product_id from swipes where user_id = $1::uuid and not liked", [user.id]),
+  ]);
+  const skipped = new Set(disliked.map((swipe) => swipe.product_id));
+  return offers.filter((offer) => diets.every((diet) => offer.tags.includes(diet)) && !skipped.has(offer.id));
+}
+
 export async function cookMeal(user: User, wish: string) {
   const offers = await listCookableOffers(user);
   let recipe: Recipe;
   let source: Meal["source"];
 
-  if (hasOpenRouterKey()) {
+  if (process.env.OPENROUTER_API_KEY) {
     const votes = await query<{ title: string; liked: boolean }>(
       `select m.title, v.liked
        from meal_votes v
@@ -221,7 +237,8 @@ export async function cookMeal(user: User, wish: string) {
        limit 20`,
       [user.id],
     );
-    recipe = parseRecipe(await askGemma(buildPrompt(user, offers, votes, wish)), offers);
+    const reply = await generateText(SYSTEM, buildPrompt(user, offers, votes, wish), COOK_TIMEOUT_MS);
+    recipe = parseRecipe(reply, offers);
     source = "gemma";
   } else {
     recipe = mockRecipe(user, offers, wish);

@@ -39,17 +39,62 @@ create table if not exists swipes (
 
 create index if not exists swipes_product_id_idx on swipes (product_id);
 
--- Made-up branches. Products have a chain in products.store, so every chain's
--- offers apply to all of its branches.
+-- Offers are matched by name and store when the catalog feed is imported.
+create unique index if not exists products_name_store_idx on products (name, store);
+
 create table if not exists stores (
   id uuid primary key default gen_random_uuid(),
-  chain text not null,
+  store text not null,
   name text not null,
   city text not null,
-  distance_km real not null
+  distance_km real not null,
+  unique (store, name, city)
 );
 
-create index if not exists stores_chain_city_idx on stores (chain, city);
+create table if not exists chats (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references users (id) on delete cascade,
+  closed boolean not null default false,
+  created_at timestamptz not null default now(),
+  last_message_at timestamptz not null default now()
+);
+
+create index if not exists chats_user_id_idx on chats (user_id, last_message_at desc);
+
+-- role 'event' is something the user did in the app that Krabby commented on.
+create table if not exists chat_messages (
+  id uuid primary key default gen_random_uuid(),
+  chat_id uuid not null references chats (id) on delete cascade,
+  role text not null check (role in ('user', 'krabby', 'event')),
+  content text not null,
+  has_photo boolean not null default false,
+  actions text[] not null default '{}',
+  created_at timestamptz not null default now()
+);
+
+create index if not exists chat_messages_chat_id_idx on chat_messages (chat_id, created_at);
+
+-- Photographed products that aren't in the catalog. Swipes can only point to catalog rows.
+create table if not exists photo_products (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references users (id) on delete cascade,
+  name text not null,
+  category text,
+  created_at timestamptz not null default now(),
+  unique (user_id, name)
+);
+
+create table if not exists shopping_list_items (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references users (id) on delete cascade,
+  product_id uuid references products (id) on delete set null,
+  name text not null,
+  quantity text,
+  checked boolean not null default false,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists shopping_list_items_user_id_idx on shopping_list_items (user_id, created_at);
 
 create table if not exists meals (
   id uuid primary key default gen_random_uuid(),

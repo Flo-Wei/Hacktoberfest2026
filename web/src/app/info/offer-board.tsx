@@ -3,16 +3,16 @@
 import { useState } from "react";
 import { ProductImage } from "@/components/product-image";
 import { discountPercent, price } from "@/lib/format";
-import type { Offer } from "@/lib/offers";
+import type { NearbyOffer } from "@/lib/products";
 import { OfferDetails } from "./offer-details";
 
 const ALL = "All";
 
-export function OfferBoard({ offers }: { offers: Offer[] }) {
+export function OfferBoard({ offers }: { offers: NearbyOffer[] }) {
   const [selected, setSelected] = useState(ALL);
   const [collapsed, setCollapsed] = useState<string[]>([]);
   const [category, setCategory] = useState(ALL);
-  const [openOffer, setOpenOffer] = useState<Offer | null>(null);
+  const [openOffer, setOpenOffer] = useState<NearbyOffer | null>(null);
 
   const stores = [...new Set(offers.map((offer) => offer.store))];
   const categories = [...new Set(offers.map((offer) => offer.category))].sort();
@@ -63,7 +63,7 @@ export function OfferBoard({ offers }: { offers: Offer[] }) {
         );
         if (storeOffers.length === 0) return null;
         const isOpen = !collapsed.includes(store);
-        const { branch, distance_km: distance } = storeOffers[0];
+        const { nearest_store: branch, nearest_km: distance } = storeOffers[0];
         return (
           <section key={store} className="space-y-2">
             <h2>

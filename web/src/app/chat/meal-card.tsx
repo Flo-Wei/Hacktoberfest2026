@@ -26,9 +26,9 @@ function ShoppingList({ products }: { products: MealProduct[] }) {
         {groupByStore(products).map(([store, items]) => (
           <section key={store}>
             <h4 className="font-semibold">{store}</h4>
-            {items[0].branch && (
+            {items[0].nearest_store && (
               <p className="text-xs text-stone-600">
-                Nearest: {items[0].branch}, {items[0].distance_km} km
+                Nearest: {items[0].nearest_store}, {items[0].nearest_km} km
               </p>
             )}
             <ul className="mt-1 space-y-1 text-sm">

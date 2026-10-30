@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react";
 import { ProductImage } from "@/components/product-image";
 import { discountPercent, price } from "@/lib/format";
-import type { Offer } from "@/lib/offers";
+import type { NearbyOffer } from "@/lib/products";
 
-export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => void }) {
+export function OfferDetails({ offer, onClose }: { offer: NearbyOffer; onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -46,9 +46,9 @@ export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => 
           <p className="text-sm text-stone-600">
             {offer.unit} · {offer.category}
           </p>
-          {offer.branch && (
+          {offer.nearest_store && (
             <p className="text-sm text-stone-600">
-              Nearest: {offer.branch}, {offer.distance_km} km
+              Nearest: {offer.nearest_store}, {offer.nearest_km} km
             </p>
           )}
         </div>
