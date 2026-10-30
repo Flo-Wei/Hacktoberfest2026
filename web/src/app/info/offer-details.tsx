@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { ProductImage } from "@/components/product-image";
 import { discountPercent, price } from "@/lib/format";
-import type { Offer } from "@/lib/products";
+import type { Offer } from "@/lib/offers";
 
 export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -46,6 +46,11 @@ export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => 
           <p className="text-sm text-stone-600">
             {offer.unit} · {offer.category}
           </p>
+          {offer.branch && (
+            <p className="text-sm text-stone-600">
+              Nearest: {offer.branch}, {offer.distance_km} km
+            </p>
+          )}
         </div>
         <p>
           <span className="text-2xl font-bold text-orange-600">{price.format(offer.discount_cents / 100)}</span>{" "}

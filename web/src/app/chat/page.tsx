@@ -1,7 +1,7 @@
 import { requireUser } from "@/lib/session";
-import { MockChat } from "./mock-chat";
+import { KrabbyChat } from "./krabby-chat";
 
 export default async function ChatPage() {
   const user = await requireUser();
-  return <MockChat name={user.name} />;
+  return <KrabbyChat name={user.name} />;
 }

@@ -1,0 +1,20 @@
+-- 18 made-up branches: every chain in every city, and a second set in Vienna.
+insert into stores (chain, name, city, distance_km) values
+  ('Hofer', 'Hofer Mariahilfer Straße', 'Vienna', 0.8),
+  ('Billa', 'Billa Neubaugasse', 'Vienna', 0.5),
+  ('Spar', 'Spar Westbahnhof', 'Vienna', 1.2),
+  ('Hofer', 'Hofer Favoriten', 'Vienna', 4.6),
+  ('Billa', 'Billa Praterstern', 'Vienna', 3.9),
+  ('Spar', 'Spar Donauzentrum', 'Vienna', 6.3),
+  ('Hofer', 'Hofer Annenstraße', 'Graz', 1.4),
+  ('Billa', 'Billa Jakominiplatz', 'Graz', 0.6),
+  ('Spar', 'Spar Lend', 'Graz', 2.1),
+  ('Hofer', 'Hofer Urfahr', 'Linz', 2.3),
+  ('Billa', 'Billa Landstraße', 'Linz', 0.7),
+  ('Spar', 'Spar Hauptbahnhof', 'Linz', 1.5),
+  ('Hofer', 'Hofer Lehen', 'Salzburg', 1.9),
+  ('Billa', 'Billa Linzer Gasse', 'Salzburg', 0.9),
+  ('Spar', 'Spar Europark', 'Salzburg', 3.4),
+  ('Hofer', 'Hofer Pradl', 'Innsbruck', 2.2),
+  ('Billa', 'Billa Maria-Theresien-Straße', 'Innsbruck', 0.4),
+  ('Spar', 'Spar Wilten', 'Innsbruck', 1.3);

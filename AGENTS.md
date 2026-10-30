@@ -41,8 +41,8 @@ Shows which offers are available in which nearby store, with filters for store, 
 - **First version runs locally:** The app lives in `web/` (Next.js, TypeScript, Tailwind). It will later move to Lovable or Vercel, the target is still open. Python is not used for features, the package in `src/grabby` is only the original scaffold.
 - **The database is Postgres:** Locally it runs on PGlite with nothing to install. The data lives in `web/.data/` and is not committed. Only `web/src/lib/db.ts` knows about PGlite. The schema and mock data are plain SQL in `web/db/`, so moving to Supabase or Vercel Postgres stays simple.
 - **No real login yet:** Onboarding creates a profile, and a cookie remembers the user ID (`web/src/lib/session.ts`). `/personas` switches to any of the 30 mock personas.
-- **Still placeholders:** The chat replies with a fixed mock text.
-- **Info board:** `/info` lists all offers per store in a card grid and only filters by store so far. Category and distance filters are still missing.
+- **Krabby recipes:** The chat suggests meals (`web/src/lib/meals.ts`). "Suggest a meal" first looks for a meal liked by similar users, otherwise Gemma cooks a new one and it's saved for others. A typed wish always gets a new recipe. Gemma's reply is checked: only products from the offer list are kept, and prices come from the database. Without `OPENROUTER_API_KEY` a simple mock recipe is used. Offers, product photos and speech are still missing.
+- **Info board:** `/info` lists all offers per store in a card grid with the nearest branch, and filters by store and category. The distance filter is still missing.
 - **Swipe recommendations:** `recommendProducts` in `web/src/lib/products.ts` ranks by likes from similar users, then by profile. Vegan and vegetarian rule out unsuitable products. Prices, stores and the mock personas' swipes are made up.
 - **Images and nutrition:** They come from Open Food Facts and are stored in `web/db/seed-products.sql`. The licence requires the visible credit in the app, see `web/db/README.md`.
 - **Offers and stores are mock data:** Don't build real scrapers. Stores (for example Hofer, Billa, Spar) and offers come from a fixed data set in the database.
@@ -61,7 +61,7 @@ Shows which offers are available in which nearby store, with filters for store, 
 
 The keys are listed in `.env.example`. Add new keys there as well. Keys the app needs at runtime belong in the hosting project's secrets and must never end up in frontend code.
 
-- **Gemma:** runs through the hosted Gemini API with `GEMINI_API_KEY`. The available models are `gemma-4-26b-a4b-it` and `gemma-4-31b-it`. Test before building whether they handle images and audio as needed.
+- **Gemma:** runs through OpenRouter with `OPENROUTER_API_KEY` (`web/src/lib/openrouter.ts`). The default model is `google/gemma-4-31b-it:free`, `OPENROUTER_MODEL` overrides it. Test before building whether it handles images and audio as needed.
 - **ElevenLabs:** uses `ELEVENLABS_API_KEY`.
 - **Lovable:** runs through the `lovable` MCP server and the `lovable-mcp` skill. The server uses per-person OAuth and needs no key.
 - **Lovable REST API:** `LOV_PUBLIC_API_KEY` is optional and needs a Business or Enterprise workspace. Lovable reserves secret names starting with `LOVABLE_`, so don't use that prefix.
@@ -95,7 +95,7 @@ uv add <package>                # add a dependency, then commit pyproject.toml a
 uv build                        # build the package
 ```
 
-There is no test runner yet. Nothing loads `.env` automatically, so commands that need API keys must pass `--env-file .env`.
+There is no test runner yet. The web app loads the root `.env` in `web/next.config.ts`. Nothing else loads it automatically, so other commands that need API keys must pass `--env-file .env`.
 
 ## Docker
 

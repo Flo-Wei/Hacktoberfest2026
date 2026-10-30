@@ -3,6 +3,8 @@
 - `seed.sql`: 30 fictional personas.
 - `seed-products.sql`: 60 products with made-up stores and prices. Images and nutrition come from Open Food Facts.
 - `seed-swipes.sql`: generated swipes for the personas.
+- `seed-stores.sql`: 18 made-up branches with a distance per city.
+- `seed-meals.sql`: 10 starter meals with generated votes from the personas.
 
 ## Open Food Facts
 

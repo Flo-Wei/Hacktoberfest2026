@@ -1,11 +1,11 @@
 import { OffCredit } from "@/components/off-credit";
-import { listOffers } from "@/lib/products";
+import { listOffers } from "@/lib/offers";
 import { requireUser } from "@/lib/session";
 import { OfferBoard } from "./offer-board";
 
 export default async function InfoPage() {
-  await requireUser();
-  const offers = await listOffers();
+  const user = await requireUser();
+  const offers = await listOffers(user.city);
 
   return (
     <div className="space-y-4">

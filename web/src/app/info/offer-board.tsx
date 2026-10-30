@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ProductImage } from "@/components/product-image";
 import { discountPercent, price } from "@/lib/format";
-import type { Offer } from "@/lib/products";
+import type { Offer } from "@/lib/offers";
 import { OfferDetails } from "./offer-details";
 
 const ALL = "All";
@@ -11,9 +11,11 @@ const ALL = "All";
 export function OfferBoard({ offers }: { offers: Offer[] }) {
   const [selected, setSelected] = useState(ALL);
   const [collapsed, setCollapsed] = useState<string[]>([]);
+  const [category, setCategory] = useState(ALL);
   const [openOffer, setOpenOffer] = useState<Offer | null>(null);
 
   const stores = [...new Set(offers.map((offer) => offer.store))];
+  const categories = [...new Set(offers.map((offer) => offer.category))].sort();
   const visible = selected === ALL ? stores : [selected];
 
   function selectStore(store: string) {
@@ -28,23 +30,40 @@ export function OfferBoard({ offers }: { offers: Offer[] }) {
 
   return (
     <div className="space-y-4">
-      <div className="sticky top-0 z-10 -mx-4 flex gap-2 overflow-x-auto bg-white px-4 py-2">
-        {[ALL, ...stores].map((store) => (
-          <button
-            key={store}
-            onClick={() => selectStore(store)}
-            aria-pressed={selected === store}
-            className={`rounded-full px-3 py-1 text-sm font-medium ${
-              selected === store ? "bg-orange-600 text-white" : "bg-orange-100"
-            }`}
-          >
-            {store}
-          </button>
-        ))}
+      <div className="sticky top-0 z-10 -mx-4 space-y-2 bg-white px-4 py-2">
+        <div className="flex gap-2 overflow-x-auto">
+          {[ALL, ...stores].map((store) => (
+            <button
+              key={store}
+              onClick={() => selectStore(store)}
+              aria-pressed={selected === store}
+              className={`rounded-full px-3 py-1 text-sm font-medium ${
+                selected === store ? "bg-orange-600 text-white" : "bg-orange-100"
+              }`}
+            >
+              {store}
+            </button>
+          ))}
+        </div>
+        <select
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
+          aria-label="Filter by category"
+          className="w-full rounded-lg border border-stone-300 bg-white px-3 py-1 text-sm"
+        >
+          <option value={ALL}>All categories</option>
+          {categories.map((name) => (
+            <option key={name}>{name}</option>
+          ))}
+        </select>
       </div>
       {visible.map((store) => {
-        const storeOffers = offers.filter((offer) => offer.store === store);
+        const storeOffers = offers.filter(
+          (offer) => offer.store === store && (category === ALL || offer.category === category),
+        );
+        if (storeOffers.length === 0) return null;
         const isOpen = !collapsed.includes(store);
+        const { branch, distance_km: distance } = storeOffers[0];
         return (
           <section key={store} className="space-y-2">
             <h2>
@@ -62,6 +81,11 @@ export function OfferBoard({ offers }: { offers: Offer[] }) {
                 <span className="text-sm text-stone-600">{storeOffers.length} offers</span>
               </button>
             </h2>
+            {branch && (
+              <p className="text-sm text-stone-600">
+                Nearest: {branch}, {distance} km
+              </p>
+            )}
             <div hidden={!isOpen} className={isOpen ? "grid grid-cols-2 gap-3" : undefined}>
               {storeOffers.map((offer) => (
                 <article key={offer.id}>

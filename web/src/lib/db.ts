@@ -7,7 +7,14 @@ import { PGlite } from "@electric-sql/pglite";
 // replace this file and run the SQL_FILES there in order.
 const DATA_DIR = path.join(process.cwd(), ".data", "pglite");
 const SQL_DIR = path.join(process.cwd(), "db");
-const SQL_FILES = ["schema.sql", "seed.sql", "seed-products.sql", "seed-swipes.sql"];
+const SQL_FILES = [
+  "schema.sql",
+  "seed.sql",
+  "seed-products.sql",
+  "seed-swipes.sql",
+  "seed-stores.sql",
+  "seed-meals.sql",
+];
 
 async function open() {
   await mkdir(DATA_DIR, { recursive: true });
