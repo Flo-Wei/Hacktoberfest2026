@@ -1,0 +1,18 @@
+# Fixed name, so the database volume doesn't depend on the folder name.
+name: grabby
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    # API keys stay out of the image and are only passed in at runtime.
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - data:/app/.data
+    restart: unless-stopped
+
+volumes:
+  data:
