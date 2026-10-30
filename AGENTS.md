@@ -34,7 +34,10 @@ Zeigt, welche Angebote es in welchem Laden in der Nähe gibt, mit Filtern nach L
 
 ## Festgelegte Entscheidungen
 
-- **Alles läuft in Lovable:** Frontend, Login, Datenbank und Serverlogik (Chat, Recommender) werden im Lovable-Projekt gebaut und gehostet. Python wird nicht für Features verwendet, das Paket in `src/grabby` ist nur das ursprüngliche Grundgerüst.
+- **Erste Version läuft lokal:** Die App liegt in `web/` (Next.js, TypeScript, Tailwind). Später zieht sie zu Lovable oder Vercel um, das Ziel ist noch offen. Python wird nicht für Features verwendet, das Paket in `src/grabby` ist nur das ursprüngliche Grundgerüst.
+- **Datenbank ist Postgres:** Lokal läuft PGlite ohne Installation, die Daten liegen in `web/.data/` und werden nicht committet. Nur `web/src/lib/db.ts` kennt PGlite. Schema und Mock-Daten stehen als normales SQL in `web/db/`, damit der Umzug zu Supabase oder Vercel Postgres einfach bleibt.
+- **Noch kein echter Login:** Das Onboarding legt ein Profil an, und ein Cookie merkt sich die User-ID (`web/src/lib/session.ts`). Über `/personas` lässt sich zu einer der 30 Mock-Personen wechseln.
+- **Noch Platzhalter:** Swipe und Infoboard zeigen nur einen Hinweis, der Chat antwortet mit einem festen Mock-Text.
 - **Angebote und Läden sind Mock-Daten:** Keine echten Scraper bauen. Läden (z.B. Hofer, Billa, Spar) und Angebote kommen aus einem festen Datensatz in der Datenbank.
 - **Kein echtes GPS:** Die Stadt und die Entfernung zum Laden stehen in den Mock-Daten.
 
@@ -43,7 +46,7 @@ Zeigt, welche Angebote es in welchem Laden in der Nähe gibt, mit Filtern nach L
 - Für jedes Feature einen eigenen Branch anlegen, z.B. `feature/swipe` oder `feature/krabby-chat`.
 - Wer fertig ist, merged den Branch selbst nach `main`, ohne Pflicht-Review. `main` muss danach weiter funktionieren.
 - Vor dem Mergen den aktuellen Stand von `main` in den eigenen Branch holen.
-- Lovable-Projekte liegen in Lovable und nicht automatisch in diesem Repo. Mit dem Lovable MCP arbeiten alle am selben Projekt und nicht auf Git-Branches, also Änderungen dort im Team absprechen.
+- Falls ihr später Lovable nutzt: Lovable-Projekte liegen in Lovable und nicht automatisch in diesem Repo. Mit dem Lovable MCP arbeiten alle am selben Projekt und nicht auf Git-Branches, also Änderungen dort im Team absprechen.
 - Geheimnisse wie `.env` nie committen.
 
 ## Externe Dienste
@@ -63,6 +66,19 @@ Vor diesen Lovable-Aktionen immer nachfragen:
 
 ## Befehle
 
+Web-App, im Ordner `web/` ausführen:
+
+```bash
+npm install      # Abhängigkeiten installieren
+npm run dev      # App auf http://localhost:3000 starten, legt beim ersten Mal die Datenbank an
+npm run lint     # Linter
+npm run build    # Production-Build, vorher npm run dev beenden
+```
+
+Lokale Datenbank zurücksetzen: Server beenden und `web/.data/` löschen. Beim nächsten Start werden die Mock-Personen neu angelegt. PGlite erlaubt nur einen Prozess pro Datenbank.
+
+Python-Grundgerüst:
+
 ```bash
 uv sync                         # Abhängigkeiten installieren
 cp .env.example .env            # nur beim ersten Mal
@@ -71,4 +87,4 @@ uv add <package>                # Abhängigkeit hinzufügen, dann pyproject.toml
 uv build                        # Paket bauen
 ```
 
-Es gibt noch keinen Test-Runner und keinen Linter. `.env` wird nicht automatisch geladen, Befehle mit API-Keys brauchen also `--env-file .env`.
+Es gibt noch keinen Test-Runner. `.env` wird nicht automatisch geladen, Befehle mit API-Keys brauchen also `--env-file .env`.

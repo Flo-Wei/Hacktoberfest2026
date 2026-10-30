@@ -13,6 +13,18 @@ Hackathon project: food recommendations based on grocery discounts, your profile
     - Chat:
         - kühlschrankfoto
 
+## Run the web app
+
+You need [Node.js](https://nodejs.org) 20 or newer. The local database is created automatically on first start, with 30 mock personas.
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+Then open http://localhost:3000.
+
 ## Setup
 
 You need [uv](https://docs.astral.sh/uv/getting-started/installation/) and [Claude Code](https://code.claude.com/docs). uv installs the right Python version for you.
