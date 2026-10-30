@@ -199,7 +199,7 @@ function mockRecipe(user: User, offers: NearbyOffer[], wish: string): Recipe {
 
   return {
     title: `${picks[0].name} bowl`,
-    description: "A simple mock recipe from today's offers.",
+    description: "A simple recipe from today's offers.",
     minutes: 25,
     pantry: ["Oil", "Salt", "Pepper"],
     steps: [

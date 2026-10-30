@@ -1,0 +1,126 @@
+Use the Impeccable skill for visual direction, hierarchy, typography, accessibility and refinement. Use the shadcn skill for component selection, composition and consistent theming.
+
+Design a warm, friendly web app for an open source project that recommends discounted groceries from BILLA, SPAR and HOFER based on each person’s preferences.
+
+The experience should feel like a helpful shopping companion: approachable, practical, community minded and easy to understand. Make saving money and discovering relevant offers feel pleasant. Keep the interface lightweight and suited to a small open source project.
+
+DESIGN DIRECTION
+
+Use shadcn/ui with its New York style as the component foundation, Radix primitives, Tailwind CSS and Inter Variable. Customize the default appearance to give the product a recognizable personality.
+
+Create a warm, crab inspired identity using terracotta, coral, cream, oat and espresso. A small, friendly crab mascot can add personality to onboarding, empty states and saved preferences. Keep it simple and occasional so the offers remain the focus.
+
+Use gently rounded corners:
+• Buttons and inputs: 10–12px
+• Product cards and panels: 14–16px
+• Preference chips and small badges: pill shaped
+
+Use subtle borders, mostly flat surfaces and soft shadows only where they help establish depth. Group content through spacing, alignment and typography. Avoid excessive card nesting, glass effects, heavy gradients and large decorative backgrounds.
+
+COLOR SYSTEM
+
+Light theme:
+• Page background: warm cream #FAF6F0
+• Cards and panels: ivory #FFFCF7
+• Secondary surfaces: oat #F1E8DD
+• Borders: sand #DDD0C1
+• Primary text: espresso #30221B
+• Secondary text: cocoa #766253
+• Primary actions: terracotta #B9432E
+• Primary action text: ivory #FFFCF7
+• Primary action hover: burnt red #9F3625
+• Selected background: pale peach #FBE7DD
+• Selected text and focus rings: terracotta #B9432E
+
+Dark theme:
+• Page background: deep espresso #1C1512
+• Cards and panels: warm charcoal #261D18
+• Secondary surfaces: dark walnut #211813
+• Borders: brown #49382D
+• Primary text: cream #F8EFE5
+• Secondary text: muted sand #BEA797
+• Primary actions: soft coral #F28B70
+• Primary action text: espresso #29150F
+• Primary action hover: peach coral #F6A087
+• Selected background: dark rust #42271F
+• Selected text and focus rings: soft coral #F28B70
+
+Reserve terracotta and coral for primary actions, selected preferences and useful emphasis. Use sage green for positive states, amber for warnings and a distinct deeper red for errors. Always accompany status colors with text or icons.
+
+Apply the palette through shared shadcn semantic tokens, including background, foreground, card, primary, secondary, muted, accent, border, input and ring. Check contrast in actual component combinations.
+
+TYPOGRAPHY AND SPACING
+
+Use Inter Variable throughout:
+• Body and controls: 15–16px
+• Supporting text and badges: 12–14px
+• Section headings: 20–24px
+• Page headings: 28–36px
+• Product prices: 24–28px with tabular numerals
+
+Use regular, medium and semibold weights with comfortable line heights. Keep headings friendly and concise.
+
+Use a 4px spacing grid:
+• Closely related elements: 8px
+• Component gaps: 12–16px
+• Card padding: 16–20px
+• Section spacing: 24–32px
+
+Make primary controls approximately 44–48px tall and give interactive elements comfortable touch targets.
+
+LAYOUT AND PRODUCT EXPERIENCE
+
+Design mobile first, with a simple header and clear navigation. Let people reach useful offers quickly, with a short preference setup and easy ways to adjust those preferences later.
+
+Prioritize:
+• A personalized feed of discounted groceries
+• Clear filters for retailer, category and supported preferences
+• Easy to understand preference chips
+• A simple way to save interesting offers
+
+Use a responsive product grid with consistent cards. Each offer should make these details easy to scan:
+• Product image and name
+• Retailer
+• Discounted price
+• Previous price and savings when verified
+• Pack size and unit price when available
+• Offer validity when known
+• A brief, truthful explanation of why it matches the person’s preferences
+
+Keep prices visually prominent. Use restrained discount badges and compact retailer identifiers. Preserve retailer logos and their proportions when legitimate assets are available, while keeping the surrounding interface consistent.
+
+Use real product imagery where available. Missing images should have a clean, friendly fallback. Clearly distinguish sample data from real offers.
+
+Use only features supported by the project’s data. Do not imply verified allergens, dietary suitability, local availability, personalized savings or recommendation reasons without evidence. Show unknown or unavailable information honestly.
+
+COMPONENTS AND INTERACTIONS
+
+Compose the interface from shadcn Button, Card, Input, Badge, Checkbox, Select, Tabs, Sheet, Dialog, Tooltip, Skeleton and Alert components as needed.
+
+Use sheets for mobile filters and lightweight dialogs for focused actions. Keep common tasks close to the offer cards.
+
+Use consistent, simple icons with visible labels where meaning could be unclear.
+
+Add subtle 120–200ms transitions for hover, selection and opening surfaces. A small amount of playful mascot motion is welcome when it supports feedback. Respect reduced motion preferences.
+
+Provide thoughtful loading, empty and error states:
+• Loading should preserve the expected layout.
+• No matches should explain which filters can be adjusted.
+• Missing offers should never appear as invented discounts.
+• Errors should explain what happened and offer a clear recovery action.
+
+VOICE AND COPY
+
+Use warm, direct, everyday language. Keep explanations brief and useful. Avoid corporate jargon, technical terminology and exaggerated savings claims.
+
+If the interface is in German, examples of the intended tone are:
+• “Angebote für dich”
+• “Was kaufst du gerne?”
+• “Deine Lieblingsprodukte”
+• “Warum dieses Angebot?”
+• “Noch nichts Passendes dabei?”
+• “Passe deine Vorlieben an”
+
+Present the open source nature quietly through an About or footer link to the repository. Keep the shopping experience focused on finding relevant offers.
+
+Keep typography, spacing and component structure consistent across light and dark themes. The final result should feel welcoming, useful and easy to maintain, with enough personality to be memorable.

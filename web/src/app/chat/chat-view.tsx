@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { requestMeal, switchToPersona } from "@/app/actions";
 import { SpeakButton } from "@/components/speak-button";
+import { Button } from "@/components/ui/button";
 import { transcribeAudio } from "@/lib/krabby/audio";
 import type { Photo, TurnEvent } from "@/lib/krabby/agent";
 import type { ChatMessage } from "@/lib/chats";
@@ -33,10 +34,12 @@ export function ChatView({
   name,
   chatId: initialChatId,
   initialMessages,
+  initialMessage = "",
 }: {
   name: string;
   chatId: string | null;
   initialMessages: Shown[];
+  initialMessage?: string;
 }) {
   const router = useRouter();
   const [chatId, setChatId] = useState(initialChatId);
@@ -52,6 +55,7 @@ export function ChatView({
   const bottom = useRef<HTMLDivElement>(null);
   const hasScrolled = useRef(false);
   const chatRef = useRef(chatId);
+  const sentInitial = useRef(false);
 
   useEffect(() => {
     // Leave the browser at a linked comment on first load.
@@ -213,11 +217,20 @@ export function ChatView({
     }
   }
 
+  // A question from the home page arrives in the URL. Clearing it stops a reload from sending it again.
+  useEffect(() => {
+    if (!initialMessage || sentInitial.current) return;
+    sentInitial.current = true;
+    window.history.replaceState(null, "", "/chat");
+    void send(initialMessage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
         <h1 className="text-2xl font-bold">Krabby</h1>
-        <div className="flex gap-3 text-sm text-stone-600">
+        <div className="flex gap-3 text-sm text-muted-foreground">
           <button type="button" onClick={() => void startNewChat()} className="underline">
             New chat
           </button>
@@ -229,11 +242,11 @@ export function ChatView({
 
       <ul className="space-y-2">
         {messages.length === 0 && (
-          <li className="mr-8 rounded-lg bg-white p-3">Hey {name}, I&apos;m Krabby! Ask me about offers, send me a product photo, or tell me what to put on your list.</li>
+          <li className="mr-8 rounded-lg bg-card p-3">Hey {name}, I&apos;m Krabby! Ask me about offers, send me a product photo, or tell me what to put on your list.</li>
         )}
         {messages.map((message) =>
           message.role === "event" ? (
-            <li key={message.id} className="text-center text-xs text-stone-600">
+            <li key={message.id} className="text-center text-xs text-muted-foreground">
               {message.content}
             </li>
           ) : (
@@ -241,8 +254,8 @@ export function ChatView({
               <div
                 className={
                   message.role === "user"
-                    ? "ml-8 whitespace-pre-wrap rounded-lg bg-orange-600 p-3 text-white"
-                    : "mr-8 whitespace-pre-wrap rounded-lg bg-white p-3"
+                    ? "ml-8 whitespace-pre-wrap rounded-lg bg-primary p-3 text-primary-foreground"
+                    : "mr-8 whitespace-pre-wrap rounded-lg bg-card p-3"
                 }
               >
                 {message.has_photo && <span className="block text-sm opacity-80">📷 Photo</span>}
@@ -253,36 +266,31 @@ export function ChatView({
             </li>
           ),
         )}
-        {streamed && <li className="mr-8 whitespace-pre-wrap rounded-lg bg-white p-3">{streamed}</li>}
+        {streamed && <li className="mr-8 whitespace-pre-wrap rounded-lg bg-card p-3">{streamed}</li>}
         {status && (
-          <li aria-live="polite" className="mr-8 text-sm text-stone-600">
+          <li aria-live="polite" className="mr-8 text-sm text-muted-foreground">
             🦀 {status}...
           </li>
         )}
       </ul>
 
-      {error && <p className="text-sm text-red-700">{error}</p>}
+      {error && <p className="text-sm text-destructive">{error}</p>}
       <div ref={bottom} />
 
-      <div className="sticky bottom-12 space-y-2 bg-[#fff7f0] py-2">
+      <div className="sticky bottom-12 space-y-2 bg-background py-2">
         {photo && (
-          <p className="flex items-center justify-between rounded-lg bg-orange-100 px-3 py-1 text-sm">
+          <p className="flex items-center justify-between rounded-lg bg-secondary px-3 py-1 text-sm">
             📷 Photo attached
             <button type="button" onClick={() => setPhoto(null)} className="underline">
               Remove
             </button>
           </p>
         )}
-        <button
-          type="button"
-          disabled={busy}
-          onClick={() => void suggestMeal()}
-          className="w-full rounded-lg border border-orange-600 bg-white py-2 font-semibold text-orange-600 disabled:opacity-60"
-        >
+        <Button type="button" variant="outline" disabled={busy} onClick={() => void suggestMeal()} className="w-full">
           Suggest a meal
-        </button>
+        </Button>
         <form onSubmit={(event) => void submit(event)} className="flex gap-2">
-          <label className="flex cursor-pointer items-center rounded-lg border border-stone-300 bg-white px-3" aria-label="Add a photo">
+          <label className="flex cursor-pointer items-center rounded-lg border border-border bg-card px-3" aria-label="Add a photo">
             📷
             <input type="file" accept="image/*" onChange={(event) => void choosePhoto(event)} className="hidden" />
           </label>
@@ -291,10 +299,10 @@ export function ChatView({
             onChange={(event) => setDraft(event.target.value)}
             placeholder={recorder ? "Listening..." : "Message Krabby"}
             aria-label="Message Krabby"
-            className="min-w-0 flex-1 rounded-lg border border-stone-300 bg-white px-3 py-2"
+            className="min-w-0 flex-1 rounded-lg border border-border bg-card px-3 py-2"
           />
           {draft.trim() || photo ? (
-            <button disabled={busy} className="rounded-lg bg-orange-600 px-4 font-semibold text-white disabled:opacity-60">
+            <button disabled={busy} className="rounded-lg bg-primary px-4 font-semibold text-primary-foreground disabled:opacity-60">
               Send
             </button>
           ) : (
@@ -303,16 +311,16 @@ export function ChatView({
               disabled={busy}
               onClick={() => void toggleRecording()}
               aria-label={recorder ? "Stop recording" : "Record a voice message"}
-              className="rounded-lg border border-stone-300 bg-white px-3 disabled:opacity-60"
+              className="rounded-lg border border-border bg-card px-3 disabled:opacity-60"
             >
               {recorder ? "⏹" : "🎤"}
             </button>
           )}
         </form>
-        <button type="button" disabled={busy} onClick={() => setVoiceMode(true)} className="text-sm text-stone-600 underline disabled:opacity-60">
+        <button type="button" disabled={busy} onClick={() => setVoiceMode(true)} className="text-sm text-muted-foreground underline disabled:opacity-60">
           Hands-free voice mode
         </button>
-        <p className="text-xs text-stone-600">
+        <p className="text-xs text-muted-foreground">
           Contains data from{" "}
           <a href="https://world.openfoodfacts.org" target="_blank" rel="noreferrer" className="underline">
             Open Food Facts

@@ -27,10 +27,10 @@ export function KrabbyPopup() {
   if (!comment) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-16 z-20 mx-auto max-w-md px-4">
-      <div role="status" className="rounded-xl border border-orange-200 bg-white p-3 shadow-lg">
+    <div className="fixed inset-x-0 bottom-[calc(var(--bottom-nav-height)+1rem)] z-40 mx-auto max-w-md px-4">
+      <div role="status" className="rounded-xl border border-border bg-card p-3 shadow-lg">
         <Link href={`/chat/${comment.chatId}#message-${comment.messageId}`} onClick={() => setComment(null)}>
-          <span className="text-sm font-bold text-orange-600">🦀 Krabby</span>
+          <span className="text-sm font-bold text-selected-foreground">🦀 Krabby</span>
           <p>{comment.text}</p>
         </Link>
         <SpeakButton messageId={comment.messageId} />

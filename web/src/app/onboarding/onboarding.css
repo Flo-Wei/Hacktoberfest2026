@@ -1,0 +1,78 @@
+/* The art is torn by a real alpha mask, so the paper shows through in both themes. */
+.onboard-art {
+  mask: url("/onboarding/tear-bottom.svg") center / 100% 100% no-repeat;
+}
+
+/* A warm multiply turns the day into dusk, and keeps cream text at 4.5:1 on the sky. */
+.dark .onboard-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklab, var(--muted-foreground) 58%, var(--background));
+  mix-blend-mode: multiply;
+}
+
+/* The one sanctioned glass surface: it sits on the art, controls inside stay solid. */
+.onboard-glass {
+  /* Stronger than the page token, because art can sit behind this text. */
+  --muted-foreground: color-mix(in oklab, var(--foreground) 80%, var(--card));
+
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px -12px rgb(48 34 27 / 0.28);
+  backdrop-filter: blur(24px) saturate(1.4);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .onboard-glass {
+    background: var(--card);
+  }
+}
+
+@media (min-width: 64rem) {
+  .onboard-art {
+    mask-image: url("/onboarding/tear-right.svg");
+  }
+}
+
+@keyframes onboard-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes onboard-focus {
+  from {
+    filter: blur(6px);
+  }
+}
+
+@keyframes onboard-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-14px);
+  }
+  70% {
+    transform: translateY(0) scaleY(0.94);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .onboard-glass {
+    animation: onboard-rise 420ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  /* Blurring the glass itself would switch its backdrop off, so the content sharpens. */
+  .onboard-sharpen {
+    animation: onboard-focus 420ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  .onboard-hop {
+    animation: onboard-hop 560ms cubic-bezier(0.16, 1, 0.3, 1) 120ms;
+  }
+}

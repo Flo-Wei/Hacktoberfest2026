@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { recordMealVote } from "@/app/actions";
-import { price } from "@/lib/format";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatPrice } from "@/lib/format";
 import type { Meal, MealProduct } from "@/lib/meals";
 
 function groupByStore(products: MealProduct[]) {
@@ -18,16 +20,16 @@ function ShoppingList({ products }: { products: MealProduct[] }) {
   const saved = products.reduce((sum, product) => sum + product.regular_cents - product.discount_cents, 0);
 
   return (
-    <details className="rounded-xl bg-stone-100 p-3">
+    <details className="rounded-lg bg-secondary p-3">
       <summary className="cursor-pointer font-semibold">
-        Shopping list · {price.format(total / 100)}, you save {price.format(saved / 100)}
+        Shopping list · {formatPrice(total)}, you save {formatPrice(saved)}
       </summary>
       <div className="mt-2 space-y-3">
         {groupByStore(products).map(([store, items]) => (
           <section key={store}>
             <h4 className="font-semibold">{store}</h4>
             {items[0].nearest_store && (
-              <p className="text-xs text-stone-600">
+              <p className="text-xs text-muted-foreground">
                 Nearest: {items[0].nearest_store}, {items[0].nearest_km} km
               </p>
             )}
@@ -35,11 +37,11 @@ function ShoppingList({ products }: { products: MealProduct[] }) {
               {items.map((item) => (
                 <li key={item.id} className="flex justify-between gap-2">
                   <span>
-                    {item.name} <span className="text-stone-600">({item.unit})</span>
+                    {item.name} <span className="text-muted-foreground">({item.unit})</span>
                   </span>
                   <span className="whitespace-nowrap">
-                    <span className="font-semibold text-orange-600">{price.format(item.discount_cents / 100)}</span>{" "}
-                    <span className="text-xs text-stone-500 line-through">{price.format(item.regular_cents / 100)}</span>
+                    <span className="font-semibold text-selected-foreground">{formatPrice(item.discount_cents)}</span>{" "}
+                    <del className="text-xs text-muted-foreground">{formatPrice(item.regular_cents)}</del>
                   </span>
                 </li>
               ))}
@@ -68,55 +70,49 @@ export function MealCard({ meal }: { meal: Meal }) {
   }
 
   return (
-    <article className="space-y-3 rounded-2xl bg-white p-4 shadow-md">
-      <div>
-        <h3 className="text-xl font-bold">{meal.title}</h3>
-        <p className="text-sm text-stone-600">
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-xl tracking-tight">{meal.title}</CardTitle>
+        <CardDescription>
           {meal.minutes} min · {meal.likes} {meal.likes === 1 ? "like" : "likes"}
-        </p>
-        {meal.description && <p className="mt-1 text-sm">{meal.description}</p>}
-      </div>
-      <div>
-        <h4 className="font-semibold">Ingredients</h4>
-        <ul className="list-disc pl-5 text-sm">
-          {meal.products.map((product) => (
-            <li key={product.id}>
-              {product.name} ({product.unit})
-            </li>
-          ))}
-          {meal.pantry.map((item) => (
-            <li key={item} className="text-stone-600">
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h4 className="font-semibold">Steps</h4>
-        <ol className="list-decimal space-y-1 pl-5 text-sm">
-          {meal.steps.map((step, index) => (
-            <li key={index}>{step}</li>
-          ))}
-        </ol>
-      </div>
-      <ShoppingList products={meal.products} />
-      <div className="grid grid-cols-2 gap-2">
-        <button
-          onClick={() => castVote(false)}
-          aria-pressed={vote === false}
-          className={`rounded-lg border py-2 font-semibold ${vote === false ? "border-stone-800 bg-stone-800 text-white" : "border-stone-300 bg-white"}`}
-        >
-          Dislike
-        </button>
-        <button
-          onClick={() => castVote(true)}
-          aria-pressed={vote === true}
-          className={`rounded-lg border py-2 font-semibold ${vote === true ? "border-orange-600 bg-orange-600 text-white" : "border-orange-600 bg-white text-orange-600"}`}
-        >
-          Like
-        </button>
-      </div>
-      {error && <p className="text-sm text-red-700">Couldn&apos;t save that. Please try again.</p>}
-    </article>
+        </CardDescription>
+        {meal.description && <p className="text-sm">{meal.description}</p>}
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <div>
+          <h4 className="font-semibold">Ingredients</h4>
+          <ul className="list-disc pl-5 text-sm">
+            {meal.products.map((product) => (
+              <li key={product.id}>
+                {product.name} ({product.unit})
+              </li>
+            ))}
+            {meal.pantry.map((item) => (
+              <li key={item} className="text-muted-foreground">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold">Steps</h4>
+          <ol className="list-decimal space-y-1 pl-5 text-sm">
+            {meal.steps.map((step, index) => (
+              <li key={index}>{step}</li>
+            ))}
+          </ol>
+        </div>
+        <ShoppingList products={meal.products} />
+        <div className="grid grid-cols-2 gap-2">
+          <Button variant={vote === false ? "secondary" : "outline"} aria-pressed={vote === false} onClick={() => castVote(false)}>
+            Dislike
+          </Button>
+          <Button variant={vote === true ? "default" : "outline"} aria-pressed={vote === true} onClick={() => castVote(true)}>
+            Like
+          </Button>
+        </div>
+        {error && <p className="text-sm text-destructive">Couldn&apos;t save that. Please try again.</p>}
+      </CardContent>
+    </Card>
   );
 }

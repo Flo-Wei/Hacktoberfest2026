@@ -1,28 +1,19 @@
 "use client";
 
 import { useState } from "react";
-
-const CATEGORY_ICONS: Record<string, string> = {
-  "Meat & Fish": "🍗",
-  "Vegan & Vegetarian": "🌱",
-  Dairy: "🥛",
-  "Fruit & Vegetables": "🥦",
-  Pantry: "🥫",
-  "Ready Meals": "🍱",
-  "Sweets & Snacks": "🍫",
-  Bakery: "🥐",
-  Drinks: "🧃",
-};
+import { cn } from "cn";
+import { Crab } from "@/components/crab";
 
 type Props = {
-  product: { id: string; name: string; category: string; image_url: string | null };
+  product: { id: string; name: string; image_url: string | null };
+  className?: string;
 };
 
-export function ProductImage({ product }: Props) {
+export function ProductImage({ product, className }: Props) {
   const [failed, setFailed] = useState(false);
 
   return (
-    <div className="flex h-28 items-center justify-center overflow-hidden rounded-xl bg-orange-50">
+    <div className={cn("flex items-center justify-center bg-secondary", className)}>
       {product.image_url && !failed ? (
         // External store links, so next/image would need every host configured.
         // eslint-disable-next-line @next/next/no-img-element
@@ -32,12 +23,10 @@ export function ProductImage({ product }: Props) {
           alt={product.name}
           draggable={false}
           onError={() => setFailed(true)}
-          className="h-full w-full object-contain"
+          className="max-h-full max-w-full rounded-lg object-contain"
         />
       ) : (
-        <span aria-hidden className="text-6xl">
-          {CATEGORY_ICONS[product.category] ?? "🛒"}
-        </span>
+        <Crab size={96} />
       )}
     </div>
   );

@@ -6,6 +6,7 @@ create table if not exists users (
   city text not null,
   goals text[] not null default '{}',
   preferences text[] not null default '{}',
+  avatar text,
   is_mock boolean not null default false,
   created_at timestamptz not null default now()
 );
