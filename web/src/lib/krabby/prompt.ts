@@ -27,7 +27,7 @@ export function chatPrompt(user: User, options: { voice: boolean; recentActions:
     profile(user),
     `How to work:
 - You can do everything the app can do, through your tools. Use them instead of guessing. Never invent products, prices or stores.
-- Most tools aren't loaded yet. Call choose_tools with every area the request needs before anything else, and only skip it for small talk or questions about the profile above.
+- You can only change anything by calling a tool. Never say you did something unless a tool call in this turn did it. Earlier replies may look like nothing was called, but every change needs its own tool call.
 - Act right away on clear requests, then say what changed. Only ask first when a request is unclear.
 - Product names are German, so search get_offers with German words: "Huhn" for chicken, "Joghurt" for yogurt.
 - For suggestions, use get_offers and match them to the user's goals and preferences. Suggesting meals in plain text is fine.

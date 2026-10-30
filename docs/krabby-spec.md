@@ -39,17 +39,17 @@ Krabby acts right away on clear requests and says what changed. It only asks fir
 
 Creating a new profile stays in onboarding, because you need a profile to open the chat.
 
-Gemma gets much slower with many tools: usually a few seconds with up to 8, but 20 to 36 seconds with all 15. So each tool belongs to one or more areas, and Krabby starts each turn with only `choose_tools`, which loads the areas a request needs. Keep this in mind when adding tools.
-
 Out of scope: fridge photos, a recipe database and meal tracking. Krabby can still suggest meals in plain text.
 
 ## Model
 
-- Replies and comments run on `gemma-4-26b-a4b-it` only. Gemma 4 is a project requirement, so don't add a non-Gemma fallback. `gemma-4-31b-it` isn't used: it failed most requests and typically took over a minute.
-- Tested behaviour: tools, multi-step tool use, streaming and images work. Audio is rejected with a 400.
-- About 1 in 4 requests returned a temporary 500, and some calls stall, so `web/src/lib/krabby/model.ts` retries model calls and gives up early on a silent one. Tools never re-run on a retry.
-- The free tier allows only 16,000 input tokens per minute for this model, shared by everyone using the key, and Gemma has no paid tier. Every step of a turn resends the prompt, tools and history. So keep tool results compact, and refer to products and list items by name rather than by ID. On a 429, Krabby waits as long as the API asks, and comments are skipped.
+- Replies and comments run on `google/gemma-4-26b-a4b-it` through OpenRouter, using the `openai` SDK with OpenRouter's base URL and `OPENROUTER_API_KEY`. Gemma 4 is a project requirement, so don't switch to a non-Gemma model.
+- Don't use Google's hosted Gemma API. Its free tier allows 16,000 input tokens a minute, often returned 500s, and took 20 to 36 seconds with all tools loaded. Through OpenRouter the same calls took under 3 seconds.
+- Each turn forces a tool call on every step (`tool_choice: "required"`) until Krabby calls `ready_to_reply`, then writes the reply with tools turned off. Left to choose, Gemma copied earlier replies and claimed changes it never made. Don't remove this: in testing, prompt wording alone got 10 of 18 requests right, and this got 18 of 18.
+- DeepInfra is the first-choice provider because it's fast and honours `tool_choice`. Cloudflare ignores it. DeepInfra can't read images, so OpenRouter routes photo turns to another provider.
+- `web/src/lib/krabby/model.ts` retries failed model calls. Tools never re-run on a retry.
 - Replies stream word by word, and Krabby shows what it's doing until the text starts.
+- Every step of a turn resends the tool results, so keep them compact, and refer to products and list items by name rather than by ID.
 
 ## Speech
 
@@ -77,7 +77,7 @@ To add a trigger, call `reportAppEvent` from `web/src/lib/krabby/events.ts` afte
 - Each user has their own saved chats, and each persona has its own.
 - A new chat starts after 3 hours without messages, or when the app is opened fresh. Closing and reopening the app counts. A server restart doesn't.
 - Old chats stay in a list and can be reopened and continued.
-- The model gets the last 20 messages of the current chat, up to 6,000 characters. A new chat starts without the old conversation, but Krabby still has the profile, swipes and shopping list, and can look things up with `search_past_chats`.
+- The model gets the last 20 messages of the current chat. A new chat starts without the old conversation, but Krabby still has the profile, swipes and shopping list, and can look things up with `search_past_chats`.
 - Only text is saved. Photos and recordings are discarded after processing.
 
 ## Product photos

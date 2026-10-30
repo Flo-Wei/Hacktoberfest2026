@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.13",
-    "@google/genai": "^2.32.0",
     "next": "15.5.28",
+    "openai": "^7.45.1",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },

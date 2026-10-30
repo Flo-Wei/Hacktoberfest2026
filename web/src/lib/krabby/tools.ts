@@ -1,4 +1,5 @@
-import { Type, type FunctionDeclaration } from "@google/genai";
+import type { ChatCompletionTool } from "openai/resources/chat/completions";
+import type { FunctionDefinition } from "openai/resources/shared";
 import { searchMessages } from "@/lib/chats";
 import { CITIES, GOALS, PREFERENCES } from "@/lib/options";
 import {
@@ -22,13 +23,7 @@ import { listStores } from "@/lib/stores";
 import { listMockUsers, updateUser, type User } from "@/lib/users";
 
 // The user always comes from the session, so no tool can reach another user's data.
-export type ToolContext = { user: User; chatId: string; areas: Set<Area> };
-
-// Gemma gets much slower with many tools: about 2s with 8 or fewer, about 30s
-// with all of them. So Krabby loads only the areas a request needs.
-export const AREAS = ["offers", "swipes", "profile", "personas", "shopping_list", "past_chats"] as const;
-
-export type Area = (typeof AREAS)[number];
+export type ToolContext = { user: User; chatId: string };
 
 export type ToolOutcome = {
   result: unknown;
@@ -40,8 +35,7 @@ export type ToolOutcome = {
 type Args = Record<string, unknown>;
 
 type Tool = {
-  areas: Area[] | "always";
-  declaration: FunctionDeclaration;
+  declaration: FunctionDefinition;
   // Shown to the user while the tool runs.
   status: string;
   run: (args: Args, context: ToolContext) => Promise<ToolOutcome>;
@@ -49,8 +43,7 @@ type Tool = {
 
 const euros = (cents: number) => `€${(cents / 100).toFixed(2)}`;
 
-// One line per product. Gemma's free tier allows 16,000 input tokens a minute and
-// every step resends these results, so they have to stay small.
+// One line per product, because every step of a turn resends these results.
 function offerLine(offer: Offer) {
   const percent = Math.round((1 - offer.discount_cents / offer.regular_cents) * 100);
   const nutrition =
@@ -58,11 +51,13 @@ function offerLine(offer: Offer) {
   return `${offer.name} | ${offer.store} | ${offer.unit} | ${euros(offer.discount_cents)} (-${percent}%)${nutrition}`;
 }
 
-const MAX_OFFERS = 30;
 const MAX_PAST_MESSAGE_CHARS = 200;
 
+// Gemma sometimes passes a whole line from get_offers as the name.
+const productName = (value: unknown) => text(value)?.split(" | ")[0].trim();
+
 async function resolveProduct(args: Args) {
-  const name = text(args.name);
+  const name = productName(args.name);
   const store = text(args.store);
   return name && store ? findOffer(name, store) : null;
 }
@@ -73,7 +68,7 @@ const strings = (value: unknown) =>
   Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : undefined;
 
 async function resolveListItem(userId: string, name: unknown) {
-  const matches = await findShoppingItems(userId, String(name ?? "").trim());
+  const matches = await findShoppingItems(userId, productName(name) ?? "");
   if (matches.length === 0) return { error: "Nothing like that on the list" };
   if (matches.length > 1) return { error: "Several items match", matches: matches.map((item) => item.name) };
   return matches[0];
@@ -81,45 +76,22 @@ async function resolveListItem(userId: string, name: unknown) {
 
 const TOOLS: Tool[] = [
   {
-    areas: "always",
-    status: "Thinking",
-    declaration: {
-      name: "choose_tools",
-      description:
-        "Load the tools for the app areas this request needs. Call this before using any app data or changing anything. offers: offers and stores. swipes: suggestions, likes, dislikes and photographed products. profile: changing the user's profile. personas: listing and switching personas. shopping_list: the shopping list. past_chats: earlier chats.",
-      parameters: {
-        type: Type.OBJECT,
-        properties: {
-          areas: { type: Type.ARRAY, items: { type: Type.STRING, enum: [...AREAS] } },
-        },
-        required: ["areas"],
-      },
-    },
-    run: async (args, context) => {
-      for (const area of strings(args.areas) ?? []) {
-        if (AREAS.includes(area as Area)) context.areas.add(area as Area);
-      }
-      return { result: { loaded: [...context.areas] } };
-    },
-  },
-  {
-    areas: ["offers", "swipes", "shopping_list"],
     status: "Checking the offers",
     declaration: {
       name: "get_offers",
       description:
         "Search current offers at stores in the user's city. Every product in the catalog is an offer. Use with no filters for all offers.",
       parameters: {
-        type: Type.OBJECT,
+        type: "object",
         properties: {
-          store: { type: Type.STRING, description: "Store chain, for example Hofer, Billa or Spar" },
+          store: { type: "string", description: "Store chain, for example Hofer, Billa or Spar" },
           category: {
-            type: Type.STRING,
+            type: "string",
             description:
               "One of: Bakery, Dairy, Drinks, Fruit & Vegetables, Meat & Fish, Pantry, Ready Meals, Sweets & Snacks, Vegan & Vegetarian",
           },
-          search: { type: Type.STRING, description: "Part of the German product name" },
-          max_distance_km: { type: Type.NUMBER, description: "Only stores within this distance" },
+          search: { type: "string", description: "One German word from the product name, such as Huhn, Milch or Joghurt" },
+          max_distance_km: { type: "number", description: "Only stores within this distance" },
         },
       },
     },
@@ -134,8 +106,8 @@ const TOOLS: Tool[] = [
       return {
         result: {
           format: "name | store | unit | price (discount) | per 100 g",
-          offers: offers.slice(0, MAX_OFFERS).map(offerLine),
-          total: offers.length,
+          offers: offers.map(offerLine),
+          ...(offers.length === 0 && { hint: "Nothing matched. Try a shorter word, or a category instead." }),
           nearest_stores: [...nearest.values()].map(
             (offer) => `${offer.nearest_store}, ${offer.nearest_km} km`,
           ),
@@ -144,16 +116,15 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["offers"],
     status: "Finding stores nearby",
     declaration: {
       name: "list_stores",
       description: "List store branches in the user's city, nearest first.",
       parameters: {
-        type: Type.OBJECT,
+        type: "object",
         properties: {
-          store: { type: Type.STRING, description: "Store chain, for example Hofer" },
-          max_distance_km: { type: Type.NUMBER },
+          store: { type: "string", description: "Store chain, for example Hofer" },
+          max_distance_km: { type: "number" },
         },
       },
     },
@@ -166,15 +137,14 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["swipes"],
     status: "Picking products for you",
     declaration: {
       name: "get_swipe_suggestions",
       description:
         "Get the next products the user hasn't swiped yet, ranked by what similar users like and by their profile. These are the same products as the Swipe page.",
       parameters: {
-        type: Type.OBJECT,
-        properties: { limit: { type: Type.NUMBER, description: "How many, 5 by default" } },
+        type: "object",
+        properties: { limit: { type: "number", description: "How many, 5 by default" } },
       },
     },
     run: async (args, { user }) => {
@@ -190,18 +160,17 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["swipes"],
     status: "Saving your swipe",
     declaration: {
       name: "record_swipe",
       description:
         "Record that the user likes or dislikes a catalog product, the same as swiping it on the Swipe page.",
       parameters: {
-        type: Type.OBJECT,
+        type: "object",
         properties: {
-          name: { type: Type.STRING, description: "Exact product name from the catalog" },
-          store: { type: Type.STRING },
-          liked: { type: Type.BOOLEAN },
+          name: { type: "string", description: "Exact product name from the catalog" },
+          store: { type: "string" },
+          liked: { type: "boolean" },
         },
         required: ["name", "store", "liked"],
       },
@@ -218,16 +187,15 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["swipes"],
     status: "Looking at your swipes",
     declaration: {
       name: "get_swipe_history",
       description: "List products the user liked or disliked, newest first, including liked product photos.",
       parameters: {
-        type: Type.OBJECT,
+        type: "object",
         properties: {
-          liked: { type: Type.BOOLEAN, description: "Only likes (true) or only dislikes (false)" },
-          limit: { type: Type.NUMBER },
+          liked: { type: "boolean", description: "Only likes (true) or only dislikes (false)" },
+          limit: { type: "number" },
         },
       },
     },
@@ -247,43 +215,41 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["swipes"],
     status: "Saving your product",
     declaration: {
       name: "save_photo_product",
       description:
         "Save a photographed product as a like when it isn't in the catalog. If it is, use record_swipe instead.",
       parameters: {
-        type: Type.OBJECT,
+        type: "object",
         properties: {
-          name: { type: Type.STRING, description: "Product name as printed on the package" },
-          category: { type: Type.STRING },
+          name: { type: "string", description: "Product name as printed on the package" },
+          category: { type: "string" },
         },
         required: ["name"],
       },
     },
     run: async (args, { user }) => {
-      const name = text(args.name);
+      const name = productName(args.name);
       if (!name) return { result: { error: "A product name is required" } };
       await savePhotoProduct(user.id, name, text(args.category));
       return { result: { saved: true }, action: `Saved ${name} as a liked product` };
     },
   },
   {
-    areas: ["profile"],
     status: "Updating your profile",
     declaration: {
       name: "update_profile",
       description:
         "Change the user's profile. Only pass what changes. goals and preferences replace the whole list, so include the existing values you want to keep.",
       parameters: {
-        type: Type.OBJECT,
+        type: "object",
         properties: {
-          name: { type: Type.STRING },
-          age: { type: Type.INTEGER },
-          city: { type: Type.STRING, enum: CITIES },
-          goals: { type: Type.ARRAY, items: { type: Type.STRING, enum: GOALS } },
-          preferences: { type: Type.ARRAY, items: { type: Type.STRING, enum: PREFERENCES } },
+          name: { type: "string" },
+          age: { type: "integer" },
+          city: { type: "string", enum: CITIES },
+          goals: { type: "array", items: { type: "string", enum: GOALS } },
+          preferences: { type: "array", items: { type: "string", enum: PREFERENCES } },
         },
       },
     },
@@ -314,12 +280,11 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["personas"],
     status: "Looking up personas",
     declaration: {
       name: "list_personas",
       description: "List the mock personas the user can switch to.",
-      parameters: { type: Type.OBJECT, properties: {} },
+      parameters: { type: "object", properties: {} },
     },
     run: async () => {
       const personas = await listMockUsers();
@@ -333,14 +298,13 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["personas"],
     status: "Switching persona",
     declaration: {
       name: "switch_persona",
       description: "Switch the app to a mock persona. Say goodbye in your reply: the chat then opens as that persona.",
       parameters: {
-        type: Type.OBJECT,
-        properties: { name: { type: Type.STRING, description: "First name or full name" } },
+        type: "object",
+        properties: { name: { type: "string", description: "First name or full name" } },
         required: ["name"],
       },
     },
@@ -360,12 +324,11 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["shopping_list"],
     status: "Opening your shopping list",
     declaration: {
       name: "get_shopping_list",
       description: "Show the user's shopping list.",
-      parameters: { type: Type.OBJECT, properties: {} },
+      parameters: { type: "object", properties: {} },
     },
     run: async (_, { user }) => {
       const items = await listShoppingItems(user.id);
@@ -387,23 +350,22 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["shopping_list"],
     status: "Updating your shopping list",
     declaration: {
       name: "add_to_shopping_list",
       description:
         "Add items to the shopping list. Pass store for catalog products so the price shows up.",
       parameters: {
-        type: Type.OBJECT,
+        type: "object",
         properties: {
           items: {
-            type: Type.ARRAY,
+            type: "array",
             items: {
-              type: Type.OBJECT,
+              type: "object",
               properties: {
-                name: { type: Type.STRING },
-                store: { type: Type.STRING, description: "Only for catalog products" },
-                quantity: { type: Type.STRING },
+                name: { type: "string" },
+                store: { type: "string", description: "Only for catalog products" },
+                quantity: { type: "string" },
               },
               required: ["name"],
             },
@@ -416,7 +378,7 @@ const TOOLS: Tool[] = [
       const items = (Array.isArray(args.items) ? args.items : []) as Args[];
       const names: string[] = [];
       for (const item of items) {
-        const name = text(item.name);
+        const name = productName(item.name);
         if (!name) continue;
         const product = await resolveProduct(item);
         await addShoppingItem(user.id, {
@@ -431,16 +393,15 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["shopping_list"],
     status: "Updating your shopping list",
     declaration: {
       name: "update_shopping_list_item",
       description: "Check or uncheck an item on the shopping list.",
       parameters: {
-        type: Type.OBJECT,
+        type: "object",
         properties: {
-          name: { type: Type.STRING, description: "The item, or part of its name" },
-          checked: { type: Type.BOOLEAN },
+          name: { type: "string", description: "The item, or part of its name" },
+          checked: { type: "boolean" },
         },
         required: ["name", "checked"],
       },
@@ -457,14 +418,13 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["shopping_list"],
     status: "Updating your shopping list",
     declaration: {
       name: "remove_from_shopping_list",
       description: "Remove an item from the shopping list.",
       parameters: {
-        type: Type.OBJECT,
-        properties: { name: { type: Type.STRING, description: "The item, or part of its name" } },
+        type: "object",
+        properties: { name: { type: "string", description: "The item, or part of its name" } },
         required: ["name"],
       },
     },
@@ -476,14 +436,13 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["shopping_list"],
     status: "Updating your shopping list",
     declaration: {
       name: "clear_shopping_list",
       description: "Empty the shopping list, or only remove the checked items.",
       parameters: {
-        type: Type.OBJECT,
-        properties: { checked_only: { type: Type.BOOLEAN } },
+        type: "object",
+        properties: { checked_only: { type: "boolean" } },
       },
     },
     run: async (args, { user }) => {
@@ -496,14 +455,13 @@ const TOOLS: Tool[] = [
     },
   },
   {
-    areas: ["past_chats"],
     status: "Looking through old chats",
     declaration: {
       name: "search_past_chats",
       description: "Search the user's earlier chats with you for a word or phrase.",
       parameters: {
-        type: Type.OBJECT,
-        properties: { search: { type: Type.STRING } },
+        type: "object",
+        properties: { search: { type: "string" } },
         required: ["search"],
       },
     },
@@ -520,18 +478,26 @@ const TOOLS: Tool[] = [
   },
 ];
 
-export function toolDeclarations(areas: Set<Area>) {
-  return TOOLS.filter(
-    (tool) => tool.areas === "always" || tool.areas.some((area) => areas.has(area)),
-  ).map((tool) => tool.declaration);
-}
+// Left to choose freely, Gemma copies earlier replies and says "Done!" without
+// calling anything. So every step must call a tool, and this one ends the steps.
+export const READY_TOOL = "ready_to_reply";
 
-export function toolStatus(name: string | undefined) {
+export const toolDefinitions: ChatCompletionTool[] = [
+  ...TOOLS.map((tool) => tool.declaration),
+  {
+    name: READY_TOOL,
+    description:
+      "Call this when no more tools are needed: everything the user asked for is done, or the message needs no app data and changes nothing, such as small talk.",
+    parameters: { type: "object", properties: {} },
+  },
+].map((declaration) => ({ type: "function", function: declaration }));
+
+export function toolStatus(name: string) {
   return TOOLS.find((tool) => tool.declaration.name === name)?.status ?? "Working on it";
 }
 
 // Errors go back to the model as results, so it can recover or explain.
-export async function runTool(name: string | undefined, args: Args, context: ToolContext) {
+export async function runTool(name: string, args: Args, context: ToolContext) {
   const tool = TOOLS.find((candidate) => candidate.declaration.name === name);
   if (!tool) return { result: { error: `Unknown tool ${name}` } };
   try {

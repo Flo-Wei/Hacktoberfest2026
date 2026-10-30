@@ -18,20 +18,10 @@ async function writeComment(user: User, event: string, verdict: Verdict): Promis
 
   try {
     const context = earlier.map((message) => `${message.role}: ${message.content}`).join("\n");
+    const hint = verdict.kind === "against" ? "Tease them gently." : "Praise them.";
     const text = await generateText(
-      [
-        {
-          role: "user",
-          parts: [
-            {
-              text: `${context ? `Recent chat:\n${context}\n\n` : ""}${verdict.reason} ${
-                verdict.kind === "against" ? "Tease them gently." : "Praise them."
-              }`,
-            },
-          ],
-        },
-      ],
-      { systemInstruction: commentPrompt(user) },
+      commentPrompt(user),
+      `${context ? `Recent chat:\n${context}\n\n` : ""}${verdict.reason} ${hint}`,
     );
     if (!text) throw new Error("Empty comment");
     const message = await addMessage(chat.id, { role: "krabby", content: text });

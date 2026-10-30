@@ -105,7 +105,7 @@ export function searchOffers(city: string, filters: OfferFilters = {}, limit = 6
      ) nearest on true
      where ($2::text is null or p.store ilike $2)
        and ($3::text is null or p.category ilike '%' || $3 || '%')
-       and ($4::text is null or p.name ilike '%' || $4 || '%')
+       and ($4::text is null or translate(lower(p.name), 'äöüß', 'aous') like '%' || translate(lower($4), 'äöüß', 'aous') || '%')
        and ($5::real is null or nearest.distance_km <= $5)
      order by p.store, (p.regular_cents - p.discount_cents)::float / p.regular_cents desc, p.name
      limit $6`,
