@@ -4,7 +4,7 @@ Shared information for all coding agents and all 4 team members. When a decision
 
 ## Language
 
-English is the project language for everything: code, comments, docs, commit messages, branch names, UI text and data values.
+English is the project language for everything: code, comments, docs, commit messages, branch names, UI text and data values. The one exception is product names, which keep their original German names and are never translated.
 
 ## Project
 
