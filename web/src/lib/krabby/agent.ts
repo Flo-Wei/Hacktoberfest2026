@@ -3,6 +3,7 @@ import type {
   ChatCompletionMessageParam,
 } from "openai/resources/chat/completions";
 import { addMessage, recentMessages, type ChatMessage } from "@/lib/chats";
+import type { Meal } from "@/lib/meals";
 import type { User } from "@/lib/users";
 import { streamReply, type ModelReply } from "./model";
 import { chatPrompt } from "./prompt";
@@ -26,7 +27,7 @@ export type TurnEvent =
   | { type: "status"; text: string }
   | { type: "text"; delta: string }
   | { type: "reset"; text: string }
-  | { type: "done"; messageId: string; text: string; actions: string[]; switchTo?: string }
+  | { type: "done"; messageId: string; text: string; actions: string[]; switchTo?: string; meals: Meal[] }
   | { type: "error"; message: string };
 
 function toModelMessage(message: ChatMessage): ChatCompletionMessageParam {
@@ -59,6 +60,7 @@ export async function* runTurn(input: TurnInput): AsyncGenerator<TurnEvent> {
 
   const recentActions = history.flatMap((message) => message.actions).slice(-RECENT_ACTIONS);
   const actions: string[] = [];
+  const meals: Meal[] = [];
   let switchTo: string | undefined;
   const seenCalls = new Set<string>();
   let reply = "";
@@ -102,6 +104,7 @@ export async function* runTurn(input: TurnInput): AsyncGenerator<TurnEvent> {
         const outcome = await runTool(call.name, call.args, context);
         if (outcome.action) actions.push(outcome.action);
         if (outcome.switchTo) switchTo = outcome.switchTo;
+        if (outcome.meal) meals.push(outcome.meal);
         conversation.push({ role: "tool", tool_call_id: call.id, content: JSON.stringify(outcome.result) });
       }
     }
@@ -119,5 +122,5 @@ export async function* runTurn(input: TurnInput): AsyncGenerator<TurnEvent> {
   const fallback = actions.length > 0 ? `Done! ${actions.join(". ")}.` : "Sorry, I lost my train of thought. Try that again?";
   const finalText = reply.trim() || fallback;
   const message = await addMessage(chatId, { role: "krabby", content: finalText, actions });
-  yield { type: "done", messageId: message.id, text: finalText, actions, switchTo };
+  yield { type: "done", messageId: message.id, text: finalText, actions, switchTo, meals };
 }

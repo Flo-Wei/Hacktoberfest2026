@@ -109,7 +109,7 @@ export async function* streamReply(
   }
 }
 
-export async function generateText(system: string, prompt: string) {
+export async function generateText(system: string, prompt: string, timeout = COMMENT_TIMEOUT_MS) {
   const response = await getClient().chat.completions.create(
     {
       model: MODEL,
@@ -119,7 +119,7 @@ export async function generateText(system: string, prompt: string) {
       ],
       provider: PROVIDER,
     } as ChatCompletionCreateParamsNonStreaming,
-    { timeout: COMMENT_TIMEOUT_MS, maxRetries: 1 },
+    { timeout, maxRetries: 1 },
   );
   return response.choices[0]?.message?.content?.trim() ?? "";
 }

@@ -1,6 +1,7 @@
 import type { ChatCompletionTool } from "openai/resources/chat/completions";
 import type { FunctionDefinition } from "openai/resources/shared";
 import { searchMessages } from "@/lib/chats";
+import { cookMeal, recommendCommunityMeal, type Meal } from "@/lib/meals";
 import { CITIES, GOALS, PREFERENCES } from "@/lib/options";
 import {
   findOffer,
@@ -30,6 +31,8 @@ export type ToolOutcome = {
   // Saved with the reply, so Krabby remembers what it changed.
   action?: string;
   switchTo?: string;
+  // Shown as a card below the reply.
+  meal?: Meal;
 };
 
 type Args = Record<string, unknown>;
@@ -75,6 +78,30 @@ async function resolveListItem(userId: string, name: unknown) {
 }
 
 const TOOLS: Tool[] = [
+  {
+    status: "Cooking something up",
+    declaration: {
+      name: "suggest_meal",
+      description:
+        "Suggest a full recipe from current offers, shown to the user as a card with ingredients, steps and a shopping list. Use whenever the user wants a meal or recipe.",
+      parameters: {
+        type: "object",
+        properties: {
+          wish: { type: "string", description: "What the user feels like, for example something quick with chicken" },
+        },
+      },
+    },
+    run: async (args, { user }) => {
+      const wish = text(args.wish) ?? "";
+      const meal = (wish ? null : await recommendCommunityMeal(user, [])) ?? (await cookMeal(user, wish));
+      if (!meal) return { result: { error: "Couldn't make a meal" } };
+      return {
+        result: { title: meal.title, minutes: meal.minutes, note: "The user sees the full recipe as a card, so don't repeat it." },
+        action: `Suggested the meal ${meal.title}`,
+        meal,
+      };
+    },
+  },
   {
     status: "Checking the offers",
     declaration: {

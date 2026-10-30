@@ -96,3 +96,32 @@ create table if not exists shopping_list_items (
 );
 
 create index if not exists shopping_list_items_user_id_idx on shopping_list_items (user_id, created_at);
+
+create table if not exists meals (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  description text not null,
+  minutes integer not null,
+  -- Ingredients people usually have at home, so not part of the offers.
+  pantry text[] not null default '{}',
+  steps text[] not null,
+  source text not null check (source in ('seed', 'gemma', 'mock')),
+  created_by uuid references users (id) on delete set null,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists meal_products (
+  meal_id uuid not null references meals (id) on delete cascade,
+  product_id uuid not null references products (id) on delete cascade,
+  primary key (meal_id, product_id)
+);
+
+create table if not exists meal_votes (
+  user_id uuid not null references users (id) on delete cascade,
+  meal_id uuid not null references meals (id) on delete cascade,
+  liked boolean not null,
+  created_at timestamptz not null default now(),
+  primary key (user_id, meal_id)
+);
+
+create index if not exists meal_votes_meal_id_idx on meal_votes (meal_id);

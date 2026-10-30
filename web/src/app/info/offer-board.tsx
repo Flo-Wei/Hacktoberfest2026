@@ -3,18 +3,21 @@
 import { useState } from "react";
 import { ProductImage } from "@/components/product-image";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { discountPercent, formatPrice } from "@/lib/format";
-import type { Offer } from "@/lib/products";
+import type { NearbyOffer } from "@/lib/products";
 import { OfferDetails } from "./offer-details";
 
 const ALL = "All";
 
-export function OfferBoard({ offers }: { offers: Offer[] }) {
+export function OfferBoard({ offers }: { offers: NearbyOffer[] }) {
   const [selected, setSelected] = useState(ALL);
   const [collapsed, setCollapsed] = useState<string[]>([]);
-  const [openOffer, setOpenOffer] = useState<Offer | null>(null);
+  const [category, setCategory] = useState(ALL);
+  const [openOffer, setOpenOffer] = useState<NearbyOffer | null>(null);
 
   const stores = [...new Set(offers.map((offer) => offer.store))];
+  const categories = [...new Set(offers.map((offer) => offer.category))].sort();
   const visible = selected === ALL ? stores : [selected];
 
   function selectStore(store: string) {
@@ -29,23 +32,42 @@ export function OfferBoard({ offers }: { offers: Offer[] }) {
 
   return (
     <div className="space-y-4">
-      <div className="sticky top-[var(--header-height)] z-10 -mx-2 flex gap-2 overflow-x-auto rounded-xl bg-[var(--glass)] p-2 backdrop-blur-lg">
-        {[ALL, ...stores].map((store) => (
-          <button
-            key={store}
-            onClick={() => selectStore(store)}
-            aria-pressed={selected === store}
-            className={`rounded-full px-3 py-1 text-sm font-medium ${
-              selected === store ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
-            }`}
-          >
-            {store}
-          </button>
-        ))}
+      <div className="sticky top-[var(--header-height)] z-10 -mx-2 flex items-center gap-2 rounded-xl bg-[var(--glass)] p-2 backdrop-blur-lg">
+        <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto">
+          {[ALL, ...stores].map((store) => (
+            <button
+              key={store}
+              onClick={() => selectStore(store)}
+              aria-pressed={selected === store}
+              className={`rounded-full px-3 py-1 text-sm font-medium ${
+                selected === store ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
+              }`}
+            >
+              {store}
+            </button>
+          ))}
+        </div>
+        <Select value={category} onValueChange={setCategory}>
+          <SelectTrigger aria-label="Filter by category" className="w-40 shrink-0">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>All categories</SelectItem>
+            {categories.map((name) => (
+              <SelectItem key={name} value={name}>
+                {name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       {visible.map((store) => {
-        const storeOffers = offers.filter((offer) => offer.store === store);
+        const storeOffers = offers.filter(
+          (offer) => offer.store === store && (category === ALL || offer.category === category),
+        );
+        if (storeOffers.length === 0) return null;
         const isOpen = !collapsed.includes(store);
+        const { nearest_store: branch, nearest_km: distance } = storeOffers[0];
         return (
           <section key={store} className="space-y-2">
             <h2>
@@ -63,6 +85,11 @@ export function OfferBoard({ offers }: { offers: Offer[] }) {
                 <span className="text-sm text-muted-foreground">{storeOffers.length} offers</span>
               </button>
             </h2>
+            {branch && (
+              <p className="text-sm text-muted-foreground">
+                Nearest: {branch}, {distance} km
+              </p>
+            )}
             <div hidden={!isOpen} className={isOpen ? "grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5" : undefined}>
               {storeOffers.map((offer) => (
                 <article key={offer.id}>

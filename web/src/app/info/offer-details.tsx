@@ -5,9 +5,9 @@ import { ProductImage } from "@/components/product-image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { discountPercent, formatPrice } from "@/lib/format";
-import type { Offer } from "@/lib/products";
+import type { NearbyOffer } from "@/lib/products";
 
-export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => void }) {
+export function OfferDetails({ offer, onClose }: { offer: NearbyOffer; onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -50,6 +50,11 @@ export function OfferDetails({ offer, onClose }: { offer: Offer; onClose: () => 
           <p className="text-sm text-muted-foreground">
             {offer.unit} · {offer.category}
           </p>
+          {offer.nearest_store && (
+            <p className="text-sm text-muted-foreground">
+              Nearest: {offer.nearest_store}, {offer.nearest_km} km
+            </p>
+          )}
         </div>
         <p>
           <span className="text-2xl font-semibold text-selected-foreground">{formatPrice(offer.discount_cents)}</span>{" "}

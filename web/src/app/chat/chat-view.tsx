@@ -3,16 +3,19 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { switchToPersona } from "@/app/actions";
+import { requestMeal, switchToPersona } from "@/app/actions";
 import { SpeakButton } from "@/components/speak-button";
+import { Button } from "@/components/ui/button";
 import { transcribeAudio } from "@/lib/krabby/audio";
 import type { Photo, TurnEvent } from "@/lib/krabby/agent";
 import type { ChatMessage } from "@/lib/chats";
+import type { Meal } from "@/lib/meals";
+import { MealCard } from "./meal-card";
 import { VoiceMode } from "./voice-mode";
 
 const MAX_PHOTO_SIDE = 1280;
 
-type Shown = Pick<ChatMessage, "id" | "role" | "content" | "has_photo">;
+type Shown = Pick<ChatMessage, "id" | "role" | "content" | "has_photo"> & { meals?: Meal[] };
 
 export type Reply = { messageId: string; text: string };
 
@@ -109,7 +112,7 @@ export function ChatView({
             const { messageId } = event;
             setMessages((current) => [
               ...current,
-              { id: messageId, role: "krabby", content: event.text, has_photo: false },
+              { id: messageId, role: "krabby", content: event.text, has_photo: false, meals: event.meals },
             ]);
             if (event.switchTo) await switchToPersona(event.switchTo);
           }
@@ -122,6 +125,32 @@ export function ChatView({
     setStatus(null);
     setBusy(false);
     return reply;
+  }
+
+  // Cards live in this view, so a meal already suggested here isn't repeated.
+  async function suggestMeal() {
+    const shownIds = messages.flatMap((message) => message.meals?.map((meal) => meal.id) ?? []);
+    const now = Date.now();
+    setMessages((current) => [...current, { id: `local-${now}`, role: "user", content: "Suggest a meal", has_photo: false }]);
+    setBusy(true);
+    setError(null);
+    setStatus("Cooking something up");
+    try {
+      const result = await requestMeal(shownIds);
+      if ("error" in result) {
+        setError(result.error);
+      } else {
+        const intro = result.reason === "similar" ? "People with similar tastes liked this one:" : "Fresh out of my kitchen:";
+        setMessages((current) => [
+          ...current,
+          { id: `local-${now}-reply`, role: "krabby", content: intro, has_photo: false, meals: [result.meal] },
+        ]);
+      }
+    } catch {
+      setError("Krabby couldn't be reached. Please try again.");
+    }
+    setStatus(null);
+    setBusy(false);
   }
 
   async function submit(event: React.FormEvent) {
@@ -221,18 +250,19 @@ export function ChatView({
               {message.content}
             </li>
           ) : (
-            <li
-              key={message.id}
-              id={`message-${message.id}`}
-              className={
-                message.role === "user"
-                  ? "ml-8 whitespace-pre-wrap rounded-lg bg-primary p-3 text-primary-foreground"
-                  : "mr-8 whitespace-pre-wrap rounded-lg bg-card p-3"
-              }
-            >
-              {message.has_photo && <span className="block text-sm opacity-80">📷 Photo</span>}
-              {message.content}
-              {message.role === "krabby" && <SpeakButton messageId={message.id} />}
+            <li key={message.id} id={`message-${message.id}`} className="space-y-2">
+              <div
+                className={
+                  message.role === "user"
+                    ? "ml-8 whitespace-pre-wrap rounded-lg bg-primary p-3 text-primary-foreground"
+                    : "mr-8 whitespace-pre-wrap rounded-lg bg-card p-3"
+                }
+              >
+                {message.has_photo && <span className="block text-sm opacity-80">📷 Photo</span>}
+                {message.content}
+                {message.role === "krabby" && !message.id.startsWith("local-") && <SpeakButton messageId={message.id} />}
+              </div>
+              {message.meals?.map((meal) => <MealCard key={meal.id} meal={meal} />)}
             </li>
           ),
         )}
@@ -247,7 +277,7 @@ export function ChatView({
       {error && <p className="text-sm text-destructive">{error}</p>}
       <div ref={bottom} />
 
-      <div className="sticky bottom-12 space-y-2 bg-[#fff7f0] py-2">
+      <div className="sticky bottom-12 space-y-2 bg-background py-2">
         {photo && (
           <p className="flex items-center justify-between rounded-lg bg-secondary px-3 py-1 text-sm">
             📷 Photo attached
@@ -256,6 +286,9 @@ export function ChatView({
             </button>
           </p>
         )}
+        <Button type="button" variant="outline" disabled={busy} onClick={() => void suggestMeal()} className="w-full">
+          Suggest a meal
+        </Button>
         <form onSubmit={(event) => void submit(event)} className="flex gap-2">
           <label className="flex cursor-pointer items-center rounded-lg border border-border bg-card px-3" aria-label="Add a photo">
             📷

@@ -4,6 +4,7 @@
 - `seed-products.sql`: 60 products with made-up stores and prices. Images and nutrition come from Open Food Facts.
 - `seed-swipes.sql`: generated swipes for the personas.
 - `seed-stores.sql`: made-up store branches with a city and distance.
+- `seed-meals.sql`: 10 starter meals with generated votes from the personas.
 
 The Python feed in `src/grabby/data/catalog.json` holds the same stores and offers. The app imports it on startup, and these seed files are the baseline for when it isn't running.
 

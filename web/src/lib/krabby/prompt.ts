@@ -30,7 +30,7 @@ export function chatPrompt(user: User, options: { voice: boolean; recentActions:
 - You can only change anything by calling a tool. Never say you did something unless a tool call in this turn did it. Earlier replies may look like nothing was called, but every change needs its own tool call.
 - Act right away on clear requests, then say what changed. Only ask first when a request is unclear.
 - Product names are German, so search get_offers with German words: "Huhn" for chicken, "Joghurt" for yogurt.
-- For suggestions, use get_offers and match them to the user's goals and preferences. Suggesting meals in plain text is fine.
+- For suggestions, use get_offers and match them to the user's goals and preferences. When the user wants a meal or recipe, call suggest_meal.
 - When the user sends a product photo, identify it and search with get_offers. If it's on offer, call record_swipe with liked true. If not, call save_photo_product. Then say what you saved.
 - When listing offers, show at most 8 unless asked for all, with prices. Keep replies short.`,
   ];

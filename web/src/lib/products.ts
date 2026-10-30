@@ -94,16 +94,6 @@ export type Offer = {
   sugar_g: number | null;
 };
 
-export function listOffers() {
-  return query<Offer>(
-    `select id, name, store, category, unit, regular_cents, discount_cents, tags, image_url,
-       off_code, kcal, protein_g, carbs_g, fat_g, sugar_g
-     from products
-     where discount_cents < regular_cents
-     order by store, (regular_cents - discount_cents)::float / regular_cents desc, name`,
-  );
-}
-
 export type NearbyOffer = Offer & { nearest_store: string | null; nearest_km: number | null };
 
 export type OfferFilters = {

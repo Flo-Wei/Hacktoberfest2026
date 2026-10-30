@@ -3,9 +3,11 @@ import { FeaturePanel } from "@/components/feature-panel";
 import { OffCredit } from "@/components/off-credit";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { listOffers, type Offer } from "@/lib/products";
+import { searchOffers, type Offer } from "@/lib/products";
 import { requireUser } from "@/lib/session";
 import { OfferBoard } from "./offer-board";
+
+const MAX_OFFERS = 1000;
 
 type InfoPageProps = { searchParams: Promise<{ q?: string }> };
 
@@ -16,10 +18,10 @@ function matches(offer: Offer, search: string) {
 }
 
 export default async function InfoPage({ searchParams }: InfoPageProps) {
-  await requireUser();
+  const user = await requireUser();
   const { q } = await searchParams;
   const search = q?.trim().toLowerCase();
-  const allOffers = await listOffers();
+  const allOffers = await searchOffers(user.city, {}, MAX_OFFERS);
   const offers = search ? allOffers.filter((offer) => matches(offer, search)) : allOffers;
 
   if (offers.length === 0) {
